@@ -1,0 +1,33 @@
+<svg width="254" height="314" viewBox="0 0 254 314" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>polly-metScape-workflow</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="matrix(2 0 0 2 -19658 -2112)">
+<g id="polly-metScape-workflow">
+<g id="Rectangle">
+<use xlink:href="#path0_fill" transform="translate(9829 1056)" fill="#FFFFFF"/>
+<mask id="mask0_outline_ins">
+<use xlink:href="#path0_fill" fill="white" transform="translate(9829 1056)"/>
+</mask>
+<g mask="url(#mask0_outline_ins)">
+<use xlink:href="#path1_stroke_2x" transform="translate(9829 1056)" fill="#8985DB"/>
+</g>
+</g>
+<g id="MW" filter="url(#filter0_d)">
+<use xlink:href="#path2_fill" transform="translate(9847 1096)" fill="#E77830"/>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d" filterUnits="userSpaceOnUse" x="9851" y="1113" width="87" height="42" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0"/>
+<feOffset dx="1" dy="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.905882 0 0 0 0 0.470588 0 0 0 0 0.188235 0 0 0 0.3 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+<path id="path0_fill" d="M 63.5 0L 127 33.0786L 127 122.934L 63.5 157L 0 123.428L 0 33.0786L 63.5 0Z"/>
+<path id="path1_stroke_2x" d="M 63.5 0L 67.196 -7.09505L 63.5 -9.02037L 59.804 -7.09505L 63.5 0ZM 63.5 157L 59.7608 164.072L 63.5274 166.064L 67.2819 164.05L 63.5 157ZM 127 122.934L 130.782 129.984L 135 127.721L 135 122.934L 127 122.934ZM 0 123.428L -8 123.428L -8 128.247L -3.73916 130.5L 0 123.428ZM 0 33.0786L -3.69598 25.9836L -8 28.2256L -8 33.0786L 0 33.0786ZM 127 33.0786L 135 33.0786L 135 28.2256L 130.696 25.9836L 127 33.0786ZM 8 123.428L 8 33.0786L -8 33.0786L -8 123.428L 8 123.428ZM 119 33.0786L 119 122.934L 135 122.934L 135 33.0786L 119 33.0786ZM 59.804 7.09505L 123.304 40.1737L 130.696 25.9836L 67.196 -7.09505L 59.804 7.09505ZM 3.69598 40.1737L 67.196 7.09505L 59.804 -7.09505L -3.69598 25.9836L 3.69598 40.1737ZM 67.2392 149.928L 3.73916 116.355L -3.73916 130.5L 59.7608 164.072L 67.2392 149.928ZM 123.218 115.884L 59.7181 149.95L 67.2819 164.05L 130.782 129.984L 123.218 115.884Z"/>
+<path id="path2_fill" d="M 30.78 17.42L 37.5 17.42C 38.18 17.42 38.52 17.76 38.52 18.44L 38.52 54.98C 38.52 55.66 38.18 56 37.5 56L 33.78 56C 33.1 56 32.76 55.66 32.76 54.98L 32.76 24.68L 32.52 24.68L 24.72 46.64C 24.48 47.28 24.04 47.6 23.4 47.6L 19.56 47.6C 18.96 47.6 18.54 47.28 18.3 46.64L 10.32 24.62L 10.08 24.62L 10.08 54.98C 10.08 55.38 10 55.66 9.84 55.82C 9.72 55.94 9.46 56 9.06 56L 5.4 56C 4.72 56 4.38 55.66 4.38 54.98L 4.38 18.44C 4.38 17.76 4.72 17.42 5.4 17.42L 12.12 17.42C 12.56 17.42 12.88 17.64 13.08 18.08L 21.3 41.24L 21.6 41.24L 29.88 18.08C 29.96 17.64 30.26 17.42 30.78 17.42ZM 58.9106 56L 52.5506 56C 51.8306 56 51.4106 55.66 51.2906 54.98L 44.1506 18.44C 44.0706 17.76 44.4106 17.42 45.1706 17.42L 49.7906 17.42C 50.5506 17.42 50.9506 17.76 50.9906 18.44L 55.8506 49.88L 56.2106 49.88L 63.2906 18.32C 63.3706 17.72 63.7306 17.42 64.3706 17.42L 69.4106 17.42C 70.0506 17.42 70.4306 17.72 70.5506 18.32L 77.6906 49.88L 78.0506 49.88L 82.9106 18.5C 82.9506 17.78 83.3506 17.42 84.1106 17.42L 88.7306 17.42C 89.5306 17.42 89.8706 17.78 89.7506 18.5L 82.6106 54.98C 82.4906 55.66 82.0906 56 81.4106 56L 75.0506 56C 74.3706 56 73.9706 55.66 73.8506 54.98L 67.0706 24.62L 66.8306 24.62L 60.0506 54.98C 59.9306 55.66 59.5506 56 58.9106 56Z"/>
+</defs>
+</svg>
