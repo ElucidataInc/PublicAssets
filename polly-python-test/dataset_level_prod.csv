@@ -1,0 +1,3 @@
+query,total_rows,total_columns,col_required
+"""select * FROM liveromix_atlas_files WHERE total_num_cells IS NOT NULL""",81,34,
+"""select description, kw_data_type, organism, disease, tissue, kw_drug, kw_cell_line, kw_cell_type, dataset_source, publication, total_num_samples, total_num_cells FROM liveromix_atlas_files WHERE total_num_cells IS NOT NULL""",81,12,

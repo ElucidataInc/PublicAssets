@@ -1,0 +1,3 @@
+query,total_rows,total_columns,col_required
+"""select sample_id, kw_curated_disease, kw_curated_cell_line, kw_curated_drug, kw_curated_cell_type, kw_curated_genetic_mod_type, kw_curated_modified_gene FROM liveromix_atlas_gct_metadata where kw_curated_cell_type = 'hepatocyte' AND kw_curated_disease = 'normal' AND kw_curated_cell_line = 'none' AND kw_curated_drug = 'none' AND kw_curated_genetic_mod_type = 'none' AND kw_curated_modified_gene = 'none'""",100,6,
+"""select organism_ch1, platform_id, description FROM liveromix_atlas_gct_metadata where description = Match_Query('Affymetrix hybridization procedure.')""",100,3,

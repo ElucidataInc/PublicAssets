@@ -1,0 +1,3 @@
+query,total_rows,total_columns,col_required
+"""select * FROM liveromix_atlas_gct_data""",100,4,
+"""select kw_doc_id FROM liveromix_atlas_gct_data WHERE kw_doc_id = 'discover-prod-datalake-v1@@@liver_atlas@@data@@Methylation@@LIHC_Methylation_TCGA.gct' AND kw_timestamp = 1625818155665""",1,2,

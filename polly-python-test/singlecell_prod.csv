@@ -1,0 +1,3 @@
+query,total_rows,total_columns,col_required
+"""select * FROM liveromix_atlas_h5ad_data""",1,25,
+"""select highly_variable, means, kw_doc_id, kw_timestamp, kw_index FROM liveromix_atlas_h5ad_data WHERE kw_index = 'Gpr34'""",1,5,
