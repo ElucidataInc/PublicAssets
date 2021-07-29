@@ -1,0 +1,3 @@
+query,total_rows,total_columns
+"query_simple_logic1 = ""select * FROM liver_atlas.samples_singlecell""",1,24
+"""select * FROM liver_atlas.features_singlecell""",1,22

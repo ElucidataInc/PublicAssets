@@ -1,0 +1,3 @@
+query,total_rows,total_columns
+"""select description, kw_data_type, organism, disease, tissue, kw_drug, kw_cell_line, kw_cell_type, dataset_source, publication, total_num_samples, total_num_cells FROM liver_atlas.datasets WHERE disease = 'normal' AND organism = 'Homo sapiens' AND kw_drug = 'none' AND dataset_source = 'GEO' AND tissue IN('liver','bone','none') AND kw_data_type = 'transcriptomics' AND kw_cell_line IN ('none', 'HEP-G2') AND kw_cell_type IN ('none', 'hepatocyte', 'embryonic fibroblast') AND publication = Match_Query('https://www.ncbi.nlm.nih.gov/geo/query/') AND description = Match_Phrase('gene') AND total_num_samples > 4""",2,11
+"""select * FROM liver_atlas.datasets WHERE total_num_cells IS NOT NULL""",36,36
