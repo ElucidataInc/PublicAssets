@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; Polly&#39;s Documentation 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Polly's Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Polly.html">About Polly Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polly.html">polly package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/download.html">Downloading Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/query.html">Querying metadata</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polly's Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>import json
+import ssl
+import logging
+import os
+import platform
+import tempfile
+from pathlib import Path
+from typing import Union, Dict
+from collections import namedtuple
+import pandas as pd
+import requests
+from retrying import retry</p>
+<p>from polly import constants as const</p>
+<p>from polly import helpers
+from polly.auth import Polly
+from polly.constants import DATA_TYPES
+from polly.errors import (</p>
+<blockquote>
+<div><p>QueryFailedException,
+UnfinishedQueryException,
+InvalidParameterException,
+error_handler,
+is_unfinished_query_error,
+paramException,
+wrongParamException,
+apiErrorException,
+invalidApiResponseException,</p>
+</div></blockquote>
+<p>)
+from deprecated import deprecated
+from polly.index_schema_level_conversion_const import indexes_schema_level_map</p>
+<p>QUERY_API_V1 = “v1”
+QUERY_API_V2 = “v2”</p>
+<dl>
+<dt>class OmixAtlas:</dt><dd><p>“””
+OmixAtlas class interact with omixatlases repository. You can query datasets and metadata.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+</dl>
+<p>We can initialize a OmixAtlas class object using.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you are authorised then you can initialize object without token to know about <a class="reference internal" href="../doc/Polly.html#auth"><span class="std std-ref">authentication</span></a>.
+“””</p>
+<dl>
+<dt>def __init__(self, token=None, env=”polly”) -&gt; None:</dt><dd><p>self.session = Polly.get_session(token, env=env)
+self.base_url = f”<a class="reference external" href="https://v2.api">https://v2.api</a>.{self.session.env}.elucidata.io”
+self.discover_url = f”<a class="reference external" href="https://api.discover">https://api.discover</a>.{self.session.env}.elucidata.io”
+self.elastic_url = (</p>
+<blockquote>
+<div><p>f”<a class="reference external" href="https://api.datalake.discover">https://api.datalake.discover</a>.{self.session.env}.elucidata.io/elastic/v2”</p>
+</div></blockquote>
+<p>)
+self.resource_url = f”{self.base_url}/v1/omixatlases”</p>
+</dd>
+<dt>def create(</dt><dd><p>self,
+display_name: str,
+description: str,
+repo_name=””,
+image_url=””,
+initials=””,
+explorer_enabled=True,
+studio_presets=[],
+components=[],</p>
+</dd>
+<dt>) -&gt; pd.DataFrame:</dt><dd><p>“””
+This function is used to create a new omixatlas,</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">display_name</span> <span class="pre">(str):</span></code> display name of the omixatlas.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">description</span> <span class="pre">(str):</span></code> description of the omixatlas.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_name</span> <span class="pre">(str):</span></code> repo_name which is used to create index in db.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">image_url</span> <span class="pre">(str):</span></code> Url of the icon for omixatlas. Optional Parameter.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">initials</span> <span class="pre">(str):</span></code> Initials shown in the icon of omixatlas. Optional Parameter.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">explorer_enabled</span> <span class="pre">(bool):</span></code> Default True. Optional Parameter.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">studio_presets</span> <span class="pre">(list):</span></code> Optional Paramter.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">components</span> <span class="pre">(list):</span></code> Optional Parameter.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">Dataframe after creation of omixatlas.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">ValueError:</span></code> Repository creation response is in Incorrect format.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">To use this function import Omixatlas class and make a object.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">omixatlas</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">display_name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">image_url</span><span class="p">,</span> <span class="n">initials</span><span class="p">,</span> <span class="n">explorer_enabled</span><span class="p">,</span>\
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>studio_presets, components)</p>
+<blockquote>
+<div><blockquote>
+<div><p>“””
+payload = self._get_repository_payload()
+frontend_info = {}
+frontend_info[“description”] = description
+frontend_info[“display_name”] = display_name
+frontend_info[“explorer_enabled”] = explorer_enabled
+frontend_info[“icon_image_url”] = (</p>
+<blockquote>
+<div><p>image_url if image_url else const.IMAGE_URL_ENDPOINT</p>
+</div></blockquote>
+<p>)
+frontend_info[“initials”] = (</p>
+<blockquote>
+<div><p>initials if initials else self._construct_initials(display_name)</p>
+</div></blockquote>
+<p>)</p>
+<dl class="simple">
+<dt>if not repo_name:</dt><dd><p>repo_name = self._create_repo_name(display_name)</p>
+</dd>
+<dt>else:</dt><dd><p>repo_name = repo_name</p>
+</dd>
+</dl>
+<p>payload[“data”][“attributes”][“repo_name”] = repo_name
+payload[“data”][“attributes”][“frontend_info”] = frontend_info
+payload[“data”][“attributes”][“components”] = components
+payload[“data”][“attributes”][“studio_presets”] = studio_presets
+indexes = payload[“data”][“attributes”][“indexes”]</p>
+<dl class="simple">
+<dt>for key in indexes.keys():</dt><dd><p>indexes[key] = f”{repo_name}_{key}”</p>
+</dd>
+</dl>
+<p>repository_url = f”{self.resource_url}”
+resp = self.session.post(repository_url, json=payload)
+error_handler(resp)</p>
+<dl class="simple">
+<dt>if resp.status_code != const.CREATED:</dt><dd><p>raise Exception(resp.text)</p>
+</dd>
+<dt>else:</dt><dd><dl class="simple">
+<dt>if resp.json()[“data”][“id”]:</dt><dd><p>repo_id = resp.json()[“data”][“id”]
+print(f” OmixAtlas {repo_id} Created  “)
+return self._repo_creation_response_df(resp.json())</p>
+</dd>
+<dt>else:</dt><dd><p>ValueError(“Repository creation response is in Incorrect format”)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>def get_all_omixatlas(self):</dt><dd><p>“””
+.. _targetget:</p>
+<p>This function will return a list of omixatlas repository in polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line">None</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><p>It will return a list of objects like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;repo_name&#39;</span><span class="p">:</span> <span class="s1">&#39;repo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;repo_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1646&#39;</span><span class="p">,</span>
+<span class="s1">&#39;indexes&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="s1">&#39;gct_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;csv&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;files&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_files&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;json&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ipynb&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_ipynb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gct_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_data&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_data&#39;</span>
+    <span class="p">},</span>
+<span class="s1">&#39;diseases&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;organisms&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;sources&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;datatypes&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;dataset_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;disease_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;tissue_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;organism_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_line_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;drug_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_source_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;normal_sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">To use this function import Omixatlas class and make a object.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">omixatlas</span><span class="o">.</span><span class="n">get_all_omixatlas</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>“””
+url = self.resource_url
+params = {“summarize”: “true”}
+response = self.session.get(url, params=params)
+error_handler(response)
+return response.json()</p>
+</dd>
+<dt>def get_omixatlas(self, key: str):</dt><dd><p>“””
+This function will return a omixatlas repository in polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">key:</span></code> repo name or repo id.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><p>It will return a objects like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;repo_name&#39;</span><span class="p">:</span> <span class="s1">&#39;repo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;repo_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1646&#39;</span><span class="p">,</span>
+<span class="s1">&#39;indexes&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="s1">&#39;gct_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;csv&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;files&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_files&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;json&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ipynb&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_ipynb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gct_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_data&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_data&#39;</span>
+    <span class="p">},</span>
+<span class="s1">&#39;diseases&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;organisms&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;sources&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;datatypes&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;dataset_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;disease_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;tissue_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;organism_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_line_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;drug_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_source_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;normal_sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">To use this function import Omixatlas class and make a object.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">omixatlas</span><span class="o">.</span><span class="n">get_omixatlas</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+url = f”{self.resource_url}/{key}”
+response = self.session.get(url)
+error_handler(response)
+return response.json()</p>
+</dd>
+<dt>def omixatlas_summary(self, key: str):</dt><dd><p>“””
+This function will return you a object that contain information about omixatlas repository.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">key</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo_id or repo_name.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><p>It will return a object like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;repo_name&#39;</span><span class="p">:</span> <span class="s1">&#39;repo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;repo_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1646&#39;</span><span class="p">,</span>
+<span class="s1">&#39;indexes&#39;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">&#39;gct_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;csv&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;files&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_files&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;json&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ipynb&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_ipynb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gct_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_data&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_data&#39;</span>
+    <span class="p">},</span>
+<span class="s1">&#39;diseases&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;organisms&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;sources&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;datatypes&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;dataset_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;disease_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;tissue_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;organism_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_line_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;drug_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_source_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;normal_sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">To use this function see the code below.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">omixatlas</span><span class="o">.</span><span class="n">omixatlas_summary</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+url = f”{self.resource_url}/{key}”
+params = {“summarize”: “true”}
+response = self.session.get(url, params=params)
+error_handler(response)
+return response.json()</p>
+</dd>
+<dt>def query_metadata(</dt><dd><p>self,
+query: str,
+experimental_features=None,
+query_api_version=QUERY_API_V2,
+page_size=None,  # Note: do not increase page size more than 999</p>
+</dd>
+<dt>):</dt><dd><p>“””
+This function will returns a table containing the datasets that satisfied the sql query.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">query</span> <span class="pre">(str)</span> <span class="pre">:</span></code> sql query  on  omixatlas for example - “SELECT * FROM liveromix_atlas.datasets”.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">experimental_features</span> <span class="pre">:</span></code> <a class="reference internal" href="../doc/query.html#target"><span class="std std-ref">this section includes in querying metadata</span></a>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">query_api_version</span> <span class="pre">(str)</span> <span class="pre">:</span></code> v1 or v2.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">page_size</span> <span class="pre">(int):</span></code> page size for query.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">It will return a table that will contain metadata (for example- disease,</div>
+<div class="line">total_num_cells) and datasets that satisfied the sql query.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">UnfinishedQueryException:</span></code> when query has not finised the execution.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">QueryFailedException:</span></code> when query failed to execute.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT src_dataset_id, name FROM geo.features WHERE LOWER(name) = &#39;brd4&#39;&quot;</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">omixatlas</span><span class="o">.</span><span class="n">query_metadata</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">query_api_version</span><span class="o">=</span><span class="s2">&quot;v2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">To know about quering metadata <a class="reference internal" href="../doc/query.html#targetq"><span class="std std-ref">Querying metadata</span></a>.</div>
+</div>
+<p>“””
+max_page_size = 999
+if page_size is not None and page_size &gt; max_page_size:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>raise ValueError(</dt><dd><p>f”The maximum permitted value for page_size is {max_page_size}”</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>elif page_size is None and query_api_version != QUERY_API_V2:</dt><dd><p>page_size = 500</p>
+</dd>
+</dl>
+<p>queries_url = f”{self.resource_url}/queries”
+queries_payload = {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“data”: {</dt><dd><p>“type”: “queries”,
+“attributes”: {“query”: query, “query_api_version”: query_api_version},</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}
+if experimental_features is not None:</p>
+<blockquote>
+<div><p>queries_payload.update({“experimental_features”: experimental_features})</p>
+</div></blockquote>
+<p>response = self.session.post(queries_url, json=queries_payload)
+error_handler(response)</p>
+<p>query_data = response.json().get(“data”)
+query_id = query_data.get(“id”)
+return self._process_query_to_completion(query_id, query_api_version, page_size)</p>
+</dd>
+<dt>&#64;retry(</dt><dd><p>retry_on_exception=is_unfinished_query_error,
+wait_exponential_multiplier=500,  # Exponential back-off starting 500ms
+wait_exponential_max=10000,  # After 10s, retry every 10s
+stop_max_delay=300000,  # Stop retrying after 300s (5m)</p>
+</dd>
+</dl>
+<p>)
+def _process_query_to_completion(</p>
+<blockquote>
+<div><p>self, query_id: str, query_api_version: str, page_size: Union[int, None]</p>
+</div></blockquote>
+<dl>
+<dt>):</dt><dd><p>queries_url = f”{self.resource_url}/queries/{query_id}”
+response = self.session.get(queries_url)
+error_handler(response)</p>
+<p>query_data = response.json().get(“data”)
+query_status = query_data.get(“attributes”, {}).get(“status”)
+if query_status == “succeeded”:</p>
+<blockquote>
+<div><p>return self._handle_query_success(query_data, query_api_version, page_size)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>elif query_status == “failed”:</dt><dd><p>self._handle_query_failure(query_data)</p>
+</dd>
+<dt>else:</dt><dd><p>raise UnfinishedQueryException(query_id)</p>
+</dd>
+</dl>
+</dd>
+<dt>def _handle_query_failure(self, query_data: dict):</dt><dd><p>fail_msg = query_data.get(“attributes”).get(“failure_reason”)
+raise QueryFailedException(fail_msg)</p>
+</dd>
+<dt>def _handle_query_success(</dt><dd><p>self, query_data: dict, query_api_version: str, page_size: Union[int, None]</p>
+</dd>
+<dt>) -&gt; pd.DataFrame:</dt><dd><p>query_id = query_data.get(“id”)</p>
+<p>details = []
+time_taken_in_ms = query_data.get(“attributes”).get(“exec_time_ms”)
+if isinstance(time_taken_in_ms, int):</p>
+<blockquote>
+<div><p>details.append(“time taken: {:.2f} seconds”.format(time_taken_in_ms / 1000))</p>
+</div></blockquote>
+<p>data_scanned_in_bytes = query_data.get(“attributes”).get(“data_scanned_bytes”)
+if isinstance(data_scanned_in_bytes, int):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>details.append(</dt><dd><p>“data scanned: {:.3f} MB”.format(data_scanned_in_bytes / (1024**2))</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if details:</dt><dd><p>detail_str = “, “.join(details)
+print(“Query execution succeeded ” f”({detail_str})”)</p>
+</dd>
+<dt>else:</dt><dd><p>print(“Query execution succeeded”)</p>
+</dd>
+<dt>if query_api_version != QUERY_API_V2 or page_size is not None:</dt><dd><p>return self._fetch_results_as_pages(query_id, page_size)</p>
+</dd>
+<dt>else:</dt><dd><p>return self._fetch_results_as_file(query_id)</p>
+</dd>
+</dl>
+</dd>
+<dt>def _fetch_results_as_pages(self, query_id, page_size):</dt><dd><dl class="simple">
+<dt>first_page_url = (</dt><dd><p>f”{self.resource_url}/queries/{query_id}” f”/results?page[size]={page_size}”</p>
+</dd>
+</dl>
+<p>)
+response = self.session.get(first_page_url)
+error_handler(response)
+result_data = response.json()
+rows = [row_data.get(“attributes”) for row_data in result_data.get(“data”)]</p>
+<p>all_rows = rows</p>
+<p>message = “Fetched {} rows”
+print(message.format(len(all_rows)), end=”r”)</p>
+<dl>
+<dt>while (</dt><dd><p>result_data.get(“links”) is not None
+and result_data.get(“links”).get(“next”) is not None
+and result_data.get(“links”).get(“next”) != “null”</p>
+</dd>
+<dt>):</dt><dd><p>next_page_url = self.base_url + result_data.get(“links”).get(“next”)
+response = self.session.get(next_page_url)
+error_handler(response)
+result_data = response.json()
+if result_data.get(“data”):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>rows = [</dt><dd><p>row_data.get(“attributes”) for row_data in result_data.get(“data”)</p>
+</dd>
+</dl>
+<p>]</p>
+</div></blockquote>
+<dl class="simple">
+<dt>else:</dt><dd><p>rows = []</p>
+</dd>
+</dl>
+<p>all_rows.extend(rows)
+print(message.format(len(all_rows)), end=”r”)</p>
+</dd>
+</dl>
+<p># Blank line resets console line start position
+print()</p>
+<p>return pd.DataFrame(all_rows)</p>
+</dd>
+<dt>def _fetch_results_as_file(self, query_id):</dt><dd><dl class="simple">
+<dt>results_file_req_url = (</dt><dd><p>f”{self.resource_url}/queries/{query_id}/results?action=download”</p>
+</dd>
+</dl>
+<p>)
+response = self.session.get(results_file_req_url)
+error_handler(response)
+result_data = response.json()</p>
+<p>results_file_download_url = result_data.get(“data”, {}).get(“download_url”)
+if (</p>
+<blockquote>
+<div><p>results_file_download_url is None
+or results_file_download_url == “Not available”</p>
+</div></blockquote>
+<dl>
+<dt>):</dt><dd><p># The user is probably executing SHOW TABLES or DESCRIBE query
+return self._fetch_results_as_pages(query_id, 100)</p>
+</dd>
+<dt>def _local_temp_file_path(filename):</dt><dd><dl class="simple">
+<dt>temp_dir = Path(</dt><dd><p>“/tmp” if platform.system() == “Darwin” else tempfile.gettempdir()</p>
+</dd>
+</dl>
+<p>).absolute()</p>
+<p>temp_file_path = os.path.join(temp_dir, filename)
+if Path(temp_file_path).exists():</p>
+<blockquote>
+<div><p>os.remove(temp_file_path)</p>
+</div></blockquote>
+<p>return temp_file_path</p>
+</dd>
+<dt>def _download_file_stream(download_url, _local_file_path):</dt><dd><dl>
+<dt>with requests.get(download_url, stream=True, headers={}) as r:</dt><dd><p>r.raise_for_status()
+with open(_local_file_path, “wb”) as f:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>for chunk in r.iter_content(chunk_size=8192):</dt><dd><p>f.write(chunk)</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>local_file_path = _local_temp_file_path(f”{query_id}.csv”)
+_download_file_stream(results_file_download_url, local_file_path)</p>
+<p>data_df = pd.read_csv(local_file_path)
+print(f”Fetched {len(data_df.index)} rows”)</p>
+<p>return data_df</p>
+</dd>
+<dt>def get_schema_from_api(</dt><dd><p>self, repo_key: str, schema_type_dict: dict, source: str, data_type: str</p>
+</dd>
+<dt>) -&gt; dict:</dt><dd><p>“””
+Gets the schema of a repo id for the given repo_key and
+schema_type definition at the top level</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo id or repo name</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">schema_type_dict</span> <span class="pre">(dictionary)</span> <span class="pre">:</span></code> {schema_level:schema_type}</div>
+<div class="line">example {‘dataset’: ‘files’, ‘sample’: ‘gct_metadata’}</div>
+</div>
+</dd>
+</dl>
+<p><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;REPO_ID&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;files | gct_metadata | h5ad_metadata&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="o">...</span> <span class="n">field</span> <span class="n">definitions</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">meta private</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>“””
+resp_dict = {}
+schema_base_url = f”{self.discover_url}/repositories”
+summary_query_param = “?response_format=summary”
+filter_query_params = “”
+if source:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if data_type:</dt><dd><p>filter_query_params = f”&amp;source={source}&amp;datatype={data_type}”</p>
+</dd>
+<dt>else:</dt><dd><p>filter_query_params = f”&amp;source={source}”</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>if repo_key and schema_type_dict and isinstance(schema_type_dict, Dict):</dt><dd><dl>
+<dt>for key, val in schema_type_dict.items():</dt><dd><p>schema_type = val
+if filter_query_params:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>dataset_url = (</dt><dd><p>f”{schema_base_url}/{repo_key}/”
++ f”schemas/{schema_type}”
++ f”{summary_query_param}{filter_query_params}”</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>else:</dt><dd><p>dataset_url = f”{schema_base_url}/{repo_key}/schemas/{schema_type}{summary_query_param}”</p>
+</dd>
+</dl>
+<p>resp = self.session.get(dataset_url)
+error_handler(resp)
+# making <cite>schema_type</cite> from the API response
+# as the key of resp_dict
+api_resp_dict = resp.json()
+if “data” in api_resp_dict:</p>
+<blockquote>
+<div><dl>
+<dt>if “attributes” in api_resp_dict[“data”]:</dt><dd><dl>
+<dt>if “schema_type” in api_resp_dict[“data”][“attributes”]:</dt><dd><dl class="simple">
+<dt>schema_type_key = api_resp_dict[“data”][“attributes”][</dt><dd><p>“schema_type”</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise invalidApiResponseException(</dt><dd><p>title=”schema_type not present”,
+detail=”schema_type not present in the repository schema”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</dd>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise invalidApiResponseException(</dt><dd><p>title=”attributes not present”,
+detail=”attributes not present in the repository schema”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise invalidApiResponseException(</dt><dd><p>title=”data key not present”,
+detail=”data key not present in the repository schema”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+<p>resp_dict[schema_type_key] = resp.json()</p>
+</dd>
+</dl>
+</dd>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”,
+detail=”repo_key and schema_type_dict are either empty or its datatype is not correct”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+<p>return resp_dict</p>
+</dd>
+<dt>def get_schema(</dt><dd><p>self, repo_key: str, schema_level=[“dataset”, “sample”], source=””, data_type=””</p>
+</dd>
+<dt>) -&gt; dict:</dt><dd><p>“””
+Using this function to extract the schema of an OmixAtlas.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo_id OR repo_name. This is a mandatory field.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">schema_level</span> <span class="pre">(list)</span> <span class="pre">:</span></code> The default value is [‘dataset’, ‘sample’]. The users can use [‘dataset’] </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>OR [‘sample’] to fetch the schema of dataset OR sample level metadata respectively.</dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">(str)</span> <span class="pre">:</span></code> is the source from where data is ingested into the Omixatlas.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">data_type</span> <span class="pre">(str)</span> <span class="pre">:</span></code> is the datatype for which user wants to get the schema for. The default </div>
+</div>
+</dd>
+</dl>
+<p>value is ‘all’, which will fetch the schema of all datatypes except single cell. To fetch the schema for single cell datatype from an OmixAtlas, the user should use ‘single_cell’.</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">It will contain the schema for dataset, sample as dataframe.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;dataset&#39;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="s1">&#39;sample&#39;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">you can access dataset, sample schema in following manner.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import pandas as pd</span>
+<span class="c1"># pd.set_option(&#39;expand_frame_repr&#39;, False)</span>
+<span class="c1"># use above two line if your dataframe does not print in single line</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">omixatlas</span><span class="o">.</span><span class="n">get_schema</span><span class="p">(</span><span class="s2">&quot;9&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">])</span>
+
+<span class="c1"># to fetch the dataframe with dataset level metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="c1"># to fetch the dataframe with sample level metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">schema.dataset</span></code> will contain dataframe you can print them in a table form like this.</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Source</p></th>
+<th class="head"><p>Datatype</p></th>
+<th class="head"><p>Field Name</p></th>
+<th class="head"><p>Field Description</p></th>
+<th class="head"><p>Field Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_organism</p></td>
+<td><p>Orgnism from which the samples were derived</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>src_uri</p></td>
+<td><p>Unique URI derived from data file’s S3 location</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>total_num_samples</p></td>
+<td><p>Total number of samples in a dataset</p></td>
+<td><p>integer</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>year</p></td>
+<td><p>Year in which the dataset was published</p></td>
+<td><p>integer</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>description</p></td>
+<td><p>Description of the dataset</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_cell_line</p></td>
+<td><p>Cell lines from which the samples were derived…</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>data_table_name</p></td>
+<td><p>Name of the data table associated with data file</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>data_table_version</p></td>
+<td><p>Current version of the data table associated w…</p></td>
+<td><p>integer</p></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">schema.sample</span></code> will contain dataframe you can print them in a table form like this.</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Source</p></th>
+<th class="head"><p>Datatype</p></th>
+<th class="head"><p>Field Name</p></th>
+<th class="head"><p>Field Description</p></th>
+<th class="head"><p>Field Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>growth_protocol_ch1</p></td>
+<td><p>NA</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>src_uri</p></td>
+<td><p>Unique URI derived from source data file’s S3 …</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>sample_id</p></td>
+<td><p>Unique ID associated with every sample</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_gene_modified</p></td>
+<td><p>Gene modified through genetic modification</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>dose_ch1</p></td>
+<td><p>NA</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_cohort_name</p></td>
+<td><p>Name of the cohort to which the sample belongs</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_control</p></td>
+<td><p>Signifies whether the given sample is a contro…</p></td>
+<td><p>integer</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>src_dataset_id</p></td>
+<td><p>Dataset ID of the file this data entity origin…</p></td>
+<td><p>text</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">invalidApiResponseException:</span></code> datakey, attributes, schema_type is missing in repository schema.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">RequestException:</span></code> Schema not found.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">paramException:</span></code> repo_key and schema_type_dict are either empty or its datatype is not correct.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example to fetch dataset and sample level schema for all datatypes from all sources in GEO Omixatlas.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">omixatlas</span><span class="o">.</span><span class="n">get_schema</span><span class="p">(</span><span class="s2">&quot;geo&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">],</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span>
+
+<span class="c1"># to fetch the dataframe with dataset level metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="c1"># to fetch the dataframe with sample level metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””</p>
+<p># get schema_type_dict
+schema_type_dict = self.get_schema_type(schema_level, data_type)
+# schema from API calls
+if repo_key and schema_type_dict and isinstance(schema_type_dict, Dict):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>schema = self.get_schema_from_api(</dt><dd><p>repo_key, schema_type_dict, source, data_type</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if schema and isinstance(schema, Dict):</dt><dd><dl class="simple">
+<dt>for key, val in schema.items():</dt><dd><dl class="simple">
+<dt>if schema[key][“data”][“attributes”][“schema”]:</dt><dd><p>schema[key] = schema[key][“data”][“attributes”][“schema”]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>df_map = {}
+for key, val in schema.items():</p>
+<blockquote>
+<div><p>flatten_dict = self.flatten_nested_schema_dict(schema[key])
+df_map[key] = self.nested_dict_to_df(flatten_dict)</p>
+</div></blockquote>
+<p>return self.return_schema_data(df_map)</p>
+</div></blockquote>
+<dl>
+<dt>def return_schema_data(self, df_map: dict) -&gt; tuple:</dt><dd><p>“””
+Return schema data as named tuple</p>
+<dl class="field-list simple">
+<dt class="field-odd">meta private</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>“””
+# change key value from index -&gt; schema_level
+# index and schema_level is in the const indexes_schema_level_map
+schema_level_dict = {}
+for key, value in df_map.items():</p>
+<blockquote>
+<div><p>schema_level_key = indexes_schema_level_map[key]
+schema_level_dict[schema_level_key] = value</p>
+</div></blockquote>
+<p>Schema = namedtuple(“Schema”, (key for key, value in schema_level_dict.items()))
+return Schema(<a href="#id1"><span class="problematic" id="id2">**</span></a>schema_level_dict)</p>
+</dd>
+</dl>
+<p>&#64;deprecated(reason=”use function get_schema”)
+def visualize_schema(</p>
+<blockquote>
+<div><p>self, repo_key: str, schema_level=[“dataset”, “sample”], source=””, data_type=””</p>
+</div></blockquote>
+<dl>
+<dt>) -&gt; dict:</dt><dd><p>“””</p>
+<dl class="field-list simple">
+<dt class="field-odd">meta private</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>To visulize schema of a repository.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">=&gt;</span> <span class="pre">str</span> <span class="pre">=&gt;</span></code> &lt;owner_name.repo_name&gt;/&lt;repo_id&gt;</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">schema_level</span> <span class="pre">=&gt;</span> <span class="pre">list</span></code> =&gt; Default value =&gt; [‘dataset’, ‘sample’]</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">{</div>
+<div class="line-block">
+<div class="line">‘dataset’:pd.DataFrame,</div>
+<div class="line">‘sample’:pd.DataFrame</div>
+</div>
+<div class="line">}</div>
+<div class="line">DataFrame consists of schema metadata summary</div>
+<div class="line">i) schema_type : gct_metadata or h5ad_metadata i.e Column Fields (Sample)</div>
+<div class="line">metdata schema definition for sample:</div>
+<div class="line-block">
+<div class="line">schema:{</div>
+<div class="line-block">
+<div class="line">“&lt;SOURCE&gt;”: {</div>
+<div class="line-block">
+<div class="line">“&lt;DATATYPE&gt;”: {</div>
+<div class="line-block">
+<div class="line">“&lt;FIELD_NAME&gt;”: {</div>
+<div class="line">“type”: “text | integer | object”,</div>
+<div class="line">“description”: “string”, (Min=1, Max=100)</div>
+<div class="line">},</div>
+<div class="line">… other fields</div>
+</div>
+<div class="line">}</div>
+<div class="line">… other Data types</div>
+</div>
+<div class="line">}</div>
+<div class="line">… other Sources</div>
+</div>
+<div class="line">}</div>
+</div>
+<div class="line">ii) schema_type : files i.e Global Fields (dataset)</div>
+<div class="line">PS :- ALL, ALL keys is not rigid for dataset level schema also</div>
+<div class="line">There it can be &lt;SOURCE&gt; and &lt;DATATYPE&gt; key also</div>
+<div class="line">metadata schema definition for a dataset:</div>
+<div class="line-block">
+<div class="line">schema:{</div>
+<div class="line-block">
+<div class="line">“ALL”: {</div>
+<div class="line-block">
+<div class="line">“ALL”: {</div>
+<div class="line-block">
+<div class="line">“&lt;FIELD_NAME&gt;”: {</div>
+<div class="line">“type”: “text | integer | object”,</div>
+<div class="line">“description”: “string”, (Min=1, Max=100)</div>
+<div class="line">},</div>
+<div class="line">… other fields</div>
+</div>
+<div class="line">}</div>
+</div>
+<div class="line">}</div>
+</div>
+</div>
+<div class="line">iii) schema_type : gct_metadata i.e Row Fields (Feature)</div>
+<div class="line">Not there right now</div>
+</div>
+</dd>
+</dl>
+<p>“””</p>
+<p># get schema_type_dict
+schema_type_dict = self.get_schema_type(schema_level, data_type)</p>
+<p># schema from API calls
+if repo_key and schema_type_dict and isinstance(schema_type_dict, Dict):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>schema = self.get_schema_from_api(</dt><dd><p>repo_key, schema_type_dict, source, data_type</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if schema and isinstance(schema, Dict):</dt><dd><dl class="simple">
+<dt>for key, val in schema.items():</dt><dd><dl class="simple">
+<dt>if schema[key][“data”][“attributes”][“schema”]:</dt><dd><p>schema[key] = schema[key][“data”][“attributes”][“schema”]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>df_map = {}
+for key, val in schema.items():</p>
+<blockquote>
+<div><p>flatten_dict = self.flatten_nested_schema_dict(schema[key])
+df_map[key] = self.nested_dict_to_df(flatten_dict)</p>
+</div></blockquote>
+<p>return self.return_schema_data(df_map)</p>
+</dd>
+<dt>def get_schema_type(self, schema_level: list, data_type: str) -&gt; dict:</dt><dd><p>“””
+Compute schema_type based on data_type and schema_level</p>
+<div class="line-block">
+<div class="line">schema_level   ——–    schema_type</div>
+<div class="line">dataset       ——–     file</div>
+<div class="line">sample    ——–      gct_metadata</div>
+<div class="line">sample and  ——       h5ad_metadata</div>
+<div class="line">single cell</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">meta private</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>“””
+if schema_level and isinstance(schema_level, list):</p>
+<blockquote>
+<div><dl>
+<dt>if “dataset” in schema_level and “sample” in schema_level:</dt><dd><dl>
+<dt>if data_type != “single_cell” or data_type == “”:</dt><dd><p>schema_type_dict = {“dataset”: “files”, “sample”: “gct_metadata”}</p>
+</dd>
+<dt>elif data_type == “single_cell”:</dt><dd><p>schema_type_dict = {“dataset”: “files”, “sample”: “h5ad_metadata”}</p>
+</dd>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise wrongParamException(</dt><dd><p>title=”Incorrect Param Error”,
+detail=”Incorrect value of param passed data_type “,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</dd>
+<dt>elif “dataset” in schema_level or “sample” in schema_level:</dt><dd><dl>
+<dt>if “dataset” in schema_level:</dt><dd><p>schema_type_dict = {“dataset”: “files”}</p>
+</dd>
+<dt>elif “sample” in schema_level:</dt><dd><dl>
+<dt>if data_type != “single_cell” or data_type == “”:</dt><dd><p>schema_type_dict = {“sample”: “gct_metadata”}</p>
+</dd>
+<dt>elif data_type == “single_cell”:</dt><dd><p>schema_type_dict = {“sample”: “h5ad_metadata”}</p>
+</dd>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise wrongParamException(</dt><dd><p>title=”Incorrect Param Error”,
+detail=”Incorrect value of param passed data_type “,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise wrongParamException(</dt><dd><p>title=”Incorrect Param Error”,
+detail=”Incorrect value of param passed schema_level “,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”,
+detail=”schema_level is either empty or its datatype is not correct”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+<p>return schema_type_dict</p>
+</dd>
+<dt>def flatten_nested_schema_dict(self, nested_schema_dict: dict) -&gt; dict:</dt><dd><p>“””
+Flatten the nested dict</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line">schema:{</div>
+<div class="line-block">
+<div class="line-block">
+<div class="line">“&lt;SOURCE&gt;”: {</div>
+<div class="line-block">
+<div class="line">“&lt;DATATYPE&gt;”: {</div>
+<div class="line-block">
+<div class="line">“&lt;FIELD_NAME&gt;”: {</div>
+<div class="line">“type”: “text | integer | object”,</div>
+<div class="line">“description”: “string”, (Min=1, Max=100)</div>
+<div class="line">},</div>
+<div class="line">… other fields</div>
+</div>
+<div class="line">}</div>
+<div class="line">… other Data types</div>
+</div>
+<div class="line">}</div>
+<div class="line">… other Sources</div>
+</div>
+<div class="line">}</div>
+</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">{</div>
+<div class="line-block">
+<div class="line">‘Source’:source_list,</div>
+<div class="line">‘Datatype’: datatype_list,</div>
+<div class="line">‘Field Name’:field_name_list,</div>
+<div class="line">‘Field Description’:field_desc_list,</div>
+<div class="line">‘Field Type’: field_type_list</div>
+</div>
+<div class="line">}</div>
+</div>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">meta private</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>“””
+reformed_dict = {}
+source_list = []
+data_type_list = []
+field_name_list = []
+field_description_list = []
+field_type_list = []
+for outer_key, inner_dict_datatype in nested_schema_dict.items():</p>
+<blockquote>
+<div><dl>
+<dt>for middle_key, inner_dict_fields in inner_dict_datatype.items():</dt><dd><dl>
+<dt>for inner_key, field_values in inner_dict_fields.items():</dt><dd><p>source_list.append(outer_key)
+data_type_list.append(middle_key)
+field_name_list.append(inner_key)
+for key, value in field_values.items():</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if key == “description”:</dt><dd><p>field_description_list.append(field_values[key])</p>
+</dd>
+<dt>if key == “type”:</dt><dd><p>field_type_list.append(field_values[key])</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>reformed_dict[“Source”] = source_list
+reformed_dict[“Datatype”] = data_type_list
+reformed_dict[“Field Name”] = field_name_list
+reformed_dict[“Field Description”] = field_description_list
+reformed_dict[“Field Type”] = field_type_list
+return reformed_dict</p>
+</dd>
+<dt>def nested_dict_to_df(self, schema_dict: dict) -&gt; pd.DataFrame:</dt><dd><p>“””
+Convert flatten dict into df and print it</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line">{</div>
+<div class="line-block">
+<div class="line">‘Source’:source_list,</div>
+<div class="line">‘Datatype’: datatype_list,</div>
+<div class="line">‘Field Name’:field_name_list,</div>
+<div class="line">‘Field Description’:field_desc_list,</div>
+<div class="line">‘Field Type’: field_type_list</div>
+</div>
+<div class="line">}</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><p>DataFrame</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">meta private</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>“””
+pd.options.display.max_columns = None
+pd.options.display.width = None
+multiIndex_df = pd.DataFrame.from_dict(schema_dict, orient=”columns”)
+return multiIndex_df</p>
+</dd>
+<dt>def format_type(self, data: dict) -&gt; dict:</dt><dd><p>“””
+Format the dict data</p>
+<dl class="field-list simple">
+<dt class="field-odd">meta private</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>“””
+if data and isinstance(data, Dict):</p>
+<blockquote>
+<div><p>return json.dumps(data, indent=4)</p>
+</div></blockquote>
+</dd>
+<dt>def insert_schema(self, repo_key: str, body: dict) -&gt; dict:</dt><dd><p>“””
+Use insert_schema(repo_key, payload) to update the existing schema of an OmixAtlas.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">insert_schema</span><span class="p">(</span><span class="n">repo_key</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args</span> <span class="pre">:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key:</span></code> (str) repo_id OR repo_name. This is a mandatory field.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">payload:</span></code> (dict) The payload is a JSON file which should be as per the structure defined for</div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>schema. Only data-admin will have the authentication to update the schema.</dt><dd><blockquote>
+<div><blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;REPO_KEY&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;files | gct_metadata | h5ad_metadata&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="o">...</span> <span class="n">field</span> <span class="n">definitions</span>
+        <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">payload</span></code> can be loaded from the JSON file in which schema is defined in the following manner:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Opening JSON file</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;schema_file.json&#39;</span><span class="p">)</span>
+
+<span class="c1"># returns JSON object as a dictionary</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">apiErrorException:</span></code> Params are either empty or its datatype is not correct or see detail.</div>
+</div>
+</dd>
+</dl>
+<p>“””
+if repo_key and body and isinstance(body, dict):</p>
+<blockquote>
+<div><p>body = json.dumps(body)
+try:</p>
+<blockquote>
+<div><p>schema_base_url = f”{self.discover_url}/repositories”
+url = f”{schema_base_url}/{repo_key}/schemas”
+resp = self.session.post(url, data=body)
+error_handler(resp)
+return resp.text</p>
+</div></blockquote>
+<dl class="simple">
+<dt>except Exception as err:</dt><dd><p>raise apiErrorException(title=”API exception err”, detail=err)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise apiErrorException(</dt><dd><p>title=”Param Error”,
+detail=”Params are either empty or its datatype is not correct”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>def update_schema(self, repo_key: str, body: dict) -&gt; dict:</dt><dd><p>“””
+Use update_schema(repo_key, payload) to update the existing schema of an OmixAtlas.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">update_schema</span><span class="p">(</span><span class="n">repo_key</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args</span> <span class="pre">:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str):</span></code> repo_id OR repo_name. This is a mandatory field.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">payload</span> <span class="pre">(dict):</span></code> The payload is a JSON file which should be as per the structure defined for</div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>schema. Only data-admin will have the authentication to update the schema.</dt><dd><blockquote>
+<div><blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;REPO_KEY&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;files | gct_metadata | h5ad_metadata&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="o">...</span> <span class="n">field</span> <span class="n">definitions</span>
+        <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">payload</span></code> can be loaded from the JSON file in which schema is defined in the following manner:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Opening JSON file</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;schema_file.json&#39;</span><span class="p">)</span>
+
+<span class="c1"># returns JSON object as a dictionary</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">apiErrorException:</span></code> Params are either empty or its datatype is not correct or see detail.</div>
+</div>
+</dd>
+</dl>
+<p>“””
+schema_type = body[“data”][“attributes”][“schema_type”]
+schema_base_url = f”{self.discover_url}/repositories”
+url = f”{schema_base_url}/{repo_key}/schemas/{schema_type}”
+if repo_key and body and isinstance(body, dict):</p>
+<blockquote>
+<div><p>body = json.dumps(body)
+try:</p>
+<blockquote>
+<div><p>resp = self.session.patch(url, data=body)
+error_handler(resp)
+return resp.text</p>
+</div></blockquote>
+<dl class="simple">
+<dt>except Exception as err:</dt><dd><p>raise apiErrorException(title=”API exception err”, detail=err)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”,
+detail=”Params are either empty or its datatype is not correct”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>def download_data(self, repo_name, _id: str):</dt><dd><p>“””
+To download any dataset, the following function can be used.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="s2">&quot;repo_key&quot;</span><span class="p">,</span> <span class="s2">&quot;[dataset_id]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str):</span></code> repo_id OR repo_name from where the data needs to be downloaded.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dataset_id</span> <span class="pre">(str):</span></code> dataset_id which the user wants to download.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">The <code class="docutils literal notranslate"><span class="pre">[repo_name</span> <span class="pre">OR</span> <span class="pre">repo_id]</span></code> of an OmixAtlas can be identified by calling the </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt><a class="reference internal" href="../polly.html#targetget"><span class="std std-ref">get_all_omixatlas()</span></a> function.</dt><dd><div class="line-block">
+<div class="line">The <code class="docutils literal notranslate"><span class="pre">[dataset_id]</span></code> can be obtained by querying the metadata at the dataset level using </div>
+</div>
+</dd>
+</dl>
+<p><code class="docutils literal notranslate"><span class="pre">query_metadata(&quot;[query</span> <span class="pre">written</span> <span class="pre">in</span> <span class="pre">SQL]&quot;)</span></code>.</p>
+<blockquote>
+<div><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">This will download the dataset.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">The output data is in .gct/h5ad format. This data can be parsed into a data frame for better </div>
+</div>
+</div></blockquote>
+<dl>
+<dt>accessibility using the following code:</dt><dd><div class="line-block">
+<div class="line">You can also download data in other format like gct to know how to write code </div>
+</div>
+</dd>
+<dt><a class="reference internal" href="../doc/download.html#targetd"><span class="std std-ref">Click Here</span></a>.</dt><dd><blockquote>
+<div><p>“””
+url = f”{self.resource_url}/{repo_name}/download”
+params = {“_id”: _id}
+response = self.session.get(url, params=params)
+error_handler(response)
+return response.json()</p>
+</div></blockquote>
+<dl>
+<dt>def save_to_workspace(</dt><dd><p>self, repo_id: str, dataset_id: str, workspace_id: int, workspace_path: str</p>
+</dd>
+<dt>) -&gt; json:</dt><dd><p>“””
+Function for saving data from omixatlas to workspaces.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_id</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo id.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dataset_id</span> <span class="pre">(str)</span> <span class="pre">:</span></code> dataset id.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_id</span> <span class="pre">(str)</span> <span class="pre">:</span></code> workspace id of polly.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_path</span> <span class="pre">(str)</span> <span class="pre">:</span></code> path in workspace where you want to save file.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example to save the dataset_id <code class="docutils literal notranslate"><span class="pre">'GSE101127_GPL1355'</span></code> from repo_id <code class="docutils literal notranslate"><span class="pre">1615965444377</span></code> to a </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>workspace_id <code class="docutils literal notranslate"><span class="pre">8025</span></code> in a folder named <code class="docutils literal notranslate"><span class="pre">'data'</span></code>.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">save_to_workspace</span><span class="p">(</span><span class="s1">&#39;1615965444377&#39;</span><span class="p">,</span> <span class="s1">&#39;GSE101127_GPL1355&#39;</span><span class="p">,</span> <span class="mi">8025</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+url = f”{self.resource_url}/workspace_jobs”
+params = {“action”: “copy”}
+payload = {</p>
+<blockquote>
+<div><dl>
+<dt>“data”: {</dt><dd><p>“type”: “workspaces”,
+“attributes”: {</p>
+<blockquote>
+<div><p>“dataset_id”: dataset_id,
+“repo_id”: repo_id,
+“workspace_id”: workspace_id,
+“workspace_path”: workspace_path,</p>
+</div></blockquote>
+<p>},</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}
+response = self.session.post(url, data=json.dumps(payload), params=params)
+error_handler(response)
+if response.status_code == 200:</p>
+<blockquote>
+<div><p>logging.basicConfig(level=logging.INFO)
+logging.info(f”Data Saved to workspace={workspace_id}”)</p>
+</div></blockquote>
+<p>return response.json()</p>
+</div></blockquote>
+<dl>
+<dt>def format_converter(self, repo_key: str, dataset_id: str, to: str) -&gt; None:</dt><dd><p>“””
+Function to convert a file format.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo_id.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dataset_id</span> <span class="pre">(str)</span> <span class="pre">:</span></code> dataset_id.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">to(str)</span> <span class="pre">:</span></code> output file format.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">For example:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">format_converter</span><span class="p">(</span><span class="s2">&quot;cbioportal&quot;</span><span class="p">,</span> <span class="s2">&quot;ACC_2019_Mutation_ACYC-FMI-19&quot;</span><span class="p">,</span> <span class="s2">&quot;maf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> invalid value of any parameter for example like - repo_id or </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>repo_name etc.</dt><dd><blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">paramException:</span></code> Incompatible or empty value of any parameter</div>
+</div>
+</div></blockquote>
+<p>“””
+if not (repo_key and isinstance(repo_key, str)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“repo_id/repo_name”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (dataset_id and isinstance(dataset_id, str)):</dt><dd><p>raise InvalidParameterException(“dataset_id”)</p>
+</dd>
+<dt>if not (to and isinstance(to, str)):</dt><dd><p>raise InvalidParameterException(“convert_to”)</p>
+</dd>
+</dl>
+<p>ssl._create_default_https_context = ssl._create_unverified_context
+response_omixatlas = self.get_omixatlas(repo_key)
+data = response_omixatlas.get(“data”).get(“attributes”)
+repo_name = data.get(“repo_name”)
+index_name = data.get(“v2_indexes”, {}).get(“files”)
+if index_name is None:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”, detail=”Repo entered is not an omixatlas.”</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>elastic_url = f”{self.elastic_url}/{index_name}/_search”
+query = {</p>
+<blockquote>
+<div><dl>
+<dt>“query”: {</dt><dd><dl>
+<dt>“bool”: {</dt><dd><dl class="simple">
+<dt>“must”: [</dt><dd><p>{“term”: {“_index”: index_name}},
+{“term”: {“dataset_id.keyword”: dataset_id}},</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}
+data_type = helpers.get_data_type(self, elastic_url, query)
+if data_type in DATA_TYPES:</p>
+<blockquote>
+<div><p>mapped_list = DATA_TYPES[data_type][0]
+if to in mapped_list[“format”]:</p>
+<blockquote>
+<div><p>supported_repo = mapped_list[“supported_repo”]
+repo_found = False
+for details in supported_repo:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if repo_name == details[“name”]:</dt><dd><p>header_mapping = details[“header_mapping”]
+repo_found = True</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>if not repo_found:</dt><dd><dl>
+<dt>raise paramException(</dt><dd><p>title=”Param Error”,
+detail=f”Incompatible repository error: Repository:’{repo_name}’ not yet </p>
+<blockquote>
+<div><p>incorporated for converter function”,</p>
+</div></blockquote>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+<p>helpers.file_conversion(self, repo_name, dataset_id, to, header_mapping)</p>
+</div></blockquote>
+<dl>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”,
+detail=f”Incompatible dataformat error: data format= {to} not yet incorporated for converter function”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>else:</dt><dd><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”,
+detail=f”Incompatible dataype error: data_type={data_type} not yet incorporated for converter function”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+<p>logging.basicConfig(level=logging.INFO)
+logging.info(“File converted successfully!”)</p>
+</div></blockquote>
+<dl>
+<dt>def _repo_creation_response_df(self, original_response) -&gt; pd.DataFrame:</dt><dd><p>“””
+This function is used to create dataframe from json reponse of
+creation api</p>
+<dl>
+<dt>Args:</dt><dd><div class="line-block">
+<div class="line">original response(dict): creation api response</div>
+</div>
+</dd>
+<dt>Returns:</dt><dd><div class="line-block">
+<div class="line">DataFrame consisting of 4 columns [“Repository Id”, “Repository Name”, “Display Name”, “Description”]</div>
+</div>
+</dd>
+</dl>
+<p>“””
+response_df_dict = {}
+if original_response[“data”]:</p>
+<blockquote>
+<div><dl>
+<dt>if original_response[“data”][“attributes”]:</dt><dd><p>attribute_data = original_response[“data”][“attributes”]
+response_df_dict[“Repository Id”] = attribute_data.get(“repo_id”, “”)
+response_df_dict[“Repository Name”] = attribute_data.get(</p>
+<blockquote>
+<div><p>“repo_name”, “”</p>
+</div></blockquote>
+<p>)
+if attribute_data[“frontend_info”]:</p>
+<blockquote>
+<div><p>front_info_dict = attribute_data[“frontend_info”]
+response_df_dict[“Display Name”] = front_info_dict.get(</p>
+<blockquote>
+<div><p>“display_name”, “”</p>
+</div></blockquote>
+<p>)
+response_df_dict[“Description”] = front_info_dict.get(</p>
+<blockquote>
+<div><p>“description”, “”</p>
+</div></blockquote>
+<p>)</p>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<p>rep_creation_df = pd.DataFrame([response_df_dict])
+return rep_creation_df</p>
+</dd>
+<dt>def _construct_initials(self, display_name) -&gt; str:</dt><dd><p>“””
+This function is used to create initials from the display name
+Args:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">display_name(str): display name of the omixatlas</div>
+</div>
+</div></blockquote>
+<dl>
+<dt>Returns:</dt><dd><div class="line-block">
+<div class="line">initials string</div>
+</div>
+</dd>
+</dl>
+<p>“””
+words = display_name.split()
+letters = [word[0] for word in words]
+initials = “”.join(letters)
+initials = initials.upper()
+return initials</p>
+</dd>
+<dt>def _create_repo_name(self, display_name) -&gt; str:</dt><dd><p>“””
+This function is used to repo_name from display_name
+Args:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">display_name(str): display name of the omixatlas</div>
+</div>
+</div></blockquote>
+<dl>
+<dt>Returns:</dt><dd><div class="line-block">
+<div class="line">Constructed repo name</div>
+</div>
+</dd>
+</dl>
+<p>“””
+repo_name = display_name.lower().replace(” “, “_”)
+return repo_name</p>
+</dd>
+<dt>def _get_repository_payload(self):</dt><dd><p>“”” “””
+return {</p>
+<blockquote>
+<div><dl>
+<dt>“data”: {</dt><dd><p>“type”: “repositories”,
+“attributes”: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“frontend_info”: {</dt><dd><p>“description”: “&lt;DESCRIPTION&gt;”,
+“display_name”: “&lt;REPO_DISPLAY_NAME&gt;”,
+“explorer_enabled”: True,
+“initials”: “&lt;INITIALS&gt;”,</p>
+</dd>
+</dl>
+<p>},
+“indexes”: {</p>
+<blockquote>
+<div><p>“csv”: “&lt;REPO_NAME&gt;_csv”,
+“files”: “&lt;REPO_NAME&gt;_files”,
+“gct_data”: “&lt;REPO_NAME&gt;_gct_data”,
+“gct_metadata”: “&lt;REPO_NAME&gt;_gct_metadata”,
+“h5ad_data”: “&lt;REPO_NAME&gt;_h5ad_data”,
+“h5ad_metadata”: “&lt;REPO_NAME&gt;_h5ad_metadata”,
+“ipynb”: “&lt;REPO_NAME&gt;_ipynb”,
+“json”: “&lt;REPO_NAME&gt;_json”,</p>
+</div></blockquote>
+<p>},
+“repo_name”: “&lt;REPO_NAME&gt;”,</p>
+</div></blockquote>
+<p>},</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+</dd>
+<dt>if __name__ == “__main__”:</dt><dd><p>client = OmixAtlas()</p>
+</dd>
+</dl>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Polly-python-team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
