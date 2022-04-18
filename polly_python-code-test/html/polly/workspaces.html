@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; Polly&#39;s Documentation 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Polly's Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Polly.html">About Polly Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polly.html">polly package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/download.html">Downloading Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/query.html">Querying metadata</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polly's Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>from polly.auth import Polly
+from polly.errors import InvalidParameterException, error_handler, InvalidPathException
+from polly import helpers
+import logging
+import pandas as pd
+import json
+import os</p>
+<dl>
+<dt>class Workspaces:</dt><dd><p>“””
+This class contains functions to interact with workspaces on Polly. We can initialize a object that
+can use all function and methods of Workspaces class.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># to initialize a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">fetch_my_workspaces</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you are authorised then you can initialize object without token to know about </p>
+</dd>
+<dt><a class="reference internal" href="../doc/Polly.html#auth"><span class="std std-ref">authentication</span></a>.</dt><dd><p>“””</p>
+<dl>
+<dt>def __init__(self, token=None, env=”polly”) -&gt; None:</dt><dd><p>self.session = Polly.get_session(token, env=env)
+self.base_url = f”<a class="reference external" href="https://v2.api">https://v2.api</a>.{self.session.env}.elucidata.io”
+self.resource_url = f”{self.base_url}/workspaces”
+if self.session.env == “polly”:</p>
+<blockquote>
+<div><p>self.env_string = “prod”</p>
+</div></blockquote>
+<dl class="simple">
+<dt>elif self.session.env == “testpolly”:</dt><dd><p>self.env_string = “test”</p>
+</dd>
+<dt>else:</dt><dd><p>self.env_string = “devenv”</p>
+</dd>
+</dl>
+</dd>
+<dt>def create_workspace(self, name: str, description=None):</dt><dd><p>“””
+This function create workspace on polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">(str):</span></code> name of the workspace.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">description</span> <span class="pre">(str):</span></code> general information about workspace.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">It will return a object like this.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">9999</span><span class="p">,</span>
+<span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;rrrrr&#39;</span><span class="p">,</span>
+<span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;for docu&#39;</span><span class="p">,</span>
+<span class="s1">&#39;created_time&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-03-16 11:08:47.127260&#39;</span><span class="p">,</span>
+<span class="s1">&#39;last_modified&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-03-16 11:08:47.127260&#39;</span><span class="p">,</span>
+<span class="s1">&#39;creator&#39;</span><span class="p">:</span> <span class="mi">1127</span><span class="p">,</span>
+<span class="s1">&#39;project_property&#39;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;workspaces&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+<span class="p">},</span>
+<span class="s1">&#39;organisation&#39;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># to create a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">create_workspace</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>“””
+url = self.resource_url
+payload = {</p>
+<blockquote>
+<div><dl>
+<dt>“data”: {</dt><dd><p>“type”: “workspaces”,
+“attributes”: {</p>
+<blockquote>
+<div><p>“name”: name,
+“description”: description,
+“project_property”: {“type”: “workspaces”, “labels”: “”},</p>
+</div></blockquote>
+<p>},</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>}
+response = self.session.post(url, data=json.dumps(payload))
+error_handler(response)
+attributes = response.json()[“data”][“attributes”]
+logging.basicConfig(level=logging.INFO)
+logging.info(“Workspace Created !”)
+return attributes</p>
+</dd>
+<dt>def fetch_my_workspaces(self):</dt><dd><p>“””
+This function fetch workspaces from Polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line">None</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">it will return a table with attributes.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">fetch_my_workspaces</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>“””
+url = self.resource_url
+response = self.session.get(url)
+error_handler(response)
+pd.set_option(“display.max_columns”, 20)
+dataframe = pd.DataFrame.from_dict(</p>
+<blockquote>
+<div><p>pd.json_normalize(response.json()[“data”]), orient=”columns”</p>
+</div></blockquote>
+<p>)
+return dataframe</p>
+</dd>
+<dt>def upload_to_workspaces(</dt><dd><p>self, workspace_id: int, workspace_path: str, local_path: str</p>
+</dd>
+<dt>) -&gt; None:</dt><dd><p>“””
+Function to upload files/folders to workspaces.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_id</span> <span class="pre">:</span></code> id of the where file need to uploaded.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_path</span> <span class="pre">:</span></code> file path on workspace if folder does not exist it will create.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">local_path</span> <span class="pre">:</span></code> uploaded file path.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">None</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> when the parameter like workspace id is invalid.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException:</span></code> when the file to path is invalid.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">upload_to_workspaces</span><span class="p">(</span><span class="n">workspace_id</span><span class="p">,</span> <span class="n">workspace_path</span><span class="p">,</span> <span class="n">local_path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+if not (workspace_id and isinstance(workspace_id, int)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“workspace_id”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (local_path and isinstance(local_path, str)):</dt><dd><p>raise InvalidParameterException(“local_path”)</p>
+</dd>
+<dt>if not (workspace_path and isinstance(workspace_path, str)):</dt><dd><p>raise InvalidParameterException(“workspace_path”)</p>
+</dd>
+</dl>
+<p>isExists = os.path.exists(local_path)
+if not isExists:</p>
+<blockquote>
+<div><p>raise InvalidPathException</p>
+</div></blockquote>
+<p>sts_url = f”{self.base_url}/projects/{workspace_id}/credentials/files”
+creds = self.session.get(sts_url)
+error_handler(creds)
+credentials = helpers.get_sts_creds(creds.json())
+bucket = f”mithoo-{self.env_string}-project-data-v1”
+s3_path = f”{bucket}/{workspace_id}/”
+s3_path = f”s3://{helpers.make_path(s3_path, workspace_path)}”
+helpers.upload_to_S3(s3_path, local_path, credentials)
+logging.basicConfig(level=logging.INFO)
+logging.info(f”Upload successful on workspace-id={workspace_id}.”)</p>
+</dd>
+<dt>def download_from_workspaces(self, workspace_id: int, workspace_path: str) -&gt; None:</dt><dd><p>“””
+Function to download files/folders from workspaces.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_id</span> <span class="pre">:</span></code> id of the where file need to uploaded.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_path</span> <span class="pre">:</span></code> downloaded file on workspace.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">None</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Error:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException</span> <span class="pre">:</span></code> for invalid path.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">OperationFailedException</span> <span class="pre">:</span></code> when downloading fails.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> when the parameter like workspace id is invalid.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">download_from_workspaces</span><span class="p">(</span><span class="n">workspace_id</span><span class="p">,</span> <span class="n">workspace_path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+if not (workspace_id and isinstance(workspace_id, int)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“workspace_id”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (workspace_path and isinstance(workspace_path, str)):</dt><dd><p>raise InvalidParameterException(“workspace_path”)</p>
+</dd>
+</dl>
+<p>sts_url = f”{self.base_url}/projects/{workspace_id}/credentials/files”
+creds = self.session.get(sts_url)
+error_handler(creds)
+credentials = helpers.get_sts_creds(creds.json())
+bucket = f”mithoo-{self.env_string}-project-data-v1”
+s3_path = f”{bucket}/{workspace_id}/”
+s3_path = f”s3://{helpers.make_path(s3_path, workspace_path)}”
+helpers.download_from_S3(s3_path, workspace_path, credentials)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Polly-python-team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
