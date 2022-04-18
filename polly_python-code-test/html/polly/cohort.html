@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; Polly&#39;s Documentation 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Polly's Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Polly.html">About Polly Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polly.html">polly package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/download.html">Downloading Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/query.html">Querying metadata</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polly's Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>import os
+import ssl
+import json
+import base64
+from polly import helpers
+from pathlib import Path
+import urllib.request
+import logging
+import pandas as pd
+from polly.auth import Polly
+from polly.omixatlas import OmixAtlas
+from polly.errors import (</p>
+<blockquote>
+<div><p>InvalidCohortNameException,
+InvalidCohortOperationException,
+paramException,
+InvalidParameterException,
+MissingKeyException,
+OperationFailedException,
+InvalidPathException,
+InvalidRepoException,
+InvalidDatasetException,
+CohortEditException,
+EmptyCohortException,
+InvalidCohortPathException,
+InvalidCohortMergeOperation,
+error_handler,</p>
+</div></blockquote>
+<p>)
+from polly.constants import COHORT_REPO_INFO, VALID_REPO_NAMES, dot
+import shutil
+from joblib import Parallel, delayed
+import datetime
+from deprecated import deprecated
+from cmapPy.pandasGEXpress.parse import parse
+from cmapPy.pandasGEXpress.concat import assemble_common_meta, assemble_data</p>
+<dl>
+<dt>class Cohort:</dt><dd><p>“””
+This class contain function which can be used to create, add or remove samples, merge metadata edit or delete.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.cohort</span> <span class="kn">import</span> <span class="n">Cohort</span>
+<span class="c1"># To use this class initialize a object like this if you are not authorised on polly</span>
+<span class="n">cohort</span> <span class="o">=</span> <span class="n">Cohort</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you are authorised then you can initialize object without token to know about <a class="reference internal" href="../doc/Polly.html#auth"><span class="std std-ref">authentication</span></a>.
+“””</p>
+<dl>
+<dt>def __init__(self, token=None, env=”polly”) -&gt; None:</dt><dd><p>self.session = Polly.get_session(token, env=env)
+self.base_url = f”<a class="reference external" href="https://v2.api">https://v2.api</a>.{self.session.env}.elucidata.io”
+self.folder_path = None
+self._cohort_details = None</p>
+</dd>
+<dt>def create_cohort(</dt><dd><p>self,
+local_path: str,
+cohort_name: str,
+description: str,
+repo_key=None,
+entity_id=None,</p>
+</dd>
+<dt>) -&gt; None:</dt><dd><p>“””
+This function is used to create a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">local_path(str):</span></code> local path to instantiate the cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">cohort_name(str):</span></code> identifier name for the cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">description(str):</span></code> description about the cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key(str):</span></code> Optional argument: repo_key(repo_name/repo_id) for the omixatlas to be added.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">entity_id(list):</span></code> Optional argument: list of sample_id or dataset_id to be added to the </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>cohort.</p>
+<blockquote>
+<div><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on creation of cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> Empty or Invalid Parameters</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortNameException:</span></code> The cohort_name does not represent a valid cohort name.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException:</span></code> Provided path does not represent a file or a directory.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">After making Cohort Object you can create cohort.</div>
+<div class="line">Example-</div>
+<div class="line">1. while passing argument of repo and dataset.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">create_cohort</span><span class="p">(</span><span class="s2">&quot;/import/tcga_cohort&quot;</span><span class="p">,</span><span class="s2">&quot;moderate&quot;</span><span class="p">,</span><span class="s2">&quot;tcga_tp53_brca_mutation_moderate&quot;</span><span class="p">,</span>\
+</pre></div>
+</div>
+</div></blockquote>
+<p>“tcga”,moderate_data)</p>
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line">2. without passing argument of repo and dataset.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort2</span><span class="o">.</span><span class="n">create_cohort</span><span class="p">(</span><span class="s2">&quot;/import/tcga_cohort&quot;</span><span class="p">,</span><span class="s2">&quot;higher&quot;</span><span class="p">,</span><span class="s2">&quot;tcga_tp53_brca_mutation_high&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+if not (local_path and isinstance(local_path, str)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“local_path”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (cohort_name and isinstance(cohort_name, str)):</dt><dd><p>raise InvalidParameterException(“cohort_name”)</p>
+</dd>
+<dt>if not (description and isinstance(description, str)):</dt><dd><p>raise InvalidParameterException(“description”)</p>
+</dd>
+<dt>if not os.path.exists(local_path):</dt><dd><p>raise InvalidPathException</p>
+</dd>
+<dt>if dot in cohort_name:</dt><dd><p>raise InvalidCohortNameException(cohort_name)</p>
+</dd>
+</dl>
+<p>file_path = os.path.join(local_path, f”{cohort_name}.pco”)
+user_id = self._get_user_id()
+os.makedirs(file_path)
+metadata = {</p>
+<blockquote>
+<div><p>“number_of_samples”: 0,
+“entity_id”: {},
+“source_omixatlas”: {},
+“description”: description,
+“user_id”: user_id,
+“date_created”: str(datetime.datetime.now()),
+“version”: “0.1”,</p>
+</div></blockquote>
+<p>}
+file_name = os.path.join(file_path, “cohort.meta”)
+input = json.dumps(metadata)
+with open(file_name, “wb”) as outfile:</p>
+<blockquote>
+<div><p>encoded_data = base64.b64encode(input.encode(“utf-8”))
+outfile.write(encoded_data)</p>
+</div></blockquote>
+<p>self.folder_path = str(file_path)
+self._cohort_details = metadata
+if entity_id is not None and repo_key is not None:</p>
+<blockquote>
+<div><p>self.add_to_cohort(repo_key, entity_id)</p>
+</div></blockquote>
+<p>logging.basicConfig(level=logging.INFO)
+logging.info(“Cohort Created !”)</p>
+</div></blockquote>
+<dl>
+<dt>def add_to_cohort(self, repo_key: str, entity_id: list) -&gt; None:</dt><dd><p>“””
+This function is used to add dataset(s) or sample(s) to a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key(str):</span></code> repo_key(repo_name/repo_id) for the omixatlas to be added.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">entity_id(list):</span></code> list of entity_ids to be added to the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message for number of dataset(s) or sample(s) which are added to the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> Empty or Invalid Parameters.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>instantiated.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line">After creating cohort we can add cohort.</div>
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">add_to_cohort</span><span class="p">(</span><span class="s2">&quot;tcga&quot;</span><span class="p">,</span><span class="n">high_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (repo_key and isinstance(repo_key, str)):</dt><dd><p>raise InvalidParameterException(“repo_key”)</p>
+</dd>
+<dt>if not (entity_id and isinstance(entity_id, list)):</dt><dd><p>raise InvalidParameterException(“entity_id”)</p>
+</dd>
+</dl>
+<p>obj = OmixAtlas()
+local_path = self.folder_path
+response_omixatlas = obj.omixatlas_summary(repo_key)
+data = response_omixatlas.get(“data”)
+repo_name = data.get(“repo_name”)
+dataset_id = self._validate_repo(repo_name, entity_id)
+entity_type = self._get_entity(repo_name)
+Parallel(n_jobs=20, require=”sharedmem”)(</p>
+<blockquote>
+<div><p>delayed(self._gctfile)(repo_name, i, local_path) for i in dataset_id</p>
+</div></blockquote>
+<p>)
+Parallel(n_jobs=20, require=”sharedmem”)(</p>
+<blockquote>
+<div><p>delayed(self._add_metadata)(repo_name, i, local_path) for i in dataset_id</p>
+</div></blockquote>
+<p>)
+file_meta = helpers.make_path(local_path, “cohort.meta”)
+with open(file_meta, “r+b”) as openfile:</p>
+<blockquote>
+<div><p>byte = openfile.read()
+data = base64.b64decode((byte))
+json_data = json.loads(data.decode(“utf-8”))
+source_omixatlas = json_data.get(“source_omixatlas”)
+if “entity_type” not in json_data:</p>
+<blockquote>
+<div><p>json_data[“entity_type”] = entity_type</p>
+</div></blockquote>
+<dl>
+<dt>if repo_name not in source_omixatlas:</dt><dd><p>source_omixatlas[repo_name] = dataset_id</p>
+</dd>
+<dt>else:</dt><dd><p>[source_omixatlas[repo_name].append(i) for i in dataset_id]</p>
+</dd>
+<dt>for i in dataset_id:</dt><dd><p>metadata = self._get_metadata(repo_name, i)
+dataset_tuple = [</p>
+<blockquote>
+<div><p>repo_name,
+metadata.get(“_source”, {}).get(“data_type”),</p>
+</div></blockquote>
+<p>]
+json_data[“entity_id”][i] = dataset_tuple
+json_data[“number_of_samples”] += 1</p>
+</dd>
+</dl>
+<p>self._cohort_details = json_data
+input = json.dumps(json_data)
+encoded_data = base64.b64encode(input.encode(“utf-8”))
+openfile.seek(0)
+openfile.write(encoded_data)
+openfile.truncate()</p>
+</div></blockquote>
+<p>logging.basicConfig(level=logging.INFO)
+logging.info(f”’{len(dataset_id)}’ dataset/s added to Cohort!”)</p>
+</div></blockquote>
+<dl>
+<dt>def summarize_cohort(self):</dt><dd><p>“””
+Function to return metadata and summary of a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A tuple with the first value as cohort metadata information (name, description and number of </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>dataset(s) or sample(s) in the cohort) and the second value as dataframe containing the source, dataset_id or sample_id and data type available in the cohort.</p>
+<blockquote>
+<div><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+<p>instantiated.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span><span class="p">,</span> <span class="n">cohort_details</span> <span class="o">=</span> <span class="n">cohort2</span><span class="o">.</span><span class="n">summarize_cohort</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">metadata will contain a object like this.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;cohort_name&#39;</span><span class="p">:</span> <span class="s1">&#39;higher&#39;</span><span class="p">,</span>
+<span class="s1">&#39;number_of_samples&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+<span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;tcga_tp53_brca_mutation_high&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">cohort detail will contain a table like that</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>source_omixatlas</p></th>
+<th class="head"><p>datatype</p></th>
+<th class="head"><p>dataset_id</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-A8-A09Q-01A-11W-A019-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-AN-A0FL-01A-11W-A050-09</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-AR-A254-01A-21D-A167-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-D8-A1XO-01A-11D-A14K-09</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-EW-A1J2-01A-21D-A13L-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-LL-A50Y-01A-11D-A25Q-09</p></td>
+</tr>
+</tbody>
+</table>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<p>meta_details = self._get_metadetails()
+df_details = self._get_df()
+return meta_details, df_details</p>
+</div></blockquote>
+<dl class="simple">
+<dt>def load_cohort(self, local_path: str):</dt><dd><p>“””
+Function to load an existing cohort into an object.
+Once loaded, the functions described in the documentation can be used for the object where the cohort </p>
+</dd>
+</dl>
+</div></blockquote>
+<p>is loaded.</p>
+<blockquote>
+<div><blockquote>
+<div><dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">local_path(str):</span></code> local path of the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on instantiation of the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException:</span></code> This path does not represent a file or a directory.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortPathException:</span></code> This path does not represent a Cohort.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">load_cohort</span><span class="p">(</span><span class="s2">&quot;/import/high_edited.pco&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+if not os.path.exists(local_path):</p>
+<blockquote>
+<div><p>raise InvalidPathException(local_path)</p>
+</div></blockquote>
+<p>file_meta = helpers.make_path(local_path, “cohort.meta”)
+if not os.path.exists(file_meta):</p>
+<blockquote>
+<div><p>raise InvalidCohortPathException</p>
+</div></blockquote>
+<p>file = open(file_meta, “r”)
+byte = file.read()
+file.close()
+data = base64.b64decode((byte))
+str_data = data.decode(“utf-8”)
+json_data = json.loads(str_data)
+self._cohort_details = json_data
+self.folder_path = local_path
+logging.basicConfig(level=logging.INFO)
+logging.info(“Cohort Loaded !”)</p>
+</div></blockquote>
+<dl>
+<dt>def _read_gcts(self, dataset_ids: list, file_path: str) -&gt; pd.DataFrame:</dt><dd><dl class="simple">
+<dt>gct_files = [</dt><dd><p>f”{file_path}/{self._cohort_details.get(‘entity_id’,{}).get(dataset_id)[0]}_{dataset_id}.gct”
+for dataset_id in dataset_ids</p>
+</dd>
+</dl>
+<p>]
+results_gct = Parallel(n_jobs=4)(</p>
+<blockquote>
+<div><p>delayed(parse)(gct_file) for gct_file in gct_files</p>
+</div></blockquote>
+<p>)
+return results_gct</p>
+</dd>
+<dt>def edit_cohort(self, new_cohort_name=None, new_description=None):</dt><dd><p>“””
+This function is used to edit a cohort name and description.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">new_cohort_name(str):</span></code> Optional Argument: new identifier name for the cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">new_description(str):</span></code> Optional Argument: new description about the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on updation of cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>instantiated.</dt><dd><blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">CohortEditException:</span></code> No parameter specified for editing in cohort</div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">edit_cohort</span><span class="p">(</span><span class="s2">&quot;high_edited&quot;</span><span class="p">,</span><span class="s2">&quot;tcga_tp53_brca_mutation_high_edited&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if new_cohort_name is None and new_description is None:</dt><dd><p>raise CohortEditException</p>
+</dd>
+<dt>if new_cohort_name:</dt><dd><p>self._edit_cohort_name(new_cohort_name)</p>
+</dd>
+<dt>if new_description:</dt><dd><p>self._edit_cohort_description(new_description)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>&#64;deprecated(reason=”use function merge_data”)
+def merge_metadata(self):</p>
+<blockquote>
+<div><p>“””
+Function to merge the sample level metadata from all the gct files in a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A pandas dataframe containing the merged metadata for analysis.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">EmptyCohortException:</span></code> There are no datasets to be merged in the cohort</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+<p>instantiated.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">high_metadata</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_metadata</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>high_metadata will be  a table.</p>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<p>file_path = self.folder_path
+sample_list = list(self._cohort_details[“entity_id”].keys())
+if len(sample_list) == 0:</p>
+<blockquote>
+<div><p>raise EmptyCohortException</p>
+</div></blockquote>
+<p>results_gct = self._read_gcts(sample_list, file_path)
+gct_files = [dataset_id + “.gct” for dataset_id in sample_list]
+All_Metadata = assemble_common_meta(</p>
+<blockquote>
+<div><p>[i.col_metadata_df for i in results_gct],
+fields_to_remove=[],
+sources=gct_files,
+remove_all_metadata_fields=False,
+error_report_file=”errors”,</p>
+</div></blockquote>
+<p>)
+return All_Metadata</p>
+</div></blockquote>
+<p>&#64;deprecated(reason=”use function merge_data”)
+def merge_data_matrix(self) -&gt; pd.DataFrame:</p>
+<blockquote>
+<div><p>“””
+Function to merge the data-matrix level metadata from all the gct files in a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A pandas dataframe containing the merged data for analysis.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">EmptyCohortException:</span></code> There are no datasets to be merged in the cohort</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p>instantiated.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">high_data_matrix</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_data_matrix</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">high_data_matrix will a table.</div>
+</div>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<p>file_path = self.folder_path
+sample_list = list(self._cohort_details[“entity_id”].keys())
+if len(sample_list) == 0:</p>
+<blockquote>
+<div><p>raise EmptyCohortException</p>
+</div></blockquote>
+<p>results_gct = self._read_gcts(sample_list, file_path)
+All_data_matrix = assemble_data(</p>
+<blockquote>
+<div><p>[i.data_df for i in results_gct], concat_direction=”horiz”</p>
+</div></blockquote>
+<p>)
+return All_data_matrix</p>
+</div></blockquote>
+<p>&#64;deprecated(reason=”use function merge_data”)
+def merge_dataset_metadata(self) -&gt; pd.DataFrame:</p>
+<blockquote>
+<div><p>“””
+Function to merge the dataset level metadata from all the jpco files in a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A pandas dataframe containing the merged data for analysis.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">EmptyCohortException:</span></code> There are no datasets to be merged in the cohort</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<dl>
+<dt>instantiated.</dt><dd><blockquote>
+<div><div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">high_data_metadata_matrix</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_dataset_metadata</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">high_data_metadata_matrix will a table.</div>
+</div>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<p>file_path = self.folder_path
+entity_list = list(self._cohort_details[“entity_id”].keys())
+if len(entity_list) == 0:</p>
+<blockquote>
+<div><p>raise EmptyCohortException</p>
+</div></blockquote>
+<dl class="simple">
+<dt>jpco_files = [</dt><dd><p>f”{file_path}/{self._cohort_details.get(‘entity_id’,{}).get(entity_id)[0]}_{entity_id}.jpco”
+for entity_id in entity_list</p>
+</dd>
+</dl>
+<p>]
+df = pd.DataFrame()
+for files in jpco_files:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>with open(files, “r”) as infile:</dt><dd><p>temp_df = json.load(infile)
+temp = pd.DataFrame.from_dict(temp_df)
+df = pd.concat([df, temp])</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>return df</p>
+</div></blockquote>
+<dl>
+<dt>def merge_data(self, data_level: str):</dt><dd><p>“””
+Function to merge data(either sample, dataset or data-matrix level metadata)
+as requested by the user from all the jpco files in a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">data_level(str):</span></code> identifier to specify the data to be merged - sample, dataset or data_matrix.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A tuple of pandas dataframe containing the merged data for analysis.
+in the sequence - sample_level, dataset_level, datamatrix dataframes.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortMergeOperation:</span></code> Incorrect or blank parameter specified for merging in cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> Empty or Invalid Parameters.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>instantiated.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for sample merging</span>
+<span class="n">merge_sample</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_data</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+<span class="c1"># for dataset merging</span>
+<span class="n">merge_dataset</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_data</span><span class="p">(</span><span class="s1">&#39;dataset&#39;</span><span class="p">)</span>
+<span class="c1"># for data_matrix merging</span>
+<span class="n">merge_data_matrix</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_data</span><span class="p">(</span><span class="s1">&#39;data_matrix&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">merge_sample, merge_dataset, merge_data_matrix will be a table.</div>
+</div>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (data_level and isinstance(data_level, str)):</dt><dd><p>raise InvalidParameterException(“data_level”)</p>
+</dd>
+<dt>if data_level == “sample”:</dt><dd><p>sample_df = self.merge_metadata()
+return sample_df</p>
+</dd>
+<dt>if data_level == “dataset”:</dt><dd><p>dataset_df = self.merge_dataset_metadata()
+return dataset_df</p>
+</dd>
+<dt>if data_level == “data_matrix”:</dt><dd><p>datamatrix_df = self.merge_data_matrix()
+return datamatrix_df</p>
+</dd>
+</dl>
+<p>raise InvalidCohortMergeOperation</p>
+</div></blockquote>
+<dl>
+<dt>def _edit_cohort_name(self, new_cohort_name: str):</dt><dd><dl class="simple">
+<dt>if not (new_cohort_name and isinstance(new_cohort_name, str)):</dt><dd><p>return</p>
+</dd>
+<dt>if dot in new_cohort_name:</dt><dd><p>logging.error(“The cohort name is not valid. Please try again.”)
+return</p>
+</dd>
+</dl>
+<p>p = Path(self.folder_path)
+parent = p.parent
+str_parent = str(parent.resolve())
+new_path = helpers.make_path(str_parent, f”{new_cohort_name}.pco”)
+existing_path = self.folder_path
+os.rename(existing_path, new_path)
+self.folder_path = new_path
+logging.basicConfig(level=logging.INFO)
+logging.info(“Cohort Name Updated!”)</p>
+</dd>
+<dt>def _edit_cohort_description(self, new_description: str):</dt><dd><dl class="simple">
+<dt>if not (new_description and isinstance(new_description, str)):</dt><dd><p>return</p>
+</dd>
+</dl>
+<p>existing_path = self.folder_path
+meta_path = helpers.make_path(existing_path, “cohort.meta”)
+with open(meta_path, “r+b”) as openfile:</p>
+<blockquote>
+<div><p>byte = openfile.read()
+data = base64.b64decode((byte))
+json_data = json.loads(data.decode(“utf-8”))
+json_data[“description”] = new_description
+self._cohort_details = json_data
+input = json.dumps(json_data)
+encoded_data = base64.b64encode(input.encode(“utf-8”))
+openfile.seek(0)
+openfile.write(encoded_data)
+openfile.truncate()</p>
+</div></blockquote>
+<p>logging.basicConfig(level=logging.INFO)
+logging.info(“Cohort Description Updated!”)</p>
+</dd>
+<dt>def is_valid(self) -&gt; bool:</dt><dd><p>“””
+This function is used to check if a cohort is valid or not.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A boolean result based on the validity of the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException:</span></code> Cohort path does not represent a file or a directory.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>instantiated.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort2</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not os.path.exists(self.folder_path):</dt><dd><p>raise InvalidPathException</p>
+</dd>
+</dl>
+<p>meta_path = helpers.make_path(self.folder_path, “cohort.meta”)
+if not os.path.exists(meta_path):</p>
+<blockquote>
+<div><p>return False</p>
+</div></blockquote>
+<p>sample_list = list(self._cohort_details[“entity_id”].keys())
+if len(sample_list) == 0:</p>
+<blockquote>
+<div><p>return True</p>
+</div></blockquote>
+<dl>
+<dt>for sample in sample_list:</dt><dd><p>omixatlas = self._cohort_details.get(“entity_id”, {}).get(sample)[0]
+gct_path = f”{self.folder_path}/{omixatlas}_{sample}.gct”
+jpco_path = f”{self.folder_path}/{omixatlas}_{sample}.jpco”
+if not (os.path.exists(gct_path) and os.path.exists(jpco_path)):</p>
+<blockquote>
+<div><p>return False</p>
+</div></blockquote>
+</dd>
+</dl>
+<p>return True</p>
+</div></blockquote>
+<dl>
+<dt>def remove_from_cohort(self, entity_id: list) -&gt; None:</dt><dd><p>“””
+This function is used for removing dataset_id or sample_id from a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">entity_id(list):</span></code> list of dataset_id or sample_id to be removed from the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on removal of dataset_id or sample_id from cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> Empty or Invalid Parameters</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been </div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>instantiated.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">remove_from_cohort</span><span class="p">(</span><span class="n">high_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>“””
+if self._cohort_details is None:</p>
+<blockquote>
+<div><p>raise InvalidCohortOperationException</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (entity_id and isinstance(entity_id, list)):</dt><dd><p>raise InvalidParameterException(“entity_id”)</p>
+</dd>
+</dl>
+<p>dataset_count = 0
+verified_dataset = []
+file_meta = helpers.make_path(self.folder_path, “cohort.meta”)
+with open(file_meta, “r+b”) as openfile:</p>
+<blockquote>
+<div><p>byte = openfile.read()
+data = base64.b64decode((byte))
+json_data = json.loads(data.decode(“utf-8”))
+dataset_id = list(json_data[“entity_id”].keys())
+for dataset in entity_id:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if dataset not in dataset_id:</dt><dd><p>logging.basicConfig(level=logging.INFO)
+logging.info(f”Dataset Id - {dataset} not present in the Cohort.”)
+continue</p>
+</dd>
+</dl>
+<p>dataset_count += 1
+verified_dataset.append(dataset)
+omixatlas = json_data.get(“entity_id”, {}).get(dataset)[0]
+gct_path = f”{self.folder_path}/{omixatlas}_{dataset}.gct”
+json_path = f”{self.folder_path}/{omixatlas}_{dataset}.jpco”
+os.remove(gct_path)
+os.remove(json_path)
+del json_data.get(“entity_id”)[dataset]
+json_data.get(“source_omixatlas”).get(omixatlas).remove(dataset)</p>
+</div></blockquote>
+<p>omixatlas_dict = json_data.get(“source_omixatlas”)
+empty_keys = []
+for key, value in omixatlas_dict.items():</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if value == []:</dt><dd><p>empty_keys.append(key)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>for key in empty_keys:</dt><dd><p>del omixatlas_dict[key]</p>
+</dd>
+</dl>
+<p>json_data[“number_of_samples”] -= dataset_count
+json_data[“source_omixatlas”] = omixatlas_dict
+if not bool(json_data.get(“entity_id”)):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if “entity_type” in json_data:</dt><dd><p>del json_data[“entity_type”]</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>self._cohort_details = json_data
+input = json.dumps(json_data)
+encoded_data = base64.b64encode(input.encode(“utf-8”))
+openfile.seek(0)
+openfile.write(encoded_data)
+openfile.truncate()</p>
+</div></blockquote>
+<p>logging.basicConfig(level=logging.INFO)
+logging.info(f”’{dataset_count}’ dataset/s removed from Cohort!”)</p>
+</div></blockquote>
+<dl>
+<dt>def delete_cohort(self) -&gt; None:</dt><dd><p>“””
+This function is used to delete a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on deletion of cohort.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">delete_cohort</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>“””
+shutil.rmtree(self.folder_path, ignore_errors=True)
+logging.basicConfig(level=logging.INFO)
+logging.info(“Cohort Deleted Successfuly!”)
+self.folder_path = None
+self._cohort_details = None</p>
+</dd>
+<dt>def _add_metadata(self, repo_key: str, dataset_id: str, local_path: str) -&gt; None:</dt><dd><p>“””
+Function to add dataset level metadata to a cohort.
+“””
+if not (repo_key and isinstance(repo_key, str)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“repo_id/repo_name”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (dataset_id and isinstance(dataset_id, str)):</dt><dd><p>raise InvalidParameterException(“dataset_id”)</p>
+</dd>
+</dl>
+<p>metadata = self._get_metadata(repo_key, dataset_id)
+file_name = f”{repo_key}_{dataset_id}.jpco”
+file_name = helpers.make_path(local_path, file_name)
+with open(file_name, “w”) as outfile:</p>
+<blockquote>
+<div><p>json.dump(metadata, outfile)</p>
+</div></blockquote>
+</dd>
+<dt>def _gctfile(self, repo_info: str, dataset_id: str, file_path: str) -&gt; None:</dt><dd><p>“””
+Function to add gct file to a cohort
+“””
+if not (repo_info and isinstance(repo_info, str)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“repo_name/repo_id”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (dataset_id and isinstance(dataset_id, str)):</dt><dd><p>raise InvalidParameterException(“dataset_id”)</p>
+</dd>
+</dl>
+<p>ssl._create_default_https_context = ssl._create_unverified_context
+obj = OmixAtlas()
+download_dict = obj.download_data(repo_info, dataset_id)
+url = download_dict.get(“data”, {}).get(“attributes”, {}).get(“download_url”)
+if not url:</p>
+<blockquote>
+<div><p>raise MissingKeyException(“dataset url”)</p>
+</div></blockquote>
+<p>file_name = f”{repo_info}_{dataset_id}.gct”
+dest_path = helpers.make_path(file_path, file_name)
+try:</p>
+<blockquote>
+<div><p>urllib.request.urlretrieve(url, dest_path)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>except Exception as e:</dt><dd><p>raise OperationFailedException(e)</p>
+</dd>
+</dl>
+</dd>
+<dt>def _get_user_id(self):</dt><dd><p>“””
+Function to get user id
+“””
+me_url = f”{self.base_url}/users/me”
+details = self.session.get(me_url)
+error_handler(details)
+user_id = details.json().get(“data”, {}).get(“attributes”, {}).get(“user_id”)
+return user_id</p>
+</dd>
+<dt>def _get_metadetails(self) -&gt; dict:</dt><dd><p>“””
+Function to return metadata details of a cohort
+“””
+data = self._cohort_details
+meta_dict = {}
+folder_name = os.path.basename(self.folder_path)
+cohort_name = folder_name.split(“.”)[0]
+meta_dict[“cohort_name”] = cohort_name
+meta_details = [“description”, “number_of_samples”]
+for key, value in data.items():</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if key.lower() in meta_details:</dt><dd><p>meta_dict[key] = value</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>return meta_dict</p>
+</dd>
+<dt>def _get_df(self) -&gt; pd.DataFrame:</dt><dd><p>“””
+Function to return cohort summary in a dataframe
+“””
+data = self._cohort_details
+df_dict = {“source_omixatlas”: [], “datatype”: [], “entity_id”: []}
+dataset_list = list(data[“entity_id”].keys())
+for entity in dataset_list:</p>
+<blockquote>
+<div><p>omixatlas = data.get(“entity_id”, {}).get(entity, {})[0]
+data_type = data.get(“entity_id”, {}).get(entity, {})[1]
+df_dict[“entity_id”].append(entity)
+df_dict[“source_omixatlas”].append(omixatlas)
+df_dict[“datatype”].append(data_type)</p>
+</div></blockquote>
+<dl>
+<dt>if len(dataset_list) &gt; 0:</dt><dd><p>entity = data[“entity_type”]
+if entity == “dataset”:</p>
+<blockquote>
+<div><p>df_dict[“dataset_id”] = df_dict.pop(“entity_id”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>else:</dt><dd><p>df_dict[“sample_id”] = df_dict.pop(“entity_id”)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>dataframe = pd.DataFrame.from_dict(df_dict)
+return dataframe</p>
+</dd>
+<dt>def _get_metadata(self, repo_key: str, dataset_id: str) -&gt; dict:</dt><dd><p>“””
+Function to return metadata for a dataset
+“””
+obj = OmixAtlas()
+response_omixatlas = obj.omixatlas_summary(repo_key)
+data = response_omixatlas.get(“data”)
+index_name = data.get(“indexes”, {}).get(“files”)
+if index_name is None:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”, detail=”Repo entered is not an omixatlas.”</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>elastic_url = f”{obj.elastic_url}/{index_name}/_search”
+query = helpers.elastic_query(index_name, dataset_id)
+metadata = helpers.get_metadata(obj, elastic_url, query)
+return metadata</p>
+</dd>
+<dt>def _validate_repo(self, repo_name: str, dataset_id: list) -&gt; list:</dt><dd><p>“””
+Function to validate repo and datasets given as argument for adding to cohort
+“””
+dict_dataset = self._cohort_details.get(“source_omixatlas”)
+dataset_list = list(self._cohort_details[“entity_id”].keys())
+if bool(dict_dataset):</p>
+<blockquote>
+<div><p>repo_list = list(dict_dataset.keys())
+if repo_name not in repo_list:</p>
+<blockquote>
+<div><p>raise InvalidRepoException(repo_name)</p>
+</div></blockquote>
+</div></blockquote>
+<dl class="simple">
+<dt>if repo_name not in VALID_REPO_NAMES:</dt><dd><p>raise InvalidRepoException(repo_name)</p>
+</dd>
+</dl>
+<p>valid_dataset_id = []
+for dataset in dataset_id:</p>
+<blockquote>
+<div><p>metadata = self._get_metadata(repo_name, dataset)
+data_type = metadata.get(“_source”, {}).get(“data_type”)
+if data_type.lower() not in VALID_REPO_NAMES[repo_name]:</p>
+<blockquote>
+<div><p>logging.basicConfig(level=logging.INFO)
+logging.info(</p>
+<blockquote>
+<div><p>“This feature supports ‘Datatype’ = ‘mutation’ and ‘transcriptomics’ .”</p>
+</div></blockquote>
+<p>)
+continue</p>
+</div></blockquote>
+<dl>
+<dt>if dataset in dataset_list:</dt><dd><p>logging.basicConfig(level=logging.INFO)
+logging.info(</p>
+<blockquote>
+<div><p>f”The entity_id - {dataset} is already existing in the cohort.”</p>
+</div></blockquote>
+<p>)
+continue</p>
+</dd>
+</dl>
+<p>valid_dataset_id.append(dataset)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if len(valid_dataset_id) == 0:</dt><dd><p>raise InvalidDatasetException</p>
+</dd>
+</dl>
+<p>return valid_dataset_id</p>
+</dd>
+<dt>def _get_entity(self, repo_name: str) -&gt; str:</dt><dd><p>“””
+Function to get the entity type of repo
+“””
+for repo, dict in COHORT_REPO_INFO.items():</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if repo_name == repo:</dt><dd><dl class="simple">
+<dt>if dict[“file_structure”] == “single”:</dt><dd><p>entity_type = “dataset”</p>
+</dd>
+<dt>else:</dt><dd><p>entity_type = “sample”</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>return entity_type</p>
+</dd>
+</dl>
+</div></blockquote>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Polly-python-team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
