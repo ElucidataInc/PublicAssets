@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Querying metadata &mdash; Polly&#39;s Documentation 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Downloading Dataset" href="download.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Polly's Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Polly.html">About Polly Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polly.html">polly package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="download.html">Downloading Dataset</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Querying metadata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#writing-a-query">1. Writing a query</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#writing-a-query-in-v1-storage-infrastructure">1.2 Writing a query in V1 storage infrastructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#querying-the-dataset-level-metadata">1.3. Querying the dataset level metadata:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#querying-the-sample-level-metadata">1.4. Querying the sample level metadata:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#querying-the-feature-level-metadata">1.5. Querying the feature level metadata:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#experimental-expanding-search-feature">2. Experimental Expanding Search Feature</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-queries">2.1 Example queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#querying-datasets-in-liver-omixatlas">Querying datasets in Liver OmixAtlas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#querying-samples-in-liver-omixatlas">Querying samples in Liver OmixAtlas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#querying-features-in-liver-omixatlas">Querying features in Liver OmixAtlas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-a-query-in-v2-1-storage-infrastructure">3. Writing a query in V2.1 storage infrastructure</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polly's Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Querying metadata</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="querying-metadata">
+<span id="targetq"></span><h1>Querying metadata<a class="headerlink" href="#querying-metadata" title="Permalink to this headline"></a></h1>
+<section id="writing-a-query">
+<h2>1. Writing a query<a class="headerlink" href="#writing-a-query" title="Permalink to this headline"></a></h2>
+<p>The polly-python library versions 0.0.7 to 0.0.9 are compatible with both storage infrastructures - v1 and v2. In order to facilitate querying on both infrastructures, there are two different API versions as well, v1 and v2, available in polly-python which refer to infrastructure used for query. This could be specified by setting query_api_version to ‘v1’ or ‘v2’ while passing the query to a function. By default, queries are made against v1. If users want to use v2 then they will have to pass an additional argument query_api_version=’v2’ in the query_metadata function. The querying on these two infrastructures is different and will be discussed in two different sections below.</p>
+<section id="writing-a-query-in-v1-storage-infrastructure">
+<h3>1.2 Writing a query in V1 storage infrastructure<a class="headerlink" href="#writing-a-query-in-v1-storage-infrastructure" title="Permalink to this headline"></a></h3>
+<p>The complete syntax for searching and aggregating data is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="p">[</span><span class="n">DISTINCT</span><span class="p">]</span> <span class="p">(</span><span class="o">*</span> <span class="o">|</span> <span class="n">expression</span><span class="p">)</span> <span class="p">[[</span><span class="n">AS</span><span class="p">]</span> <span class="n">alias</span><span class="p">]</span> <span class="p">[,</span> <span class="o">...</span><span class="p">]</span>
+<span class="n">FROM</span> <span class="p">{</span> <span class="n">index_name</span> <span class="o">|</span> <span class="p">{[</span><span class="n">repo_id</span><span class="p">]</span><span class="o">|</span><span class="p">[</span><span class="n">repo_name</span><span class="p">]}</span><span class="o">.</span><span class="p">{</span><span class="n">datasets</span><span class="o">|</span><span class="n">samples</span><span class="o">|</span><span class="n">features</span><span class="p">}</span> <span class="p">}</span>
+<span class="p">[</span><span class="n">WHERE</span> <span class="n">predicates</span><span class="p">]</span>
+<span class="p">[</span><span class="n">GROUP</span> <span class="n">BY</span> <span class="n">expression</span> <span class="p">[,</span> <span class="o">...</span><span class="p">]</span>
+<span class="p">[</span><span class="n">HAVING</span> <span class="n">predicates</span><span class="p">]]</span>
+<span class="p">[</span><span class="n">ORDER</span> <span class="n">BY</span> <span class="n">expression</span> <span class="p">[</span><span class="n">IS</span> <span class="p">[</span><span class="n">NOT</span><span class="p">]</span> <span class="n">NULL</span><span class="p">]</span> <span class="p">[</span><span class="n">ASC</span> <span class="o">|</span> <span class="n">DESC</span><span class="p">]</span> <span class="p">[,</span> <span class="o">...</span><span class="p">]]</span>
+<span class="p">[</span><span class="n">LIMIT</span> <span class="p">[</span><span class="n">offset</span><span class="p">,</span> <span class="p">]</span> <span class="n">size</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="querying-the-dataset-level-metadata">
+<h3>1.3. Querying the dataset level metadata:<a class="headerlink" href="#querying-the-dataset-level-metadata" title="Permalink to this headline"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [files] WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [repo_name].datasets WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [repo_id].datasets WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="querying-the-sample-level-metadata">
+<h3>1.4. Querying the sample level metadata:<a class="headerlink" href="#querying-the-sample-level-metadata" title="Permalink to this headline"></a></h3>
+<p>For all samples except Single Cell</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [gct_metadata] WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [repo_name].samples WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [repo_id].samples WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+</pre></div>
+</div>
+<p>For samples in Single Cell</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [h5ad_metadata] WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="querying-the-feature-level-metadata">
+<h3>1.5. Querying the feature level metadata:<a class="headerlink" href="#querying-the-feature-level-metadata" title="Permalink to this headline"></a></h3>
+<p>For all features except Single Cell</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [gct_data] WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [repo_name].features WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [repo_id].features WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+</pre></div>
+</div>
+<p>For features in Single Cell</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT [column_name] FROM [h5ad_data] WHERE [column_name]=&#39;[value]&#39;&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="experimental-expanding-search-feature">
+<span id="target"></span><h2>2. Experimental Expanding Search Feature<a class="headerlink" href="#experimental-expanding-search-feature" title="Permalink to this headline"></a></h2>
+<p>A disease is described by many different names in the literature. If we search it with a keyword, datasets annotated with related keywords for the same disease are missed in the output. For example, if ‘nash’ is searched for disease, ‘non-alcoholic fatty liver disease’, ‘nonalcoholic steatohepatitis’, ‘nash-non-alcoholic steatohepatitis’, ‘non-alcoholic steatohepatitis’ are missed although they are valid hits for disease keyword ‘nash’.</p>
+<p>To address this, we have included an experimental feature which allows expansion of disease query to include additional similar keywords based on ontology mapping. The query written in the Polly Python Library is expanded on the basis of the ontology tree mapping available in the following resources</p>
+<div class="line-block">
+<div class="line">[1]. <a class="reference external" href="https://disease-ontology.org/">The disease ontology</a></div>
+<div class="line">[2]. <a class="reference external" href="https://www.ebi.ac.uk/efo/">Experimental factor ontology</a></div>
+<div class="line">[3]. <a class="reference external" href="http://obofoundry.org/ontology/mondo.html">Mondo Disease Ontology</a></div>
+<div class="line">[4]. <a class="reference external" href="https://github.com/NCI-Thesaurus/thesaurus-obo-edition">NCI Thesaurus</a></div>
+<div class="line">[5]. <a class="reference external" href="https://hpo.jax.org/">Human phenotype ontology</a></div>
+<div class="line">[6]. <a class="reference external" href="https://github.com/OmniSearch/omit">Ontology for MIRNA Target</a></div>
+</div>
+<p>Expanding search feature could be use in the following way</p>
+<p>Setting “expand” to True: It allows expansion of the query to include disease terms children from the ontology tree. It means no false positive datasets are included in the output while including more true positives.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">omixatlas</span><span class="o">.</span><span class="n">query_metadata</span><span class="p">(</span>
+    <span class="n">query</span><span class="o">=</span><span class="n">user_query</span><span class="p">,</span>
+    <span class="n">experimental_features</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;expand&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;related_terms&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Setting “related_terms” to True: It allows expansion of query by including immediate parent of the disease term in the ontology tree. It causes maximum expansion but a few false positive datasets may be included.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">omixatlas</span><span class="o">.</span><span class="n">query_metadata</span><span class="p">(</span>
+    <span class="n">query</span><span class="o">=</span><span class="n">user_query</span><span class="p">,</span>
+    <span class="n">experimental_features</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;expand&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;related_terms&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">})</span>
+</pre></div>
+</div>
+<section id="example-queries">
+<h3>2.1 Example queries<a class="headerlink" href="#example-queries" title="Permalink to this headline"></a></h3>
+</section>
+<section id="querying-datasets-in-liver-omixatlas">
+<h3>Querying datasets in Liver OmixAtlas<a class="headerlink" href="#querying-datasets-in-liver-omixatlas" title="Permalink to this headline"></a></h3>
+<p>To identify datasets belonging to the tissue Liver, disease Liver cirrhosis and organism Homo sapiens</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT * FROM liveromix_atlas.datasets</span>
+<span class="s2">                        WHERE disease = &#39;liver cirrhosis&#39;</span>
+<span class="s2">                        AND tissue = &quot;liver&quot;</span>
+<span class="s2">                        AND organism=&quot;Homo sapiens&quot;</span>
+<span class="s2">                        &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>To identify all datasets belonging to a Hepatocellular Carcinoma disease in Human and Mouse</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT * FROM liveromix_atlas.datasets</span>
+<span class="s2">                        WHERE disease = &#39;Carcinoma, Hepatocellular&#39;</span>
+<span class="s2">                        AND ( organism=&quot;Homo sapiens&quot; or organism=&quot;Mus musculus&quot;)</span>
+<span class="s2">                    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>To identify type of data, tissue, and data description of all the datasets belonging to a Hepatocellular Carcinoma disease in Human and Mouse</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT dataset_id,description,tissue,kw_data_type</span>
+<span class="s2">                        FROM liveromix_atlas.datasets</span>
+<span class="s2">                        WHERE disease = &#39;Carcinoma, Hepatocellular&#39;</span>
+<span class="s2">                        AND ( organism=&quot;Homo sapiens&quot; or organism=&quot;Mus musculus&quot;)</span>
+<span class="s2">                    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Identify all transcriptome datasets in Hepatocellular Carcinoma disease in Human and Mouse</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT * FROM liveromix_atlas.datasets</span>
+<span class="s2">                    WHERE disease = &#39;Carcinoma, Hepatocellular&#39;</span>
+<span class="s2">                    AND ( organism=&quot;Homo sapiens&quot; or organism=&quot;Mus musculus&quot;)</span>
+<span class="s2">                    AND ( kw_data_type = &quot;Transcriptomics&quot;)</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Identify all transcriptome datasets from GEO in Hepatocellular Carcinoma disease in Human and Mouse</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT * FROM liveromix_atlas.datasets</span>
+<span class="s2">                    WHERE disease = &#39;Carcinoma, Hepatocellular&#39;</span>
+<span class="s2">                    AND ( organism=&quot;Homo sapiens&quot; or organism=&quot;Mus musculus&quot;)</span>
+<span class="s2">                    AND ( kw_data_type = &quot;Transcriptomics&quot;)</span>
+<span class="s2">                    AND ( dataset_source = &quot;GEO&quot;)</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Select all methylation, miRNA, and transcriptomics datasets for Hepatocellular Carcinoma disease in Human and Mouse</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT * FROM liveromix_atlas.datasets</span>
+<span class="s2">                    WHERE dataset_source = &#39;TCGA&#39;</span>
+<span class="s2">                    AND (kw_data_type = &#39;Methylation&#39;</span>
+<span class="s2">                        OR kw_data_type = &#39;MiRNA&#39;</span>
+<span class="s2">                        OR kw_data_type = &#39;Transcriptomics&#39;</span>
+<span class="s2">                        )</span>
+<span class="s2">                    AND ( organism=&quot;Homo sapiens&quot; or organism=&quot;Mus musculus&quot;)</span>
+<span class="s2">                &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>In all the examples above liveromix_atlas_files could be used in place of liveromix_atlas.datasets</p>
+</section>
+<section id="querying-samples-in-liver-omixatlas">
+<h3>Querying samples in Liver OmixAtlas<a class="headerlink" href="#querying-samples-in-liver-omixatlas" title="Permalink to this headline"></a></h3>
+<p>Select a sample with a GEO ID</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT *</span>
+<span class="s2">            FROM liveromix_atlas.samples</span>
+<span class="s2">            WHERE kw_column  = &#39;GSM798352&#39;</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Identify all samples in which “CYP1B1” gene has been knocked out</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT *</span>
+<span class="s2">            FROM liveromix_atlas.samples</span>
+<span class="s2">            WHERE kw_curated_genetic_mod_type = &#39;knockout&#39;</span>
+<span class="s2">            AND kw_curated_modified_gene = &quot;CYP1B1&quot;</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Identify all samples where gene “YAP1” has been knocked in, in hepatocype cell line</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT kw_curated_cell_line,kw_curated_drug,kw_curated_genetic_mod_type,kw_curated_modified_gene,kw_curated_cell_type</span>
+<span class="s2">                FROM liveromix_atlas.samples</span>
+<span class="s2">                WHERE kw_curated_genetic_mod_type = &#39;knockin&#39;</span>
+<span class="s2">                AND kw_curated_cell_type = &quot;hepatocyte&quot;</span>
+<span class="s2">                AND kw_curated_modified_gene = &quot;YAP1&quot;</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>Identify all samples of ‘Carcinoma, Hepatocellular’ disease that have been treated with some drug</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT kw_curated_cell_line,kw_curated_drug,kw_curated_tissue,kw_curated_disease</span>
+<span class="s2">            FROM liveromix_atlas.samples</span>
+<span class="s2">            WHERE kw_curated_disease = &#39;Carcinoma, Hepatocellular&#39;</span>
+<span class="s2">            AND kw_curated_drug &lt;&gt; &quot;none&quot;</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>In all the examples above liveromix_atlas_gct_metadata could be used in place of liveromix_atlas.samples</p>
+</section>
+<section id="querying-features-in-liver-omixatlas">
+<h3>Querying features in Liver OmixAtlas<a class="headerlink" href="#querying-features-in-liver-omixatlas" title="Permalink to this headline"></a></h3>
+<p>Identify all samples in which the gene “YAP1” is upregulated</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT *</span>
+<span class="s2">                FROM liveromix_atlas.features</span>
+<span class="s2">                WHERE kw_index = &#39;YAP1&#39;</span>
+<span class="s2">                AND kw_column.kw_expression &gt; 0</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>In this example liveromix_atlas_gct_data could be used in place of liveromix_atlas.features</p>
+</section>
+</section>
+<section id="writing-a-query-in-v2-1-storage-infrastructure">
+<h2>3. Writing a query in V2.1 storage infrastructure<a class="headerlink" href="#writing-a-query-in-v2-1-storage-infrastructure" title="Permalink to this headline"></a></h2>
+<p>The complete syntax for searching and aggregating data is as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="n">WITH</span> <span class="n">with_query</span> <span class="p">[,</span> <span class="o">...</span><span class="p">]</span> <span class="p">]</span>
+<span class="n">SELECT</span> <span class="p">[</span> <span class="n">ALL</span> <span class="o">|</span> <span class="n">DISTINCT</span> <span class="p">]</span> <span class="n">select_expression</span> <span class="p">[,</span> <span class="o">...</span><span class="p">]</span>
+<span class="p">[</span> <span class="n">FROM</span> <span class="n">from_item</span> <span class="p">[,</span> <span class="o">...</span><span class="p">]</span> <span class="p">]</span>
+<span class="p">[</span> <span class="n">WHERE</span> <span class="n">condition</span> <span class="p">]</span>
+<span class="p">[</span> <span class="n">GROUP</span> <span class="n">BY</span> <span class="p">[</span> <span class="n">ALL</span> <span class="o">|</span> <span class="n">DISTINCT</span> <span class="p">]</span> <span class="n">grouping_element</span> <span class="p">[,</span> <span class="o">...</span><span class="p">]</span> <span class="p">]</span>
+<span class="p">[</span> <span class="n">HAVING</span> <span class="n">condition</span> <span class="p">]</span>
+<span class="p">[</span> <span class="p">{</span> <span class="n">UNION</span> <span class="o">|</span> <span class="n">INTERSECT</span> <span class="o">|</span> <span class="n">EXCEPT</span> <span class="p">}</span> <span class="p">[</span> <span class="n">ALL</span> <span class="o">|</span> <span class="n">DISTINCT</span> <span class="p">]</span> <span class="n">select</span> <span class="p">]</span>
+<span class="p">[</span> <span class="n">ORDER</span> <span class="n">BY</span> <span class="n">expression</span> <span class="p">[</span> <span class="n">ASC</span> <span class="o">|</span> <span class="n">DESC</span> <span class="p">]</span> <span class="p">[</span> <span class="n">NULLS</span> <span class="n">FIRST</span> <span class="o">|</span> <span class="n">NULLS</span> <span class="n">LAST</span><span class="p">]</span> <span class="p">[,</span> <span class="o">...</span><span class="p">]</span> <span class="p">]</span>
+<span class="p">[</span> <span class="n">OFFSET</span> <span class="n">count</span> <span class="p">[</span> <span class="n">ROW</span> <span class="o">|</span> <span class="n">ROWS</span> <span class="p">]</span> <span class="p">]</span>
+<span class="p">[</span> <span class="n">LIMIT</span> <span class="p">[</span> <span class="n">count</span> <span class="o">|</span> <span class="n">ALL</span> <span class="p">]</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>Some example queries have been given in a notebook on our <a class="reference external" href="https://github.com/ElucidataInc/polly-python/blob/main/polly-python-query-examples.ipynb">github</a>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operators</p></th>
+<th class="head"><p>Functions performed</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">=</span></code></p></td>
+<td><p>Equal to operator which can be used to find matching strings with values in the columns</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code></p></td>
+<td><p>Not equal to operator which can be used to find non-matching strings with values in the columns</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&gt;</span></code></p></td>
+<td><p>Greater than operator which can be used ONLY for integer based columns</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;</span></code></p></td>
+<td><p>Less than operator which can be used ONLY for integer based columns</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&gt;=</span></code></p></td>
+<td><p>Greater than or equal to operator which can be used ONLY for integer based columns</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&lt;=</span></code></p></td>
+<td><p>Less than or equal to operator which can be used ONLY for integer based columns</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">IS</span></code></p></td>
+<td><p>NULL       Check if the field value is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">IS</span></code></p></td>
+<td><p>NOT NULL   Check if the field value is <code class="docutils literal notranslate"><span class="pre">NOT</span> <span class="pre">NULL</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AND</span></code></p></td>
+<td><p>All values across the parameters searched for have to be present in a dataset for it to be returned as a match when the AND operator is used. e.g. “organism = ‘Homo sapiens’ AND disease = ‘Carcinoma, Hepatocellular’” would only return datasets that belong to homo sapiens and have the disease as hepatocellular carcinoma.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">OR</span></code></p></td>
+<td><p>Atleast any one value across the parameters searched for have to be present in a dataset for it to be returned as a match when the OR operator is used. e.g. <code class="docutils literal notranslate"><span class="pre">organism</span> <span class="pre">=</span> <span class="pre">'Homo</span> <span class="pre">sapiens'</span> <span class="pre">OR</span> <span class="pre">disease</span> <span class="pre">=</span> <span class="pre">'Carcinoma,</span> <span class="pre">Hepatocellular'</span></code> would return datasets that belong to homo sapiens or have the disease as hepatocellular carcinoma or match both criteria.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">QUERY(,'value')</span></code></p></td>
+<td><p>It works like a fuzzy search. If you add a string for a parameter with this operator, it would return all possible results matching each word in the string. The search output is returned with a “Score” using which the output is sorted. e.g. <code class="docutils literal notranslate"><span class="pre">MATCH_QUERY(description,'Transcriptomics</span> <span class="pre">profiling')</span></code> would return all datasets having <code class="docutils literal notranslate"><span class="pre">transcriptomics</span> <span class="pre">profiling</span></code> , <code class="docutils literal notranslate"><span class="pre">Transcriptomics</span> <span class="pre">and</span> <span class="pre">profiling</span></code> as possible terms within their description. Each dataset would be scored on the basis of matching of the searched string with the information present within the dataset.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">PHRASE(,'value')</span></code></p></td>
+<td><p>This can be used for exact phrase match with the information being searched for. e.g. <code class="docutils literal notranslate"><span class="pre">MATCH_PHRASE(description,'Transcriptomics</span> <span class="pre">profiling')</span></code> would only return the datasets that have <code class="docutils literal notranslate"><span class="pre">Transcriptomics</span> <span class="pre">profiling</span></code> within their description.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MULTI</span> <span class="pre">MATCH('query'='value',</span> <span class="pre">'column_name'='value)</span></code></p></td>
+<td><p>This can be used to search for text in multiple fields, use <code class="docutils literal notranslate"><span class="pre">MULTI</span> <span class="pre">MATCH('query'='value',</span> <span class="pre">'column_name'='value)</span></code>. e.g. <code class="docutils literal notranslate"><span class="pre">MULTI</span> <span class="pre">MATCH('query'='Stem</span> <span class="pre">Cells',</span> <span class="pre">'fields'='tissue','description')</span></code> would return datasets that have <code class="docutils literal notranslate"><span class="pre">&quot;Stem</span> <span class="pre">Cell&quot;</span></code> in either tissue OR description fields.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code></p></td>
+<td><p>The GROUP BY operator groups rows that have the same values into summary rows. The <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> statement is often used with aggregate functions <code class="docutils literal notranslate"><span class="pre">(COUNT,</span> <span class="pre">MAX,</span> <span class="pre">MIN,</span> <span class="pre">SUM,</span> <span class="pre">AVG)</span></code> to group the result-set by one or more columns.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">HAVING</span></code></p></td>
+<td><p>Use the HAVING clause to aggregate inside each bucket based on aggregation functions <code class="docutils literal notranslate"><span class="pre">(COUNT,</span> <span class="pre">AVG,</span> <span class="pre">SUM,</span> <span class="pre">MIN,</span> <span class="pre">and</span> <span class="pre">MAX)</span></code>. The HAVING clause filters results from the GROUP BY clause</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">COUNT(*)</span></code></p></td>
+<td><p>This counts each row present in a table/index being queried. NOTE: The output of this query would return a JSON stating the total number of rows in the table</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LIMIT</span></code></p></td>
+<td><p>NOTE: The response of any query returns 200 entries by default. You can extend this by defining the LIMIT of the results you want to query to be able to return.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ORDER</span> <span class="pre">BY</span></code></p></td>
+<td><p>Can only be used to sort the search results using integer based parameters in the schema. Sorting on the basis of dataset_id, number of samples, _score of the data is available at the dataset-level metadata. ASC or DESC can be used to define whether you want to order the rows in ascending or descending order respectively</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="download.html" class="btn btn-neutral float-left" title="Downloading Dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Polly-python-team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
