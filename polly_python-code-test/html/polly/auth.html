@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; Polly&#39;s Documentation 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Polly's Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Polly.html">About Polly Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polly.html">polly package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/download.html">Downloading Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/query.html">Querying metadata</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polly's Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>from polly.session import PollySession</p>
+<p>link_doc = “<a class="reference external" href="https://docs.elucidata.io/OmixAtlas/Polly%20Python.html">https://docs.elucidata.io/OmixAtlas/Polly%20Python.html</a>”</p>
+<dl>
+<dt>class UnauthorizedException(Exception):</dt><dd><p>“””</p>
+<dl class="field-list simple">
+<dt class="field-odd">meta private</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>“””</p>
+<dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return f”Authorization failed as credentials not found. Please use Polly.auth(token) as shown here  —- {link_doc}”</p>
+</dd>
+</dl>
+</dd>
+<dt>class Polly:</dt><dd><p>“””
+This class for authorization to use polly on local, which include following member functions.
+“””</p>
+<p>_default_session = None</p>
+<p>&#64;classmethod
+def auth(cls, token, env=”polly”):</p>
+<blockquote>
+<div><p>“””
+Function for authorization to use polly on terminal or notebook.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">if token is not satisfied it will throw a error.</div>
+<div class="line">else it will auth you.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Error:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">UnauthorizedException:</span></code> when the token is expired.</div>
+</div>
+</dd>
+</dl>
+<p>To use auth function import class Polly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.auth</span> <span class="kn">import</span> <span class="n">Polly</span>
+<span class="n">Polly</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+cls._default_session = PollySession(token, env=env)</p>
+</div></blockquote>
+<p>&#64;classmethod
+def get_session(cls, token=None, env=”polly”):</p>
+<blockquote>
+<div><p>“””
+Function to get session from polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">if token is not satisfied it will throw UnauthorizedException.</div>
+<div class="line">else it will return a polly.session object.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Error:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">UnauthorizedException:</span></code> when the token is expired.</div>
+</div>
+</dd>
+</dl>
+<p>To use get_seesion function import class Polly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.auth</span> <span class="kn">import</span> <span class="n">Polly</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Polly</span><span class="o">.</span><span class="n">get_session</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>“””
+if not token:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if not cls._default_session:</dt><dd><p>raise UnauthorizedException</p>
+</dd>
+<dt>else:</dt><dd><p>return cls._default_session</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>else:</dt><dd><p>return PollySession(token, env=env)</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Polly-python-team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
