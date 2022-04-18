@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; Polly&#39;s Documentation 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Polly's Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Polly.html">About Polly Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polly.html">polly package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/download.html">Downloading Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/query.html">Querying metadata</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polly's Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>import sys
+from polly import application_error_info as app_err_info</p>
+<p>sys.tracebacklimit = 0</p>
+<dl>
+<dt>class RequestException(Exception):</dt><dd><dl class="simple">
+<dt>def __init__(self, title, detail=None):</dt><dd><p>self.title = title
+self.detail = detail</p>
+</dd>
+</dl>
+</dd>
+<dt>class BaseExceptionError(Exception):</dt><dd><p>“””
+Base Exception class for v2 APIs.
+All custom exceptions are created by extending this class.
+Exception has 4 attributes corresponding to details sent in ‘error’ object
+in response JSON -</p>
+<blockquote>
+<div><p>status - http status code
+code - application specific error code
+title - title of error
+detail - details of error</p>
+</div></blockquote>
+<p>“””</p>
+<dl class="simple">
+<dt>def __init__(self, status, code, title, detail):</dt><dd><p>Exception.__init__(self)
+self.title = title
+self.detail = detail</p>
+</dd>
+<dt>def as_dict(self):</dt><dd><p>return {“title”: self.title, “detail”: self.detail}</p>
+</dd>
+<dt>def as_str(self):</dt><dd><p>exception_str = “Exception Type : ” + self.__class__.__name__
+exception_str += “nTitle - ” + self.title if self.title else “”
+exception_str += “nDetails - ” + self.detail if self.detail else “”
+return exception_str</p>
+</dd>
+<dt>def __str__(self):</dt><dd><p>return f”{self.__class__.__name__} ({self.title}): {self.detail}”</p>
+</dd>
+</dl>
+</dd>
+<dt>class ElasticException(Exception):</dt><dd><dl>
+<dt>def __str__(self):</dt><dd><dl class="simple">
+<dt>if self.detail:</dt><dd><p>return f”{self.title}: {self.detail}”</p>
+</dd>
+</dl>
+<p>return self.title</p>
+</dd>
+</dl>
+</dd>
+<dt>class UnauthorizedException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “Expired or Invalid Token”</p>
+</dd>
+</dl>
+</dd>
+<dt>class UnfinishedQueryException(Exception):</dt><dd><dl class="simple">
+<dt>def __init__(self, query_id):</dt><dd><p>self.query_id = query_id</p>
+</dd>
+<dt>def __str__(self):</dt><dd><p>return f’Query “{self.query_id}” has not finished executing’</p>
+</dd>
+</dl>
+</dd>
+<dt>class QueryFailedException(Exception):</dt><dd><dl class="simple">
+<dt>def __init__(self, reason):</dt><dd><p>self.reason = reason</p>
+</dd>
+<dt>def __str__(self):</dt><dd><p>return f”Query failed to executentreason: {self.reason}”</p>
+</dd>
+</dl>
+</dd>
+<dt>class OperationFailedException(Exception):</dt><dd><dl class="simple">
+<dt>def __init__(self, reason):</dt><dd><p>self.reason = reason</p>
+</dd>
+<dt>def __str__(self):</dt><dd><p>return f”{self.reason}”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidPathException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “This path does not represent a file or a directory. Please try again.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidCohortPathException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “This path does not represent a Cohort. Please try again.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidCohortNameException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self, cohort_name):</dt><dd><p>return f”The identifier {cohort_name} does not represent a valid cohort name. Please try again.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidRepoException(Exception):</dt><dd><dl class="simple">
+<dt>def __init__(self, repo_name):</dt><dd><p>self.repo_name = repo_name</p>
+</dd>
+<dt>def __str__(self):</dt><dd><p>return “This feature supports the repo : ‘tcga’ . Please try again.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidDatasetException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “Dataset/s not added.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidCohortOperationException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “This operation is not valid as no cohort has been instantiated.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class EmptyCohortException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “There are no datasets to be merged in the cohort. Please try adding datasets using add_to_cohort() function.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class CohortEditException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “No parameter specified for editing in cohort”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidCohortMergeOperation(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “Incorrect or blank parameter specified for merging in cohort”</p>
+</dd>
+</dl>
+</dd>
+<dt>class MissingKeyException(Exception):</dt><dd><dl class="simple">
+<dt>def __init__(self, key):</dt><dd><p>self.key = key</p>
+</dd>
+<dt>def __str__(self):</dt><dd><p>return f”Missing keys {self.key}”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidParameterException(Exception):</dt><dd><dl class="simple">
+<dt>def __init__(self, parameter):</dt><dd><p>self.parameter = parameter</p>
+</dd>
+<dt>def __str__(self):</dt><dd><p>return f”Empty or Invalid Parameters = {self.parameter}.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class InvalidFormatException(Exception):</dt><dd><dl class="simple">
+<dt>def __str__(self):</dt><dd><p>return “File format not supported.”</p>
+</dd>
+</dl>
+</dd>
+<dt>class paramException(BaseExceptionError):</dt><dd><p>detail = app_err_info.PARAM_EXCEPTION</p>
+<dl>
+<dt>def __init__(self, title=None, detail=None):</dt><dd><p>self.title = app_err_info.PARAM_EXCEPTION_TITLE
+if detail:</p>
+<blockquote>
+<div><p>self.detail = detail</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+<dt>class wrongParamException(BaseExceptionError):</dt><dd><p>detail = app_err_info.WRONG_PARAMS_EXCEPTION</p>
+<dl>
+<dt>def __init__(self, title=None, detail=None):</dt><dd><p>self.title = app_err_info.WRONG_PARAMS_EXCEPTION_TITLE
+if detail:</p>
+<blockquote>
+<div><p>self.detail = detail</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+<dt>class apiErrorException(BaseExceptionError):</dt><dd><p>detail = app_err_info.API_ERROR_EXCEPTION</p>
+<dl>
+<dt>def __init__(self, title=None, detail=None):</dt><dd><p>self.title = app_err_info.API_ERROR_EXCEPTION_TITLE
+if detail:</p>
+<blockquote>
+<div><p>self.detail = detail</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+<dt>class invalidApiResponseException(BaseExceptionError):</dt><dd><dl class="simple">
+<dt>def __init__(self, title=None, detail=None):</dt><dd><dl class="simple">
+<dt>if title:</dt><dd><p>self.title = title</p>
+</dd>
+<dt>if detail:</dt><dd><p>self.detail = detail</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>def error_handler(response):</dt><dd><dl class="simple">
+<dt>if has_error_message(response):</dt><dd><p>title, detail = extract_json_api_error(response)
+raise RequestException(title, detail)</p>
+</dd>
+<dt>elif response.status_code == 401:</dt><dd><p>raise UnauthorizedException</p>
+</dd>
+</dl>
+<p>response.raise_for_status()</p>
+</dd>
+<dt>def has_error_message(response):</dt><dd><dl>
+<dt>try:</dt><dd><dl class="simple">
+<dt>for key in response.json().keys():</dt><dd><dl class="simple">
+<dt>if key in {“error”, “errors”}:</dt><dd><p>return True</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>return False</p>
+</dd>
+<dt>except Exception:</dt><dd><p>return False</p>
+</dd>
+</dl>
+</dd>
+<dt>def extract_json_api_error(response):</dt><dd><p>error = response.json().get(“error”)
+if error is None:</p>
+<blockquote>
+<div><p>error = response.json().get(“errors”)[0]</p>
+</div></blockquote>
+<p>title = error.get(“title”)
+detail = error.get(“detail”)
+return title, detail</p>
+</dd>
+<dt>def extract_error_message_details(error_response):</dt><dd><p>error = error_response.json().get(“error”)
+if error is None:</p>
+<blockquote>
+<div><p>error = error_response.json().get(“errors”)[0]</p>
+</div></blockquote>
+<p><a href="#id1"><span class="problematic" id="id2">type_</span></a> = error.get(“type”, None) or error.get(“code”, None)
+reason = error.get(“reason”, None) or error.get(“title”, None)
+details = error.get(“details”, None) or error.get(“detail”, None)</p>
+<p>return <a href="#id3"><span class="problematic" id="id4">type_</span></a>, reason, details</p>
+</dd>
+<dt>def is_unfinished_query_error(exception):</dt><dd><p>return isinstance(exception, UnfinishedQueryException)</p>
+</dd>
+</dl>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Polly-python-team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
