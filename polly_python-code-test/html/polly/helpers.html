@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; Polly&#39;s Documentation 1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Polly's Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../doc/Polly.html">About Polly Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../polly.html">polly package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/download.html">Downloading Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../doc/query.html">Querying metadata</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Polly's Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p>import os
+import json
+import logging
+import urllib.request
+from cloudpathlib import S3Client
+from botocore.exceptions import ClientError
+from cmapPy.pandasGEXpress.parse_gct import parse
+from polly.errors import (</p>
+<blockquote>
+<div><p>error_handler,
+InvalidParameterException,
+MissingKeyException,
+InvalidPathException,
+OperationFailedException,
+paramException,</p>
+</div></blockquote>
+<p>)</p>
+<dl>
+<dt>def make_path(prefix: any, postfix: any) -&gt; str:</dt><dd><p>“””
+Function to make and return a valid path
+“””
+if not prefix:</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“prefix”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not postfix:</dt><dd><p>raise InvalidParameterException(“postfix”)</p>
+</dd>
+</dl>
+<p>return os.path.normpath(f”{prefix}/{postfix}”)</p>
+</dd>
+<dt>def get_sts_creds(sts_dict: dict) -&gt; dict:</dt><dd><p>“””
+Function to check and return temporary sts creds
+“””
+if sts_dict and isinstance(sts_dict, dict):</p>
+<blockquote>
+<div><dl>
+<dt>if “data” in sts_dict:</dt><dd><p>data = sts_dict.get(“data”)
+if “attributes” in data[0]:</p>
+<blockquote>
+<div><p>attributes = data[0].get(“attributes”)
+if “credentials” in attributes:</p>
+<blockquote>
+<div><p>return attributes.get(“credentials”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>else:</dt><dd><p>raise MissingKeyException(“credentials”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>else:</dt><dd><p>raise MissingKeyException(“attributes”)</p>
+</dd>
+</dl>
+</dd>
+<dt>else:</dt><dd><p>raise MissingKeyException(“data”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>else:</dt><dd><p>raise InvalidParameterException(“sts_dict”)</p>
+</dd>
+</dl>
+</dd>
+<dt>def upload_to_S3(cloud_path: str, local_path: str, credentials: dict) -&gt; None:</dt><dd><p>“””
+Function to upload file/folder to S3 cloud path
+“””
+access_key_id = credentials[“AccessKeyId”]
+secret_access_key = credentials[“SecretAccessKey”]
+session_token = credentials[“SessionToken”]
+client = S3Client(</p>
+<blockquote>
+<div><p>aws_access_key_id=access_key_id,
+aws_secret_access_key=secret_access_key,
+aws_session_token=session_token,</p>
+</div></blockquote>
+<p>)
+source_path = client.CloudPath(cloud_path)
+if not source_path.exists():</p>
+<blockquote>
+<div><p>source_path.mkdir()</p>
+</div></blockquote>
+<dl class="simple">
+<dt>try:</dt><dd><p>source_path.upload_from(local_path, force_overwrite_to_cloud=True)</p>
+</dd>
+<dt>except ClientError as e:</dt><dd><p>raise OperationFailedException(e)</p>
+</dd>
+</dl>
+</dd>
+<dt>def download_from_S3(cloud_path: str, workspace_path: str, credentials: dict) -&gt; None:</dt><dd><p>“””
+Function to download file/folder from workspaces
+“””
+access_key_id = credentials[“AccessKeyId”]
+secret_access_key = credentials[“SecretAccessKey”]
+session_token = credentials[“SessionToken”]
+client = S3Client(</p>
+<blockquote>
+<div><p>aws_access_key_id=access_key_id,
+aws_secret_access_key=secret_access_key,
+aws_session_token=session_token,</p>
+</div></blockquote>
+<p>)
+source_path = client.CloudPath(cloud_path)
+if not source_path.exists():</p>
+<blockquote>
+<div><p>raise InvalidPathException</p>
+</div></blockquote>
+<p>isFile = source_path.is_file()
+if isFile:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>try:</dt><dd><p>dest_path = os.getcwd()
+source_path.copy(dest_path, force_overwrite_to_cloud=True)
+logging.basicConfig(level=logging.INFO)
+logging.info(f”Download successful to path={dest_path}”)</p>
+</dd>
+<dt>except ClientError as e:</dt><dd><p>raise OperationFailedException(e)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>else:</dt><dd><dl class="simple">
+<dt>if not cloud_path.endswith(“/”):</dt><dd><p>cloud_path += “/”</p>
+</dd>
+</dl>
+<p>source_path = client.CloudPath(cloud_path)
+if not source_path.is_dir():</p>
+<blockquote>
+<div><p>raise InvalidPathException</p>
+</div></blockquote>
+<dl class="simple">
+<dt>try:</dt><dd><p>dest_path = f”{make_path(os.getcwd(),workspace_path)}”
+source_path.copytree(dest_path, force_overwrite_to_cloud=True)
+logging.basicConfig(level=logging.INFO)
+logging.info(f”Download successful to path={dest_path}”)</p>
+</dd>
+<dt>except ClientError as e:</dt><dd><p>raise OperationFailedException(e)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>def file_conversion(</dt><dd><p>self, repo_info: str, dataset_id: str, format: str, header_mapping: dict</p>
+</dd>
+<dt>) -&gt; None:</dt><dd><p>“””
+Function that converts file to mentioned format
+“””
+if not (repo_info and isinstance(repo_info, str)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“repo_name/repo_id”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (dataset_id and isinstance(dataset_id, str)):</dt><dd><p>raise InvalidParameterException(“dataset_id”)</p>
+</dd>
+<dt>if not (format and isinstance(format, str)):</dt><dd><p>raise InvalidParameterException(“format”)</p>
+</dd>
+<dt>if not isinstance(header_mapping, dict):</dt><dd><p>raise InvalidParameterException(“header_mapping”)</p>
+</dd>
+</dl>
+<p>download_dict = self.download_data(repo_info, dataset_id)
+url = download_dict.get(“data”, {}).get(“attributes”, {}).get(“download_url”)
+if not url:</p>
+<blockquote>
+<div><p>raise MissingKeyException(“dataset url”)</p>
+</div></blockquote>
+<p>file_name = f”{dataset_id}.gct”
+try:</p>
+<blockquote>
+<div><p>urllib.request.urlretrieve(url, file_name)
+data = parse(file_name)
+os.remove(file_name)
+row_metadata = data.row_metadata_df
+if header_mapping:</p>
+<blockquote>
+<div><p>row_metadata = row_metadata.rename(header_mapping, axis=1)</p>
+</div></blockquote>
+<p>row_metadata.to_csv(f”{dataset_id}.{format}”, sep=”t”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>except Exception as e:</dt><dd><p>raise OperationFailedException(e)</p>
+</dd>
+</dl>
+</dd>
+<dt>def get_data_type(self, url: str, payload: dict) -&gt; str:</dt><dd><p>“””
+Function to return the data-type of the required dataset
+“””
+if not (url and isinstance(url, str)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“url”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (payload and isinstance(payload, dict)):</dt><dd><p>raise InvalidParameterException(“payload”)</p>
+</dd>
+</dl>
+<p>response = self.session.post(url, data=json.dumps(payload))
+error_handler(response)
+response_data = response.json()
+hits = response_data.get(“hits”, {}).get(“hits”)
+if not (hits and isinstance(hits, list)):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”,
+detail=”No matches found with the given repo details. Please try again.”,</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>dataset = hits[0]
+data_type = dataset.get(“_source”, {}).get(“data_type”)
+if not data_type:</p>
+<blockquote>
+<div><p>raise MissingKeyException(“data_type”)</p>
+</div></blockquote>
+<p>return data_type</p>
+</dd>
+<dt>def get_metadata(self, url: str, payload: dict) -&gt; str:</dt><dd><p>“””
+Function to return the data-type of the required dataset
+“””
+if not (url and isinstance(url, str)):</p>
+<blockquote>
+<div><p>raise InvalidParameterException(“url”)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>if not (payload and isinstance(payload, dict)):</dt><dd><p>raise InvalidParameterException(“payload”)</p>
+</dd>
+</dl>
+<p>response = self.session.post(url, data=json.dumps(payload))
+error_handler(response)
+response_data = response.json()
+hits = response_data.get(“hits”, {}).get(“hits”)
+if not (hits and isinstance(hits, list)):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>raise paramException(</dt><dd><p>title=”Param Error”,
+detail=”No matches found with the given repo details. Please try again.”,</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>dataset = hits[0]
+return dataset</p>
+</dd>
+<dt>def elastic_query(index_name: str, dataset_id: str) -&gt; dict:</dt><dd><dl>
+<dt>query = {</dt><dd><dl>
+<dt>“query”: {</dt><dd><dl>
+<dt>“bool”: {</dt><dd><dl class="simple">
+<dt>“must”: [</dt><dd><p>{“term”: {“_index”: index_name}},
+{“term”: {“dataset_id.keyword”: dataset_id}},</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+<p>}
+return query</p>
+</dd>
+</dl>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Polly-python-team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
