@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>polly package &mdash; Polly&#39;s Documentation 1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Downloading Dataset" href="doc/download.html" />
+    <link rel="prev" title="About Polly Library" href="doc/Polly.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Polly's Documentation
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="doc/Polly.html">About Polly Library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">polly package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-polly.auth">polly.auth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-polly.cohort">polly.cohort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-polly.omixatlas">polly.omixatlas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-polly.workspaces">polly.workspaces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc/download.html">Downloading Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doc/query.html">Querying metadata</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Polly's Documentation</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>polly package</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="polly-package">
+<h1>polly package<a class="headerlink" href="#polly-package" title="Permalink to this headline"></a></h1>
+<section id="module-polly.auth">
+<span id="polly-auth"></span><h2>polly.auth<a class="headerlink" href="#module-polly.auth" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="polly.auth.Polly">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Polly</span></span><a class="headerlink" href="#polly.auth.Polly" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class for authorization to use polly on local, which include following member functions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.auth.Polly.auth">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polly'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.auth.Polly.auth" title="Permalink to this definition"></a></dt>
+<dd><p>Function for authorization to use polly on terminal or notebook.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">if token is not satisfied it will throw a error.</div>
+<div class="line">else it will auth you.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Error:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">UnauthorizedException:</span></code> when the token is expired.</div>
+</div>
+</dd>
+</dl>
+<p>To use auth function import class Polly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.auth</span> <span class="kn">import</span> <span class="n">Polly</span>
+<span class="n">Polly</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.auth.Polly.get_session">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polly'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.auth.Polly.get_session" title="Permalink to this definition"></a></dt>
+<dd><p>Function to get session from polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">if token is not satisfied it will throw UnauthorizedException.</div>
+<div class="line">else it will return a polly.session object.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Error:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">UnauthorizedException:</span></code> when the token is expired.</div>
+</div>
+</dd>
+</dl>
+<p>To use get_seesion function import class Polly.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.auth</span> <span class="kn">import</span> <span class="n">Polly</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Polly</span><span class="o">.</span><span class="n">get_session</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-polly.cohort">
+<span id="polly-cohort"></span><h2>polly.cohort<a class="headerlink" href="#module-polly.cohort" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="polly.cohort.Cohort">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Cohort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polly'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.cohort.Cohort" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class contain function which can be used to create, add or remove samples, merge metadata edit or delete.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.cohort</span> <span class="kn">import</span> <span class="n">Cohort</span>
+<span class="c1"># To use this class initialize a object like this if you are not authorised on polly</span>
+<span class="n">cohort</span> <span class="o">=</span> <span class="n">Cohort</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you are authorised then you can initialize object without token to know about <a class="reference internal" href="doc/Polly.html#auth"><span class="std std-ref">authentication</span></a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.create_cohort">
+<span class="sig-name descname"><span class="pre">create_cohort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cohort_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#polly.cohort.Cohort.create_cohort" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to create a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">local_path(str):</span></code> local path to instantiate the cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">cohort_name(str):</span></code> identifier name for the cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">description(str):</span></code> description about the cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key(str):</span></code> Optional argument: repo_key(repo_name/repo_id) for the omixatlas to be added.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">entity_id(list):</span></code> Optional argument: list of sample_id or dataset_id to be added to the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on creation of cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> Empty or Invalid Parameters</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortNameException:</span></code> The cohort_name does not represent a valid cohort name.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException:</span></code> Provided path does not represent a file or a directory.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">After making Cohort Object you can create cohort.</div>
+<div class="line">Example-</div>
+<div class="line">1. while passing argument of repo and dataset.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">create_cohort</span><span class="p">(</span><span class="s2">&quot;/import/tcga_cohort&quot;</span><span class="p">,</span><span class="s2">&quot;moderate&quot;</span><span class="p">,</span><span class="s2">&quot;tcga_tp53_brca_mutation_moderate&quot;</span><span class="p">,</span><span class="s2">&quot;tcga&quot;</span><span class="p">,</span><span class="n">moderate_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">2. without passing argument of repo and dataset.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort2</span><span class="o">.</span><span class="n">create_cohort</span><span class="p">(</span><span class="s2">&quot;/import/tcga_cohort&quot;</span><span class="p">,</span><span class="s2">&quot;higher&quot;</span><span class="p">,</span><span class="s2">&quot;tcga_tp53_brca_mutation_high&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.add_to_cohort">
+<span class="sig-name descname"><span class="pre">add_to_cohort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#polly.cohort.Cohort.add_to_cohort" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to add dataset(s) or sample(s) to a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key(str):</span></code> repo_key(repo_name/repo_id) for the omixatlas to be added.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">entity_id(list):</span></code> list of entity_ids to be added to the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message for number of dataset(s) or sample(s) which are added to the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> Empty or Invalid Parameters.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">After creating cohort we can add cohort.</div>
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">add_to_cohort</span><span class="p">(</span><span class="s2">&quot;tcga&quot;</span><span class="p">,</span><span class="n">high_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.summarize_cohort">
+<span class="sig-name descname"><span class="pre">summarize_cohort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#polly.cohort.Cohort.summarize_cohort" title="Permalink to this definition"></a></dt>
+<dd><p>Function to return metadata and summary of a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A tuple with the first value as cohort metadata information (name, description and number of dataset(s) or sample(s) in the cohort) and the second value as dataframe containing the source, dataset_id or sample_id and data type available in the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span><span class="p">,</span> <span class="n">cohort_details</span> <span class="o">=</span> <span class="n">cohort2</span><span class="o">.</span><span class="n">summarize_cohort</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">metadata will contain a object like this.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;cohort_name&#39;</span><span class="p">:</span> <span class="s1">&#39;higher&#39;</span><span class="p">,</span>
+<span class="s1">&#39;number_of_samples&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+<span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;tcga_tp53_brca_mutation_high&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">cohort detail will contain a table like that</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>source_omixatlas</p></th>
+<th class="head"><p>datatype</p></th>
+<th class="head"><p>dataset_id</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-A8-A09Q-01A-11W-A019-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-AN-A0FL-01A-11W-A050-09</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-AR-A254-01A-21D-A167-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-D8-A1XO-01A-11D-A14K-09</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-EW-A1J2-01A-21D-A13L-09</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>tcga</p></td>
+<td><p>Mutation</p></td>
+<td><p>BRCA_Mutation_TCGA-LL-A50Y-01A-11D-A25Q-09</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.load_cohort">
+<span class="sig-name descname"><span class="pre">load_cohort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">local_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.cohort.Cohort.load_cohort" title="Permalink to this definition"></a></dt>
+<dd><p>Function to load an existing cohort into an object.
+Once loaded, the functions described in the documentation can be used for the object where the cohort is loaded.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">local_path(str):</span></code> local path of the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on instantiation of the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException:</span></code> This path does not represent a file or a directory.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortPathException:</span></code> This path does not represent a Cohort.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">load_cohort</span><span class="p">(</span><span class="s2">&quot;/import/high_edited.pco&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.edit_cohort">
+<span class="sig-name descname"><span class="pre">edit_cohort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_cohort_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.cohort.Cohort.edit_cohort" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to edit a cohort name and description.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">new_cohort_name(str):</span></code> Optional Argument: new identifier name for the cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">new_description(str):</span></code> Optional Argument: new description about the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on updation of cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">CohortEditException:</span></code> No parameter specified for editing in cohort</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">edit_cohort</span><span class="p">(</span><span class="s2">&quot;high_edited&quot;</span><span class="p">,</span><span class="s2">&quot;tcga_tp53_brca_mutation_high_edited&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.merge_metadata">
+<span class="sig-name descname"><span class="pre">merge_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#polly.cohort.Cohort.merge_metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Function to merge the sample level metadata from all the gct files in a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A pandas dataframe containing the merged metadata for analysis.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">EmptyCohortException:</span></code> There are no datasets to be merged in the cohort</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">high_metadata</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_metadata</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>high_metadata will be  a table.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.merge_data_matrix">
+<span class="sig-name descname"><span class="pre">merge_data_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="headerlink" href="#polly.cohort.Cohort.merge_data_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Function to merge the data-matrix level metadata from all the gct files in a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A pandas dataframe containing the merged data for analysis.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">EmptyCohortException:</span></code> There are no datasets to be merged in the cohort</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">high_data_matrix</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_data_matrix</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">high_data_matrix will a table.</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.merge_dataset_metadata">
+<span class="sig-name descname"><span class="pre">merge_dataset_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="headerlink" href="#polly.cohort.Cohort.merge_dataset_metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Function to merge the dataset level metadata from all the jpco files in a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A pandas dataframe containing the merged data for analysis.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">EmptyCohortException:</span></code> There are no datasets to be merged in the cohort</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">high_data_metadata_matrix</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_dataset_metadata</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">high_data_metadata_matrix will a table.</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.merge_data">
+<span class="sig-name descname"><span class="pre">merge_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.cohort.Cohort.merge_data" title="Permalink to this definition"></a></dt>
+<dd><p>Function to merge data(either sample, dataset or data-matrix level metadata)
+as requested by the user from all the jpco files in a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">data_level(str):</span></code> identifier to specify the data to be merged - sample, dataset or data_matrix.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A tuple of pandas dataframe containing the merged data for analysis.
+in the sequence - sample_level, dataset_level, datamatrix dataframes.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortMergeOperation:</span></code> Incorrect or blank parameter specified for merging in cohort.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> Empty or Invalid Parameters.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for sample merging</span>
+<span class="n">merge_sample</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_data</span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">)</span>
+<span class="c1"># for dataset merging</span>
+<span class="n">merge_dataset</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_data</span><span class="p">(</span><span class="s1">&#39;dataset&#39;</span><span class="p">)</span>
+<span class="c1"># for data_matrix merging</span>
+<span class="n">merge_data_matrix</span> <span class="o">=</span> <span class="n">cohort</span><span class="o">.</span><span class="n">merge_data</span><span class="p">(</span><span class="s1">&#39;data_matrix&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">merge_sample, merge_dataset, merge_data_matrix will be a table.</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#polly.cohort.Cohort.is_valid" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to check if a cohort is valid or not.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A boolean result based on the validity of the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException:</span></code> Cohort path does not represent a file or a directory.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort2</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.remove_from_cohort">
+<span class="sig-name descname"><span class="pre">remove_from_cohort</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#polly.cohort.Cohort.remove_from_cohort" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used for removing dataset_id or sample_id from a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">entity_id(list):</span></code> list of dataset_id or sample_id to be removed from the cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on removal of dataset_id or sample_id from cohort.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> Empty or Invalid Parameters</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidCohortOperationException:</span></code> This operation is not valid as no cohort has been instantiated.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">remove_from_cohort</span><span class="p">(</span><span class="n">high_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.cohort.Cohort.delete_cohort">
+<span class="sig-name descname"><span class="pre">delete_cohort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#polly.cohort.Cohort.delete_cohort" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to delete a cohort.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">A confirmation message on deletion of cohort.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example-</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cohort</span><span class="o">.</span><span class="n">delete_cohort</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-polly.omixatlas">
+<span id="polly-omixatlas"></span><h2>polly.omixatlas<a class="headerlink" href="#module-polly.omixatlas" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OmixAtlas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polly'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.omixatlas.OmixAtlas" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>OmixAtlas class interact with omixatlases repository. You can query datasets and metadata.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+</dl>
+<p>We can initialize a OmixAtlas class object using.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you are authorised then you can initialize object without token to know about <a class="reference internal" href="doc/Polly.html#auth"><span class="std std-ref">authentication</span></a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repo_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explorer_enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">studio_presets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.core.frame.DataFrame</span></span></span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.create" title="Permalink to this definition"></a></dt>
+<dd><p>This function is used to create a new omixatlas,</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">display_name</span> <span class="pre">(str):</span></code> display name of the omixatlas.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">description</span> <span class="pre">(str):</span></code> description of the omixatlas.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_name</span> <span class="pre">(str):</span></code> repo_name which is used to create index in db.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">image_url</span> <span class="pre">(str):</span></code> Url of the icon for omixatlas. Optional Parameter.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">initials</span> <span class="pre">(str):</span></code> Initials shown in the icon of omixatlas. Optional Parameter.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">explorer_enabled</span> <span class="pre">(bool):</span></code> Default True. Optional Parameter.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">studio_presets</span> <span class="pre">(list):</span></code> Optional Paramter.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">components</span> <span class="pre">(list):</span></code> Optional Parameter.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">Dataframe after creation of omixatlas.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">ValueError:</span></code> Repository creation response is in Incorrect format.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">To use this function import Omixatlas class and make a object.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">omixatlas</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">display_name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">repo_name</span><span class="p">,</span> <span class="n">image_url</span><span class="p">,</span> <span class="n">initials</span><span class="p">,</span> <span class="n">explorer_enabled</span><span class="p">,</span><span class="n">studio_presets</span><span class="p">,</span> <span class="n">components</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.get_all_omixatlas">
+<span class="sig-name descname"><span class="pre">get_all_omixatlas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.get_all_omixatlas" title="Permalink to this definition"></a></dt>
+<dd><p id="targetget">This function will return a list of omixatlas repository in polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line">None</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><p>It will return a list of objects like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;repo_name&#39;</span><span class="p">:</span> <span class="s1">&#39;repo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;repo_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1646&#39;</span><span class="p">,</span>
+<span class="s1">&#39;indexes&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="s1">&#39;gct_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;csv&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;files&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_files&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;json&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ipynb&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_ipynb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gct_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_data&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_data&#39;</span>
+    <span class="p">},</span>
+<span class="s1">&#39;diseases&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;organisms&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;sources&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;datatypes&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;dataset_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;disease_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;tissue_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;organism_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_line_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;drug_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_source_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;normal_sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">To use this function import Omixatlas class and make a object.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">omixatlas</span><span class="o">.</span><span class="n">get_all_omixatlas</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.get_omixatlas">
+<span class="sig-name descname"><span class="pre">get_omixatlas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.get_omixatlas" title="Permalink to this definition"></a></dt>
+<dd><p>This function will return a omixatlas repository in polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">key:</span></code> repo name or repo id.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><p>It will return a objects like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;repo_name&#39;</span><span class="p">:</span> <span class="s1">&#39;repo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;repo_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1646&#39;</span><span class="p">,</span>
+<span class="s1">&#39;indexes&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="s1">&#39;gct_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;csv&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;files&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_files&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;json&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ipynb&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_ipynb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gct_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_data&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_data&#39;</span>
+    <span class="p">},</span>
+<span class="s1">&#39;diseases&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;organisms&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;sources&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;datatypes&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;dataset_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;disease_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;tissue_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;organism_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_line_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;drug_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_source_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;normal_sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">To use this function import Omixatlas class and make a object.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">omixatlas</span><span class="o">.</span><span class="n">get_omixatlas</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.omixatlas_summary">
+<span class="sig-name descname"><span class="pre">omixatlas_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.omixatlas_summary" title="Permalink to this definition"></a></dt>
+<dd><p>This function will return you a object that contain information about omixatlas repository.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">key</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo_id or repo_name.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><p>It will return a object like this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;repo_name&#39;</span><span class="p">:</span> <span class="s1">&#39;repo&#39;</span><span class="p">,</span>
+<span class="s1">&#39;repo_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1646&#39;</span><span class="p">,</span>
+<span class="s1">&#39;indexes&#39;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">&#39;gct_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_metadata&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_metadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;csv&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_csv&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;files&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_files&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;json&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ipynb&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_ipynb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gct_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_gct_data&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;h5ad_data&#39;</span><span class="p">:</span> <span class="s1">&#39;repo_h5ad_data&#39;</span>
+    <span class="p">},</span>
+<span class="s1">&#39;diseases&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;organisms&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;sources&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;datatypes&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="s1">&#39;dataset_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;disease_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;tissue_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;organism_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_line_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;cell_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;drug_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_type_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;data_source_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="s1">&#39;normal_sample_count&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">To use this function see the code below.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">omixatlas</span><span class="o">.</span><span class="n">omixatlas_summary</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.query_metadata">
+<span class="sig-name descname"><span class="pre">query_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_api_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">QUERY_API_V2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.query_metadata" title="Permalink to this definition"></a></dt>
+<dd><p>This function will returns a table containing the datasets that satisfied the sql query.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">query</span> <span class="pre">(str)</span> <span class="pre">:</span></code> sql query  on  omixatlas for example - “SELECT * FROM liveromix_atlas.datasets”.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">experimental_features</span> <span class="pre">:</span></code> <a class="reference internal" href="doc/query.html#target"><span class="std std-ref">this section includes in querying metadata</span></a>.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">query_api_version</span> <span class="pre">(str)</span> <span class="pre">:</span></code> v1 or v2.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">page_size</span> <span class="pre">(int):</span></code> page size for query.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">It will return a table that will contain metadata (for example- disease,</div>
+<div class="line">total_num_cells) and datasets that satisfied the sql query.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">UnfinishedQueryException:</span></code> when query has not finised the execution.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">QueryFailedException:</span></code> when query failed to execute.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">polly.omixatlas</span> <span class="kn">import</span> <span class="n">OmixAtlas</span>
+<span class="n">omixatlas</span> <span class="o">=</span> <span class="n">OmixAtlas</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># to use OmixAtlas class functions</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT src_dataset_id, name FROM geo.features WHERE LOWER(name) = &#39;brd4&#39;&quot;</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">omixatlas</span><span class="o">.</span><span class="n">query_metadata</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">query_api_version</span><span class="o">=</span><span class="s2">&quot;v2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">To know about quering metadata <a class="reference internal" href="doc/query.html#targetq"><span class="std std-ref">Querying metadata</span></a>.</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.get_schema">
+<span class="sig-name descname"><span class="pre">get_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['dataset',</span> <span class="pre">'sample']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.get_schema" title="Permalink to this definition"></a></dt>
+<dd><p>Using this function to extract the schema of an OmixAtlas.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo_id OR repo_name. This is a mandatory field.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">schema_level</span> <span class="pre">(list)</span> <span class="pre">:</span></code> The default value is [‘dataset’, ‘sample’]. The users can use [‘dataset’] OR [‘sample’] to fetch the schema of dataset OR sample level metadata respectively.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">(str)</span> <span class="pre">:</span></code> is the source from where data is ingested into the Omixatlas.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">data_type</span> <span class="pre">(str)</span> <span class="pre">:</span></code> is the datatype for which user wants to get the schema for. The default value is ‘all’, which will fetch the schema of all datatypes except single cell. To fetch the schema for single cell datatype from an OmixAtlas, the user should use ‘single_cell’.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">It will contain the schema for dataset, sample as dataframe.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;dataset&#39;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="s1">&#39;sample&#39;</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">you can access dataset, sample schema in following manner.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import pandas as pd</span>
+<span class="c1"># pd.set_option(&#39;expand_frame_repr&#39;, False)</span>
+<span class="c1"># use above two line if your dataframe does not print in single line</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">omixatlas</span><span class="o">.</span><span class="n">get_schema</span><span class="p">(</span><span class="s2">&quot;9&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">])</span>
+
+<span class="c1"># to fetch the dataframe with dataset level metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="c1"># to fetch the dataframe with sample level metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">schema.dataset</span></code> will contain dataframe you can print them in a table form like this.</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Source</p></th>
+<th class="head"><p>Datatype</p></th>
+<th class="head"><p>Field Name</p></th>
+<th class="head"><p>Field Description</p></th>
+<th class="head"><p>Field Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_organism</p></td>
+<td><p>Orgnism from which the samples were derived</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>src_uri</p></td>
+<td><p>Unique URI derived from data file’s S3 location</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>total_num_samples</p></td>
+<td><p>Total number of samples in a dataset</p></td>
+<td><p>integer</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>year</p></td>
+<td><p>Year in which the dataset was published</p></td>
+<td><p>integer</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>description</p></td>
+<td><p>Description of the dataset</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_cell_line</p></td>
+<td><p>Cell lines from which the samples were derived…</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>data_table_name</p></td>
+<td><p>Name of the data table associated with data file</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>data_table_version</p></td>
+<td><p>Current version of the data table associated w…</p></td>
+<td><p>integer</p></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">schema.sample</span></code> will contain dataframe you can print them in a table form like this.</div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>Source</p></th>
+<th class="head"><p>Datatype</p></th>
+<th class="head"><p>Field Name</p></th>
+<th class="head"><p>Field Description</p></th>
+<th class="head"><p>Field Type</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>growth_protocol_ch1</p></td>
+<td><p>NA</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>src_uri</p></td>
+<td><p>Unique URI derived from source data file’s S3 …</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>sample_id</p></td>
+<td><p>Unique ID associated with every sample</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_gene_modified</p></td>
+<td><p>Gene modified through genetic modification</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>dose_ch1</p></td>
+<td><p>NA</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_cohort_name</p></td>
+<td><p>Name of the cohort to which the sample belongs</p></td>
+<td><p>text</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>curated_control</p></td>
+<td><p>Signifies whether the given sample is a contro…</p></td>
+<td><p>integer</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>all</p></td>
+<td><p>all</p></td>
+<td><p>src_dataset_id</p></td>
+<td><p>Dataset ID of the file this data entity origin…</p></td>
+<td><p>text</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">invalidApiResponseException:</span></code> datakey, attributes, schema_type is missing in repository schema.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">RequestException:</span></code> Schema not found.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">paramException:</span></code> repo_key and schema_type_dict are either empty or its datatype is not correct.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example to fetch dataset and sample level schema for all datatypes from all sources in GEO Omixatlas.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">omixatlas</span><span class="o">.</span><span class="n">get_schema</span><span class="p">(</span><span class="s2">&quot;geo&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span> <span class="s1">&#39;sample&#39;</span><span class="p">],</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span>
+
+<span class="c1"># to fetch the dataframe with dataset level metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="c1"># to fetch the dataframe with sample level metadata</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.insert_schema">
+<span class="sig-name descname"><span class="pre">insert_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.insert_schema" title="Permalink to this definition"></a></dt>
+<dd><p>Use insert_schema(repo_key, payload) to update the existing schema of an OmixAtlas.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">insert_schema</span><span class="p">(</span><span class="n">repo_key</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args</span> <span class="pre">:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key:</span></code> (str) repo_id OR repo_name. This is a mandatory field.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">payload:</span></code> (dict) The payload is a JSON file which should be as per the structure defined for schema. Only data-admin will have the authentication to update the schema.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;REPO_KEY&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;files | gct_metadata | h5ad_metadata&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="o">...</span> <span class="n">field</span> <span class="n">definitions</span>
+        <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">payload</span></code> can be loaded from the JSON file in which schema is defined in the following manner:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Opening JSON file</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;schema_file.json&#39;</span><span class="p">)</span>
+
+<span class="c1"># returns JSON object as a dictionary</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">apiErrorException:</span></code> Params are either empty or its datatype is not correct or see detail.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.update_schema">
+<span class="sig-name descname"><span class="pre">update_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.update_schema" title="Permalink to this definition"></a></dt>
+<dd><p>Use update_schema(repo_key, payload) to update the existing schema of an OmixAtlas.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">update_schema</span><span class="p">(</span><span class="n">repo_key</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args</span> <span class="pre">:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str):</span></code> repo_id OR repo_name. This is a mandatory field.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">payload</span> <span class="pre">(dict):</span></code> The payload is a JSON file which should be as per the structure defined for schema. Only data-admin will have the authentication to update the schema.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;REPO_KEY&gt;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;schema_type&quot;</span><span class="p">:</span> <span class="s2">&quot;files | gct_metadata | h5ad_metadata&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="o">...</span> <span class="n">field</span> <span class="n">definitions</span>
+        <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">payload</span></code> can be loaded from the JSON file in which schema is defined in the following manner:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Opening JSON file</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;schema_file.json&#39;</span><span class="p">)</span>
+
+<span class="c1"># returns JSON object as a dictionary</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">apiErrorException:</span></code> Params are either empty or its datatype is not correct or see detail.</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.download_data">
+<span class="sig-name descname"><span class="pre">download_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.download_data" title="Permalink to this definition"></a></dt>
+<dd><p>To download any dataset, the following function can be used.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="s2">&quot;repo_key&quot;</span><span class="p">,</span> <span class="s2">&quot;[dataset_id]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str):</span></code> repo_id OR repo_name from where the data needs to be downloaded.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dataset_id</span> <span class="pre">(str):</span></code> dataset_id which the user wants to download.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">The <code class="docutils literal notranslate"><span class="pre">[repo_name</span> <span class="pre">OR</span> <span class="pre">repo_id]</span></code> of an OmixAtlas can be identified by calling the <a class="reference internal" href="#targetget"><span class="std std-ref">get_all_omixatlas()</span></a> function.</div>
+<div class="line">The <code class="docutils literal notranslate"><span class="pre">[dataset_id]</span></code> can be obtained by querying the metadata at the dataset level using <code class="docutils literal notranslate"><span class="pre">query_metadata(&quot;[query</span> <span class="pre">written</span> <span class="pre">in</span> <span class="pre">SQL]&quot;)</span></code>.</div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">This will download the dataset.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">The output data is in .gct/h5ad format. This data can be parsed into a data frame for better accessibility using the following code:</div>
+<div class="line">You can also download data in other format like gct to know how to write code <a class="reference internal" href="doc/download.html#targetd"><span class="std std-ref">Click Here</span></a>.</div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.save_to_workspace">
+<span class="sig-name descname"><span class="pre">save_to_workspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workspace_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workspace_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">&lt;module</span> <span class="pre">'json'</span> <span class="pre">from</span> <span class="pre">'/opt/hostedtoolcache/Python/3.10.4/x64/lib/python3.10/json/__init__.py'&gt;</span></span></span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.save_to_workspace" title="Permalink to this definition"></a></dt>
+<dd><p>Function for saving data from omixatlas to workspaces.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_id</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo id.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dataset_id</span> <span class="pre">(str)</span> <span class="pre">:</span></code> dataset id.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_id</span> <span class="pre">(str)</span> <span class="pre">:</span></code> workspace id of polly.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_path</span> <span class="pre">(str)</span> <span class="pre">:</span></code> path in workspace where you want to save file.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">Example to save the dataset_id <code class="docutils literal notranslate"><span class="pre">'GSE101127_GPL1355'</span></code> from repo_id <code class="docutils literal notranslate"><span class="pre">1615965444377</span></code> to a workspace_id <code class="docutils literal notranslate"><span class="pre">8025</span></code> in a folder named <code class="docutils literal notranslate"><span class="pre">'data'</span></code>.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">save_to_workspace</span><span class="p">(</span><span class="s1">&#39;1615965444377&#39;</span><span class="p">,</span> <span class="s1">&#39;GSE101127_GPL1355&#39;</span><span class="p">,</span> <span class="mi">8025</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.omixatlas.OmixAtlas.format_converter">
+<span class="sig-name descname"><span class="pre">format_converter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#polly.omixatlas.OmixAtlas.format_converter" title="Permalink to this definition"></a></dt>
+<dd><p>Function to convert a file format.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">repo_key</span> <span class="pre">(str)</span> <span class="pre">:</span></code> repo_id.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">dataset_id</span> <span class="pre">(str)</span> <span class="pre">:</span></code> dataset_id.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">to(str)</span> <span class="pre">:</span></code> output file format.</div>
+</div>
+</dd>
+</dl>
+<div class="line-block">
+<div class="line">For example:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">omixatlas</span><span class="o">.</span><span class="n">format_converter</span><span class="p">(</span><span class="s2">&quot;cbioportal&quot;</span><span class="p">,</span> <span class="s2">&quot;ACC_2019_Mutation_ACYC-FMI-19&quot;</span><span class="p">,</span> <span class="s2">&quot;maf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> invalid value of any parameter for example like - repo_id or repo_name etc.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">paramException:</span></code> Incompatible or empty value of any parameter</div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-polly.workspaces">
+<span id="polly-workspaces"></span><h2>polly.workspaces<a class="headerlink" href="#module-polly.workspaces" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="polly.workspaces.Workspaces">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Workspaces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'polly'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.workspaces.Workspaces" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class contains functions to interact with workspaces on Polly. We can initialize a object that
+can use all function and methods of Workspaces class.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">token</span> <span class="pre">(str):</span></code> token copy from polly.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># to initialize a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">fetch_my_workspaces</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you are authorised then you can initialize object without token to know about <a class="reference internal" href="doc/Polly.html#auth"><span class="std std-ref">authentication</span></a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.workspaces.Workspaces.create_workspace">
+<span class="sig-name descname"><span class="pre">create_workspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polly.workspaces.Workspaces.create_workspace" title="Permalink to this definition"></a></dt>
+<dd><p>This function create workspace on polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">(str):</span></code> name of the workspace.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">description</span> <span class="pre">(str):</span></code> general information about workspace.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">It will return a object like this.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">9999</span><span class="p">,</span>
+<span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;rrrrr&#39;</span><span class="p">,</span>
+<span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;for docu&#39;</span><span class="p">,</span>
+<span class="s1">&#39;created_time&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-03-16 11:08:47.127260&#39;</span><span class="p">,</span>
+<span class="s1">&#39;last_modified&#39;</span><span class="p">:</span> <span class="s1">&#39;2022-03-16 11:08:47.127260&#39;</span><span class="p">,</span>
+<span class="s1">&#39;creator&#39;</span><span class="p">:</span> <span class="mi">1127</span><span class="p">,</span>
+<span class="s1">&#39;project_property&#39;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;workspaces&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+<span class="p">},</span>
+<span class="s1">&#39;organisation&#39;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># to create a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">create_workspace</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.workspaces.Workspaces.fetch_my_workspaces">
+<span class="sig-name descname"><span class="pre">fetch_my_workspaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#polly.workspaces.Workspaces.fetch_my_workspaces" title="Permalink to this definition"></a></dt>
+<dd><p>This function fetch workspaces from Polly.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line">None</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">it will return a table with attributes.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">fetch_my_workspaces</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.workspaces.Workspaces.upload_to_workspaces">
+<span class="sig-name descname"><span class="pre">upload_to_workspaces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workspace_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workspace_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#polly.workspaces.Workspaces.upload_to_workspaces" title="Permalink to this definition"></a></dt>
+<dd><p>Function to upload files/folders to workspaces.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_id</span> <span class="pre">:</span></code> id of the where file need to uploaded.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_path</span> <span class="pre">:</span></code> file path on workspace if folder does not exist it will create.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">local_path</span> <span class="pre">:</span></code> uploaded file path.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">None</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Errors:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> when the parameter like workspace id is invalid.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException:</span></code> when the file to path is invalid.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">upload_to_workspaces</span><span class="p">(</span><span class="n">workspace_id</span><span class="p">,</span> <span class="n">workspace_path</span><span class="p">,</span> <span class="n">local_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polly.workspaces.Workspaces.download_from_workspaces">
+<span class="sig-name descname"><span class="pre">download_from_workspaces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workspace_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">workspace_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#polly.workspaces.Workspaces.download_from_workspaces" title="Permalink to this definition"></a></dt>
+<dd><p>Function to download files/folders from workspaces.</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">Args:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_id</span> <span class="pre">:</span></code> id of the where file need to uploaded.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">workspace_path</span> <span class="pre">:</span></code> downloaded file on workspace.</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Returns:</span></code></dt><dd><div class="line-block">
+<div class="line">None</div>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">Error:</span></code></dt><dd><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidPathException</span> <span class="pre">:</span></code> for invalid path.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">OperationFailedException</span> <span class="pre">:</span></code> when downloading fails.</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">InvalidParameterException:</span></code> when the parameter like workspace id is invalid.</div>
+</div>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a obj</span>
+<span class="n">workspaces</span> <span class="o">=</span> <span class="n">Workspaces</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="c1"># from there you can other methods</span>
+<span class="n">workspaces</span><span class="o">.</span><span class="n">download_from_workspaces</span><span class="p">(</span><span class="n">workspace_id</span><span class="p">,</span> <span class="n">workspace_path</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="doc/Polly.html" class="btn btn-neutral float-left" title="About Polly Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="doc/download.html" class="btn btn-neutral float-right" title="Downloading Dataset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Polly-python-team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
