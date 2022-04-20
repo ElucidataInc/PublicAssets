@@ -1,23 +1,23 @@
 {
-    "tcga": {
-        "file_structure": "single",
-    },
-    "cbioportal": {
-        "file_structure": "single",
-    },
-    "depmap": {
-        "file_structure": "single",
-    },
-    "gdc": {
-        "file_structure": "single",
-    },
-    "immport": {
-        "file_structure": "single",
-    },
-    "lincs": {
-        "file_structure": "single",
-    },
-    "cptac": {
-        "file_structure": "single",
-    },
+ "tcga": {
+  "file_structure": "single"
+ },
+ "cbioportal": {
+  "file_structure": "single"
+ },
+ "depmap": {
+  "file_structure": "single"
+ },
+ "gdc": {
+  "file_structure": "single"
+ },
+ "immport": {
+  "file_structure": "single"
+ },
+ "lincs": {
+  "file_structure": "single"
+ },
+ "cptac": {
+  "file_structure": "single"
+ }
 }
