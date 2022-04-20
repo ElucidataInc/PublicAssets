@@ -1,4 +1,4 @@
-COHORT_REPO_INFO = {
+{
     "tcga": {
         "file_structure": "single",
     },
