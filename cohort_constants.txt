@@ -22,5 +22,17 @@
  },
  "geo": {
   "file_structure": "multiple"
+ },
+ "metabolomics": {
+  "file_structure": "multiple"
+ },
+ "pcd": {
+  "file_structure": "multiple"
+ },
+ "sc_data_lake": {
+  "file_structure": "multiple"
+ },
+ "enterprise_atlas": {
+  "file_structure": "multiple"
  }
 }
