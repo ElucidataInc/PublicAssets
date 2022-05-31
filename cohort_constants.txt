@@ -20,6 +20,9 @@
  "cptac": {
   "file_structure": "single"
  },
+ "valo": {
+  "file_structure": "single"
+ },
  "geo": {
   "file_structure": "multiple"
  },
