@@ -32,9 +32,6 @@
  "pcd": {
   "file_structure": "multiple"
  },
- "sc_data_lake": {
-  "file_structure": "multiple"
- },
  "enterprise_atlas": {
   "file_structure": "multiple"
  }
