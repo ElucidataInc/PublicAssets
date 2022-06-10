@@ -23,6 +23,9 @@
  "valo": {
   "file_structure": "single"
  },
+  "tcga_raw_counts": {
+  "file_structure": "single"
+ },
  "geo": {
   "file_structure": "multiple"
  },
