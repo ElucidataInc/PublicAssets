@@ -1,4 +1,4 @@
 {
-  "data": ["gct", "vcf", "h5ad", ".ipynb_checkpoints"],
-  "metadata": ["json", "jpco", ".ipynb_checkpoints"]
+  "data": ["gct", "vcf", "h5ad", "ipynb_checkpoints"],
+  "metadata": ["json", "jpco", "ipynb_checkpoints"]
 }
