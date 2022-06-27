@@ -1,0 +1,50 @@
+{
+   "curated_disease":[
+      "Carcinoma, Hepatocellular"
+   ],
+   "disease_type":"histologic_diagnosis",
+   "disease_stage":"None",
+   "sample_type":"Tumor",
+   "gender":"MALE",
+   "vital_status":"Dead",
+   "molecular_subtype":"NA",
+   "curated_drug":[
+      "gemcitabine",
+      "cisplatin"
+   ],
+   "publication":"https://www.cell.com/cell/fulltext/S0092-8674(17)30639-6?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867417306396%3Fshowall%3Dtrue",
+   "patient_id":"TCGA-FV-A3R2",
+   "curated_tissue":[
+      "bile duct",
+      "liver"
+   ],
+   "curated_organism":[
+      "['Homo sapiens']"
+   ],
+   "dataset_id":"LIHC_Copy_Number_Segment_TCGA-FV-A3R3-01A",
+   "data_type":"Copy Number Variation",
+   "copy_number_type":"segment",
+   "description":"Liver hepatocellular carcinoma Copy Number Variation for TCGA-FV-A3R2-01A",
+   "curated_cell_line":[
+      "None"
+   ],
+   "curated_cell_type":[
+      "None"
+   ],
+   "dataset_source":"TCGA",
+   "curation_version":"g3",
+   "total_num_samples":"1",
+   "version":"0",
+   "is_current":"true",
+   "src_repo":"tcga",
+   "package":"TCGA_data_lake/data",
+   "region":"us-west-2",
+   "bucket":"discover-prod-datalake-v1",
+   "key":"TCGA_data_lake/data/LIHC/CNV/LIHC_Copy_Number_Segment_TCGA-FV-A3R3-01A.gct",
+   "file_type":"gct",
+   "file_location":"https://discover-prod-datalake-v1.s3-us-west-2.amazonaws.com/TCGA_data_lake/data/LIHC/CNV/LIHC_Copy_Number_Segment_TCGA-FV-A3R3-01A.gct",
+   "src_uri":"polly:data://TCGA_data_lake/data/LIHC/CNV/LIHC_Copy_Number_Segment_TCGA-FV-A3R2-01A.gct",
+   "timestamp_":"1652981912308",
+   "data_table_name":"tcga__lihc_copy_number_segment_tcga_fv_a3r2_01a",
+   "data_table_version":"0"
+}
