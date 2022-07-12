@@ -7,7 +7,7 @@
     "curated_cell_type",
     "curated_drug",
     "curated_genetic_modification_type",
-    "curated_cell_line",
+    "curated_cell_line"
   ],
   "sample_fields": [
     "growth_protocol_ch1",
@@ -20,7 +20,7 @@
     "sex_ch1",
     "treatment_ch1",
     "taxid_ch1",
-    "treatment_protocol_ch1",
+    "treatment_protocol_ch1"
   ],
   "dataset_fields": [
     "dataset_source",
@@ -39,7 +39,7 @@
     "curated_cell_line",
     "curated_gene",
     "year",
-    "publication",
+    "publication"
   ],
   "extra_fields": [
     "characteristics_ch1",
@@ -61,6 +61,6 @@
     "characteristics_ch1_7",
     "cell_line_ch1",
     "organism_ch1",
-    "characteristics_ch1_8",
+    "characteristics_ch1_8"
   ]
 }
