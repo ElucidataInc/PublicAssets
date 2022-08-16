@@ -1,0 +1,4 @@
+{
+	"cbiportal": ["dataset_id", "description", "summary", "overall_design", "curated_tissue", "curated_drug", "curated_cell_line", "curated_disease", "curated_organism"],
+	"geo": ["curated_gene", "abstract", "kw_curated_genetic_mod_type", "data_type", "curated_cell_type", "dataset_source"]
+}
