@@ -1,4 +1,11 @@
 {
-	"cbioportal": ["dataset_id","description","summary","overall_design","curated_tissue","curated_drug","curated_cell_line","curated_disease","curated_organism","curated_gene","abstract","kw_curated_genetic_mod_type","data_type","curated_cell_type", "dataset_source"],
-	"geo": ["dataset_id","description","summary","overall_design","curated_tissue","curated_drug","curated_cell_line","curated_disease","curated_organism","curated_gene","abstract","kw_curated_genetic_mod_type","data_type","curated_cell_type", "dataset_source"]
+	"cbioportal": ["curated_disease","curated_disease_type","curated_disease_type","curated_drug","curated_organism","curated_project","curated_tissue","dataset_id","description","publication","raw_disease"],
+	"geo": ["dataset_id","description","summary","overall_design","curated_tissue","curated_drug","curated_cell_line","curated_disease","curated_organism","curated_gene","abstract","kw_curated_genetic_mod_type","data_type","curated_cell_type", "dataset_source"],
+	"tcga": ["curated_disease", "curated_drug",  "curated_organism", "curated_tissue", "data_type", "disease_stage", "disease_subtype", "disease_type ", "donor_gender", "gender", "sample_type", "tumour_purity", "vital_status", "patient_id", "publication", "dataset_id"],
+	"lincs": ["curated_cell_line","curated_disease","curated_drug","curated_tissue","data_type","dataset_id","dataset_source","description","donor_age","donor_sex","operation","platform","publication"],
+	"pcd": ["curated_cell_line","curated_disease","curated_drug","curated_organism","curated_tissue","dataset_id","description","publication","source","study_id"],
+	"depmap": ["curated_cell_line","curated_cell_type","curated_disease","curated_organism","curated_tissue","data_subtype","data_type","dataset_id","dataset_source","donor_age","donor_gender","operation","platform","publication","sample_type"],
+	"cptac": ["curated_cell_line","curated_cell_type","curated_disease","curated_drug","curated_organism","curated_tissue","data_type","dataset_id","description","donor_age","donor_gender","experimental_design","file_type","operation","platform","publication","sample_type"],
+	"immport": ["assay","biosample_accession","cohort_description","cohort_id","curated_cell_line","curated_cell_type","curated_disease","curated_drug","curated_organism","curated_tissue","data_type","dataset_id","dataset_source","description","disease_type","donor_age","donor_sex","gene","platform","publication","research_focus_area","sample_type","treatment"],
+	"sc_data_lake": ["curated_organism","curated_cell_line","platform","curated_cell_type","publication","curated_disease","curated_drug","curated_gene","curated_strain","curated_tissue","dataset_id"]
 }
