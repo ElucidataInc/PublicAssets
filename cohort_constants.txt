@@ -38,6 +38,9 @@
  "enterprise_atlas": {
   "file_structure": "multiple"
  },
+  "ngj": {
+  "file_structure": "multiple"
+ },
   "demo_oa_2": {
   "file_structure": "hybrid"
  }
