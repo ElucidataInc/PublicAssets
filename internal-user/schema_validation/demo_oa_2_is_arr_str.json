@@ -8,10 +8,10 @@
           "schema": {
               "all": {
                   "all": {
-                      "DATA_MATRIX_AVAILABLE": {
-                          "is_array": "false",
+                      "data_matrix_available": {
+                          "is_array": "ncnknkcne",
                           "is_ontology": false,
-                          "is_keyword": false,
+                          "is_keyword": true,
                           "original_name": "Data Matrix Available",
                           "description": "Data Matrix Available",
                           "type": "text",
