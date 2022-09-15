@@ -11,7 +11,7 @@
                       "data_matrix_available": {
                           "is_array": false,
                           "is_ontology": false,
-                          "is_keyword": true,
+                          "is_keyword": "abcde",
                           "original_name": "Data Matrix Available",
                           "description": "Data Matrix Available",
                           "type": "text",
