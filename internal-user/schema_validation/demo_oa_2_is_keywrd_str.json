@@ -9,9 +9,9 @@
               "all": {
                   "all": {
                       "data_matrix_available": {
-                          "is_array": false,
+                          "is_array": "ncnknkcne",
                           "is_ontology": false,
-                          "is_keyword": "abcdef",
+                          "is_keyword": true,
                           "original_name": "Data Matrix Available",
                           "description": "Data Matrix Available",
                           "type": "text",
