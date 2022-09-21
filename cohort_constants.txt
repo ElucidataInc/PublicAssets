@@ -43,5 +43,11 @@
  },
   "demo_oa_2": {
   "file_structure": "hybrid"
+ },
+   "owkin_france_clinical_oa": {
+  "file_structure": "hybrid"
+ },
+   "owkin_france_cellline_oa": {
+  "file_structure": "single"
  }
 }
