@@ -1,0 +1,70 @@
+{
+    "__index__": {
+        "file_metadata": "true",
+        "col_metadata": "true",
+        "row_metadata": "true",
+        "data_required": "true",
+        "validation_check": {
+            "dataset": {
+                "validate": false, 
+                "scope": "basic", 
+                "force_ingest": false
+            }, 
+            "sample": {
+                "validate": "true", 
+                "scope": "basic", 
+                "force_ingest": "false"
+            }
+        }
+    },
+    "curated_file_type": null,
+    "curated_organism": [
+        "Homo sapiens"
+    ],
+    "src_uri": "polly:data:\/\/cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC12T.gct",
+    "total_num_samples": 1,
+    "curated_disease_type": "Invasive Breast Carcinoma",
+    "sample_id": "AdCC12T",
+    "description": "ACBC_MSKCC_2015 Copy Number Variation dataset for sample id - AdCC12T",
+    "curated_cell_line": [
+        "None"
+    ],
+    "data_table_name": "cbioportal__acbc_mskcc_2015_copy_number_adcc12t",
+    "data_table_version": 0,
+    "raw_disease": [
+        "Adenoid Cystic Breast Cancer"
+    ],
+    "timestamp_": 1649595761148,
+    "file_type": "gct",
+    "publication": "None",
+    "curated_cell_type": [
+        "None"
+    ],
+    "key": "cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC12T.gct",
+    "src_repo": "cbioportal",
+    "package": "cbioportal\/data",
+    "file_location": "https:\/\/discover-prod-datalake-v1.s3-us-west-2.amazonaws.com\/cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC12T.gct",
+    "curation_version": "g3",
+    "dataset_id": "ACBC_MSKCC_2015_Copy_Number_AdCC12T",
+    "curated_disease": [
+        "Adenoid Cystic Breast Cancer"
+    ],
+    "curated_drug": [
+        "None"
+    ],
+    "data_repository": null,
+    "experimental_design": null,
+    "version": 0,
+    "data_source": null,
+    "bucket": "discover-prod-datalake-v1",
+    "curated_repo": null,
+    "curated_tissue": [
+        "breast"
+    ],
+    "dataset_source": "cBioPortal",
+    "data_type": "Copy Number Variation",
+    "curated_project": "ACBC_MSKCC_2015",
+    "is_current": true,
+    "region": "us-west-2",
+    "operation": null
+}
