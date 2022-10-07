@@ -1,3 +1,21 @@
-{
+{   
+    "__index__": {
+        "file_metadata": "true",
+        "col_metadata": "true",
+        "row_metadata": "true",
+        "data_required": "true",
+        "validation_check": {
+            "dataset": {
+                "validate": false, 
+                "scope": "advanced", 
+                "force_ingest": false
+            }, 
+            "sample": {
+                "validate": "true", 
+                "scope": "advanced", 
+                "force_ingest": "false"
+            }
+        }
+    },
     "key": "value"
 }
