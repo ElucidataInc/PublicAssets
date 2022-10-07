@@ -49,5 +49,8 @@
  },
    "owkin_france_cellline_oa": {
   "file_structure": "single"
+ },
+   "trex_bio": {
+  "file_structure": "multiple"
  }
 }
