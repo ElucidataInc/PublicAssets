@@ -25,7 +25,6 @@
 		"dataset_id",
 		"dataset_source",
 		"description",
-		"donor_age",
 		"donor_sex",
 		"platform",
 		"publication"
@@ -52,7 +51,6 @@
 		"data_type",
 		"dataset_id",
 		"dataset_source",
-		"donor_age",
 		"donor_gender",
 		"platform",
 		"publication",
@@ -80,7 +78,6 @@
 		"data_type",
 		"dataset_id",
 		"description",
-		"donor_age",
 		"donor_gender",
 		"file_type",
 		"platform",
@@ -125,7 +122,6 @@
 		"dataset_id"
 	],
 	"tcga_pancan_atlas": [
-		"age",
 		"copy_number_type",
 		"curated_cell_line",
 		"curated_cell_type",
@@ -146,7 +142,6 @@
 		"vital_status"
 	],
 	"tcga_raw_counts": [
-		"age",
 		"copy_number_type",
 		"curated_cell_line",
 		"curated_cell_type",
@@ -170,7 +165,6 @@
 	],
 	"gnomad": [
 		"curated_gene",
-		"curated_loeuf.keyword",
 		"curated_pathway",
 		"curated_plof_gene_class",
 		"data_type",
@@ -294,13 +288,11 @@
 		"platform",
 		"publication",
 		"publication_name",
-		"refinement_resolution.keyword",
 		"repo ",
 		"sample_id",
 		"scop_classification",
 		"symmetry_type",
-		"taxonomy",
-		"year"
+		"taxonomy"
 	],
 	"gdc": [
 		"case_id",
