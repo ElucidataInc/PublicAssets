@@ -12,7 +12,7 @@
                           "is_array": true,
                           "is_ontology": false,
                           "is_keyword": true,
-                          "original_name": 306,
+                          "original_name": "anc",
                           "description": "Data Matrix Available",
                           "type": "text",
                           "is_filter": true,
