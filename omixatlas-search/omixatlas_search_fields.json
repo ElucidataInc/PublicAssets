@@ -355,6 +355,6 @@
         "data_type",
         "curated_cell_type",
         "dataset_source",
-        "kw_sample_type"
+        "sample_type"
     ]
 }
