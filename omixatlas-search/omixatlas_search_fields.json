@@ -354,6 +354,7 @@
         "kw_curated_genetic_mod_type",
         "data_type",
         "curated_cell_type",
-        "dataset_source"
+        "dataset_source",
+        "kw_sample_type"
     ]
 }
