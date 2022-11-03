@@ -1,4 +1,4 @@
 {
-  "data": ["gct", "vcf", "h5ad", "mmcif", "h5seurat"],
+  "data": ["gct", "vcf", "h5ad", "mmcif", "h5Seurat"],
   "metadata": ["json", "jpco"]
 }
