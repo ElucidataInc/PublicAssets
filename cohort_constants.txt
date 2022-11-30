@@ -50,6 +50,9 @@
    "owkin_france_cellline_oa": {
   "file_structure": "single"
  },
+   "etx": {
+  "file_structure": "multiple"
+ },
    "trex_bio": {
   "file_structure": "multiple"
  }
