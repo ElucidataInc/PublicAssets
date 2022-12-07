@@ -1,0 +1,19 @@
+{
+    "geo": [
+        "growth_protocol*",
+        "dose*",
+        "extract_protocol*",
+        "characteristics*",
+        "treatment*",
+        "taxid*",
+        "gender*",
+        "smoking*",
+        "label*",
+        "title",
+        "instrument_model",
+        "data_processing",
+        "description",
+        "data_id",
+        "hyb_protocol"
+    ],
+}
