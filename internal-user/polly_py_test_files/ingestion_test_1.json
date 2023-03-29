@@ -1,0 +1,43 @@
+{
+    "data": {
+        "type": "omixatlases",
+        "id": "1654268055800",
+        "attributes": {
+            "components": [
+                {
+                    "data_type": [
+                        "dual_labeled_dashboard_shinyapp"
+                    ],
+                    "component_id": 59
+                }
+            ],
+            "frontend_info": {
+                "display_name": "ingestion test 1",
+                "icon_image_url": "https://elucidatainc.github.io/PublicAssets/discover-fe-assets/omixatlas_hex.svg",
+                "description": "updated description ingestion_test_1 omixatlas"
+            },
+            "repo_id": "1654268055800",
+            "repo_name": "ingestion_test_1",
+            "type": "omixatlas",
+            "owner": "GLOBAL",
+            "indexes": {
+                "files": "ingestion_test_1_files",
+                "joint": "ingestion_test_1_joint",
+                "gct_col_metadata": "ingestion_test_1_gct_col_metadata"
+            },
+            "v2_indexes": {
+                "files": "ingestion_test_1_files",
+                "joint": "ingestion_test_1_joint",
+                "gct_col_metadata": "ingestion_test_1_gct_col_metadata"
+            },
+            "studio_presets": [],
+            "is_public": false,
+            "is_locked": false,
+            "category": "private",
+            "storage_infra_version": "v1"
+        },
+        "links": {
+            "self": "/omixatlases/1654268055800"
+        }
+    }
+}
