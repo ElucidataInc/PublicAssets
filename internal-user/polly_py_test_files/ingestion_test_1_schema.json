@@ -11,16 +11,11 @@
                         "analysis_summary": {
                             "type": "text",
                             "is_keyword": true,
-                            "is_array": false,
-                            "is_filter": true,
-                            "is_column": true,
-                            "is_curated": true,
-                            "is_ontology": true,
                             "is_searchable": true,
                             "filter_size": 100,
                             "original_name": "analysis_summary updated thrice ",
-                            "display_name": "Analysis_summary",
-                            "description": "analysis_summary's sample corresponding to repo_id=development",
+                            "display_name": "display name",
+                            "description": "description",
                             "is_reserved": false
                         }
                     }
@@ -33,7 +28,7 @@
             "last_updated_by": "191"
         },
         "links": {
-            "self": "/repositories/1654268055800/schema/files"
+            "self": "/dummy/1234/schema/files"
         }
     }
 }
