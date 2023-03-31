@@ -21,7 +21,7 @@
     "curated_organism": [
         "Homo sapiens"
     ],
-    "src_uri": "polly:data:\/\/cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC10T.gct",
+    "src_uri": "kvmvlmrvlrmv",
     "total_num_samples": 1,
     "curated_disease_type": "Invasive Breast Carcinoma",
     "sample_id": "AdCC10T",
@@ -29,7 +29,7 @@
     "curated_cell_line": [
         "None"
     ],
-    "data_table_name": "cbioportal__acbc_mskcc_2015_copy_number_adcc10t",
+    "data_table_name": "vlmvlmvlrmvr",
     "data_table_version": 0,
     "raw_disease": [
         "Adenoid Cystic Breast Cancer"
@@ -40,14 +40,14 @@
     "curated_cell_type": [
         "None"
     ],
-    "key": "cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC10T.gct",
+    "key": "vkevmvrmvkrvrkvrvmkmlfemvlemv",
     "src_repo": "cbioportal",
     "package": "cbioportal\/data",
-    "file_location": "https:\/\/discover-prod-datalake-v1.s3-us-west-2.amazonaws.com\/cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC10T.gct",
+    "file_location": "cemlemlemvlemvlem",
     "curation_version": "g3",
     "dataset_id": "ACBC_MSKCC_2015_Copy_Number_AdCC10T",
     "curated_disease": [
-        "Adenoid Cystic Breast Cancer"
+        "evelvmemvlemvmlev"
     ],
     "curated_drug": [
         "None"
@@ -56,7 +56,7 @@
     "experimental_design": null,
     "version": 0,
     "data_source": null,
-    "bucket": "discover-prod-datalake-v1",
+    "bucket": "memlelmvelmve",
     "curated_repo": null,
     "curated_tissue": [
         "breast"
@@ -65,6 +65,6 @@
     "data_type": "Copy Number Variation",
     "curated_project": "ACBC_MSKCC_2015",
     "is_current": true,
-    "region": "us-west-2",
+    "region": "mars",
     "operation": null
 }
