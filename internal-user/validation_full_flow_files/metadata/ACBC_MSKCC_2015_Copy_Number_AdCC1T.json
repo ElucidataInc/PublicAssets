@@ -19,20 +19,20 @@
     },
     "curated_file_type": null,
     "curated_organism": [
-        "Homo sapiens"
+        "mknkbbkbk"
     ],
-    "src_uri": "polly:data:\/\/cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC1T.gct",
+    "src_uri": "cnkknckenkenvkevkenvken",
     "total_num_samples": 1,
-    "curated_disease_type": "Invasive Breast Carcinoma",
+    "curated_disease_type": "kknkbbkb",
     "sample_id": "AdCC1T",
-    "description": "ACBC_MSKCC_2015 Copy Number Variation dataset for sample id - AdCC1T",
+    "description": "mlnkbjvjv",
     "curated_cell_line": [
         "None"
     ],
-    "data_table_name": "cbioportal__acbc_mskcc_2015_copy_number_adcc1t",
+    "data_table_name": "dksndkwnknwcw",
     "data_table_version": 0,
     "raw_disease": [
-        "Adenoid Cystic Breast Cancer"
+        "nccknsncsncsncksn"
     ],
     "timestamp_": 1649595769683,
     "file_type": "gct",
@@ -40,14 +40,14 @@
     "curated_cell_type": [
         "None"
     ],
-    "key": "cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC1T.gct",
-    "src_repo": "cbioportal",
-    "package": "cbioportal\/data",
-    "file_location": "https:\/\/discover-prod-datalake-v1.s3-us-west-2.amazonaws.com\/cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC1T.gct",
+    "key": "nkbkvkbkbkbk",
+    "src_repo": "vkfnvfknvknbkfnb",
+    "package": "vmvlrnlrnb",
+    "file_location": "knkbsbckscksbckscksbkck",
     "curation_version": "g3",
     "dataset_id": "ACBC_MSKCC_2015_Copy_Number_AdCC1T",
     "curated_disease": [
-        "Adenoid Cystic Breast Cancer"
+        "kncknscsknksn"
     ],
     "curated_drug": [
         "None"
@@ -56,16 +56,16 @@
     "experimental_design": null,
     "version": 0,
     "data_source": null,
-    "bucket": "discover-prod-datalake-v1",
+    "bucket": "ncsncsckskncksn",
     "curated_repo": null,
     "curated_tissue": [
         "breast"
     ],
-    "dataset_source": "cBioPortal",
+    "dataset_source": "csncsnckscnsknc",
     "data_type": "Copy Number Variation",
     "curated_project": "ACBC_MSKCC_2015",
     "is_current": true,
-    "region": "us-west-2",
+    "region": "cksncksnkcskvbksb",
     "operation": null,
     "dataset_level_validation": true
 }
