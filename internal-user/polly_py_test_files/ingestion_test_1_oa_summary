@@ -1,0 +1,34 @@
+{
+  "data": {
+    "repo_name": "ingestion_test_1",
+    "repo_id": "1654268055800",
+    "indexes": {
+      "files": "ingestion_test_1_files",
+      "joint": "ingestion_test_1_joint",
+      "gct_col_metadata": "ingestion_test_1_gct_col_metadata"
+    },
+    "v2_indexes": {
+      "files": "ingestion_test_1_files",
+      "joint": "ingestion_test_1_joint",
+      "gct_col_metadata": "ingestion_test_1_gct_col_metadata"
+    },
+    "linked_workspace_id": None,
+    "sources": [
+      
+    ],
+    "datatypes": [
+      
+    ],
+    "dataset_count": 83,
+    "disease_count": 0,
+    "tissue_count": 0,
+    "organism_count": 0,
+    "cell_line_count": 0,
+    "cell_type_count": 0,
+    "drug_count": 0,
+    "data_type_count": 0,
+    "data_source_count": 0,
+    "sample_count": 0.0,
+    "normal_sample_count": 880
+  }
+}
