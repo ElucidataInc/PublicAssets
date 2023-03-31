@@ -19,11 +19,11 @@
     },
     "curated_file_type": null,
     "curated_organism": [
-        "Homo sapiens"
+        "cksncksncnsnck"
     ],
     "src_uri": "kvmvlmrvlrmv",
     "total_num_samples": 1,
-    "curated_disease_type": "Invasive Breast Carcinoma",
+    "curated_disease_type": "cknksnkcnsncnsnckn",
     "sample_id": "AdCC10T",
     "description": "ACBC_MSKCC_2015 Copy Number Variation dataset for sample id - AdCC10T",
     "curated_cell_line": [
@@ -41,8 +41,8 @@
         "None"
     ],
     "key": "vkevmvrmvkrvrkvrvmkmlfemvlemv",
-    "src_repo": "cbioportal",
-    "package": "cbioportal\/data",
+    "src_repo": "cknskncksnvks",
+    "package": "cskvksvksnk",
     "file_location": "cemlemlemvlemvlem",
     "curation_version": "g3",
     "dataset_id": "ACBC_MSKCC_2015_Copy_Number_AdCC10T",
@@ -61,7 +61,7 @@
     "curated_tissue": [
         "breast"
     ],
-    "dataset_source": "cBioPortal",
+    "dataset_source": "mnnvnlwvlwnvlw",
     "data_type": "Copy Number Variation",
     "curated_project": "ACBC_MSKCC_2015",
     "is_current": true,
