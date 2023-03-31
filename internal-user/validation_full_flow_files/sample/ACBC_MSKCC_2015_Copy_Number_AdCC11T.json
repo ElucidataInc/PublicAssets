@@ -8,7 +8,7 @@
             "dataset": {
                 "validate": true, 
                 "scope": "basic", 
-                "force_ingest": true
+                "force_ingest": false
             }, 
             "sample": {
                 "validate": "false", 
@@ -19,20 +19,20 @@
     },
     "curated_file_type": null,
     "curated_organism": [
-        "Homo sapiens"
+        "qwer"
     ],
-    "src_uri": "polly:data:\/\/cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC11T.gct",
+    "src_uri": "vvrmvlrvlrmvlrmv",
     "total_num_samples": 1,
-    "curated_disease_type": "Invasive Breast Carcinoma",
+    "curated_disease_type": "peekkrrm",
     "sample_id": "AdCC11T",
-    "description": "ACBC_MSKCC_2015 Copy Number Variation dataset for sample id - AdCC11T",
+    "description": "porlrkvmf,ls",
     "curated_cell_line": [
         "None"
     ],
-    "data_table_name": "cbioportal__acbc_mskcc_2015_copy_number_adcc11t",
+    "data_table_name": "asxsaaffld",
     "data_table_version": 0,
     "raw_disease": [
-        "Adenoid Cystic Breast Cancer"
+        "flrvrlvmrlmvrlvmre"
     ],
     "timestamp_": 1649595773350,
     "file_type": "gct",
@@ -40,14 +40,14 @@
     "curated_cell_type": [
         "None"
     ],
-    "key": "cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC11T.gct",
-    "src_repo": "cbioportal",
-    "package": "cbioportal\/data",
-    "file_location": "https:\/\/discover-prod-datalake-v1.s3-us-west-2.amazonaws.com\/cbioportal\/data\/ACBC_MSKCC_2015\/CNV\/ACBC_MSKCC_2015_Copy_Number_AdCC11T.gct",
+    "key": "vmlrmvrlmgmrgrmglm",
+    "src_repo": "ceknvknvkwnvkwv",
+    "package": "2344mmr",
+    "file_location": "lpdkrrr",
     "curation_version": "g3",
     "dataset_id": "ACBC_MSKCC_2015_Copy_Number_AdCC11T",
     "curated_disease": [
-        "Adenoid Cystic Breast Cancer"
+        "erktmblww"
     ],
     "curated_drug": [
         "None"
@@ -56,15 +56,15 @@
     "experimental_design": null,
     "version": 0,
     "data_source": null,
-    "bucket": "discover-prod-datalake-v1",
+    "bucket": "23edkwldmf",
     "curated_repo": null,
     "curated_tissue": [
-        "breast"
+        "vrblmblrmblrm"
     ],
-    "dataset_source": "cBioPortal",
+    "dataset_source": "celmelmvlemve",
     "data_type": "Copy Number Variation",
     "curated_project": "ACBC_MSKCC_2015",
     "is_current": true,
-    "region": "us-west-2",
+    "region": "jvnnknkvnkrnvkrb",
     "operation": null
 }
