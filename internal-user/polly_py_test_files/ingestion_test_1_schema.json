@@ -1,9 +1,9 @@
 {
     "data": {
         "type": "schemas",
-        "id": "1234",
+        "id": "1654268055800",
         "attributes": {
-            "repo_id": "1234",
+            "repo_id": "1654268055800",
             "schema_type": "files",
             "schema": {
                 "all": {
@@ -28,7 +28,7 @@
             "last_updated_by": "191"
         },
         "links": {
-            "self": "/dummy/1234/schema/files"
+            "self": "/dummy/1654268055800/schema/files"
         }
     }
 }
