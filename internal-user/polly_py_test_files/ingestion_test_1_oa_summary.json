@@ -12,7 +12,7 @@
       "joint": "ingestion_test_1_joint",
       "gct_col_metadata": "ingestion_test_1_gct_col_metadata"
     },
-    "linked_workspace_id": None,
+    "linked_workspace_id": Null,
     "sources": [
       
     ],
