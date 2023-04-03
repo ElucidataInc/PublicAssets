@@ -1,47 +1,73 @@
 {
-	"_index": "ingestion_test_1_files",
-	"_type": "_doc",
-	"_id": "ingestion_test_1_gse12345_gpl6789",
-	"_score": null,
-	"_source": {
-		"curated_tissue": ["some adipose tissue"],
-		"dataset_source": "TEST_OA",
-		"description": "some description",
-		"curated_organism": ["organism"],
-		"year": "year",
-		"curated_disease": ["disease"],
-		"platform": "Microarray",
-		"dataset_id": "GSE12345_GPL6789",
-		"curated_cell_type": ["cell type"],
-		"data_type": "Transcriptomics",
-		"publication": "some_pulication_link",
-		"curated_drug": ["drug"],
-		"curated_gene": ["gene"],
-		"curated_cell_line": ["cell_line"],
-		"drug_smiles": ["drug_smile"],
-		"total_num_samples": "6",
-		"curated_strain": ["strain"],
-		"summary": "some summary",
-		"overall_design": "experiment design",
-		"manually_curated_fields": {
-			"dataset_level": [],
-			"sample_level": ["disease"],
-		},
-		"data_matrix_available": "false",
-		"subseries_ids": [],
-		"missing_samples": [],
-		"version": "0",
-		"is_current": "true",
-		"src_repo": "test_ingestion_1",
-		"package": "lake/data",
-		"region": "us-west-2",
-		"bucket": "discover-prod-datalake-v1",
-		"key": "data/GCT/GSE100003_GPL15207_curated.gct",
-		"file_type": "gct",
-		"file_location": "GSE12345_GPL6789.gct",
-		"src_uri": "GSE12345_GPL6789.gct",
-		"timestamp_": "1672086130815",
-		"data_table_name": "ingestion_test_1_GSE12345_GPL6789",
-			"data_table_version": "0",
+  "_index": "ingestion_test_1_files",
+  "_type": "_doc",
+  "_id": "ingestion_test_1_gse12345_gpl6789",
+  "_score": 12345,
+  "_source": {
+    "curated_tissue": [
+      "some adipose tissue"
+    ],
+    "dataset_source": "TEST_OA",
+    "description": "some description",
+    "curated_organism": [
+      "organism"
+    ],
+    "year": "year",
+    "curated_disease": [
+      "disease"
+    ],
+    "platform": "Microarray",
+    "dataset_id": "GSE12345_GPL6789",
+    "curated_cell_type": [
+      "cell type"
+    ],
+    "data_type": "Transcriptomics",
+    "publication": "some_pulication_link",
+    "curated_drug": [
+      "drug"
+    ],
+    "curated_gene": [
+      "gene"
+    ],
+    "curated_cell_line": [
+      "cell_line"
+    ],
+    "drug_smiles": [
+      "drug_smile"
+    ],
+    "total_num_samples": "6",
+    "curated_strain": [
+      "strain"
+    ],
+    "summary": "some summary",
+    "overall_design": "experiment design",
+    "manually_curated_fields": {
+      "dataset_level": [
+        
+      ],
+      "sample_level": [
+        "disease"
+      ]
     },
+    "data_matrix_available": "false",
+    "subseries_ids": [
+      
+    ],
+    "missing_samples": [
+      
+    ],
+    "version": "0",
+    "is_current": "true",
+    "src_repo": "test_ingestion_1",
+    "package": "lake/data",
+    "region": "us-west-2",
+    "bucket": "discover-prod-datalake-v1",
+    "key": "data/GCT/GSE100003_GPL15207_curated.gct",
+    "file_type": "gct",
+    "file_location": "GSE12345_GPL6789.gct",
+    "src_uri": "GSE12345_GPL6789.gct",
+    "timestamp_": "1672086130815",
+    "data_table_name": "ingestion_test_1_GSE12345_GPL6789",
+    "data_table_version": "0"
+  }
 }
