@@ -2,7 +2,7 @@
         "_index": "ingestion_test_1_files",
         "_type": "_doc",
         "_id": "ingestion_test_1__gse12345_gpl6789@0",
-        "_score": 0000.0000,
+        "_score": null,
         "_source": {
             "curated_tissue": ["some adipose tissue"],
             "dataset_source": "TEST_OA",
