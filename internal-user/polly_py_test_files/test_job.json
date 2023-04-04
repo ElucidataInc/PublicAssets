@@ -1,0 +1,12 @@
+{
+    "cpu": "1",
+    "memory": "1Gi",
+    "image": "ubuntu",
+    "tag": "latest",
+    "name": "This is a job for testing bust mode",
+    "command": [
+        "/bin/bash",
+        "-c",
+        "TERM=xterm free -h; echo '\nnumber of vCPU';nproc;sleep 30;echo 'hi'"
+    ]
+}
