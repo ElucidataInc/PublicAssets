@@ -55,5 +55,8 @@
  },
    "trex_bio": {
   "file_structure": "multiple"
+ },
+   "sonata_tx": {
+  "file_structure": "multiple"
  }
 }
