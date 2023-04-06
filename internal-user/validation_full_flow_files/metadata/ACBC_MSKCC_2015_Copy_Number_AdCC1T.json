@@ -6,7 +6,7 @@
         "data_required": "true",
         "validation_check": {
             "dataset": {
-                "validate": true, 
+                "validate": false, 
                 "scope": "advanced", 
                 "force_ingest": true
             }, 
