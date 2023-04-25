@@ -1,0 +1,332 @@
+{
+  "_scroll_id": "FGluY2x1ZGVfY29udGV4dF91dWlkDXF1ZXJ5QW5kRmV0",
+  "took": 3,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 4,
+      "relation": "eq"
+    },
+    "max_score": 13.694996,
+    "hits": [
+      {
+        "_index": "geo_gct",
+        "_type": "_doc",
+        "_id": "geo__gse",
+        "_score": 13.694996,
+        "_source": {
+          "title": "WT_MDSCs_rep1",
+          "status": "Public on Mar 02 2023",
+          "submission_date": "Apr 01 2022",
+          "last_update_date": "Mar 02 2023",
+          "type": "SRA",
+          "channel_count": "1",
+          "source_name_ch1": "MDSCs",
+          "organism_ch1": "Mus musculus",
+          "taxid_ch1": "10090",
+          "characteristics_ch1_0_genotype": "WT",
+          "characteristics_ch1_1_strain": "C5/6",
+          "treatment_protocol_ch1": "Tumours were disaggregated and digested in collagenase D and DNAse for 45 minutes at 37°C to obtain single-cell suspension. After neutralization of unspecific binding with αCD16/CD32 (clone 93), single-cell suspensions were stained with specific mAb (primary antibodies directly conjugated). MDSCs were sorted using FACS Aria (BD) as CD45+, CD11B+, GR1+ cells . RNA isolation was performed using TRIzol (Qiagen)",
+          "growth_protocol_ch1": "Murine MDSCs were differentiated in vitro. Briefly, bone marrow precursors were flushed from the femurs of C57/BL6 or TREM2mut mice with RPMI 1640 medium. Six-week-old NRG males were challenged subcutaneously with TRAMP-C1 cells. After 4 weeks, mice were treated with BM-MDSCs differentiated in vitro from C57/BL6 or TREM2mut mice. Tumour-bearing mice were sacrificed after 6h upon BM-MDSCs injection.",
+          "molecule_ch1": "total RNA",
+          "extract_protocol_ch1": "RNA was then extracted using TRIzol RNA isolation reagent (Invitrogel, Cat n=15596026) and RNase-Free DNase set (Qiagen, Cat n=79254) treatment was performed following manufacturers’ guidelines.,RNA integrity was checked with Agilent 2100 Bioanalyzer system. Protocol used was NEBNext rRNA depletion KIT (Human\\Mouse\\Rat) (“NEB #E6310”). Sequencing of the libraries was performed using the NextSeq 500 with the NextSeq 500/550 High Output Kit v2 (75 cycles; Illumina).",
+          "description": "RiboZero RNA",
+          "data_processing": "Samples were processed starting from stranded, single ended 75bp-long sequencing reads,the overall quality of sequencing reads was evaluated using a variety of tools, namely FastQC, RSeQC, AfterQC and Qualimap. Sequence alignments to the reference mouse genome (GRCm38) was performed using STAR (v.2.5.2a). Gene-expression was quantified at gene level by using the comprehensive annotations made available by Gencode. Specifically, we used v20 release of the Gene Transfer File (GTF).,Raw counts were further processed in the R Statistical environment and downstream differential expression analysis was performed using the DESeq2 pipeline.  Genes characterized by zero expression were removed and genes with low mean normalized counts were filtered out by the Independent Filtering feature embedded in DESeq243 (alpha = 0.05).,Over-representation analysis was performed using egsea.ora function.,Assembly: mm10,Supplementary files format and content: Matrix table with raw gene counts",
+          "platform_id": "GPL19057",
+          "contact_name": "Andrea,,Alimonti",
+          "contact_email": "andrea.alimonti@ior.usi.ch",
+          "contact_department": "Molecular Oncology",
+          "contact_institute": "Institute of oncology research",
+          "contact_address": "Via vela 6",
+          "contact_city": "Bellinzona",
+          "contact_zip_postal_code": "6500",
+          "contact_country": "Switzerland",
+          "instrument_model": "Illumina NextSeq 500",
+          "library_selection": "cDNA",
+          "library_source": "transcriptomic",
+          "library_strategy": "RNA-Seq",
+          "relation": "BioSample: https://www.ncbi.nlm.nih.gov/biosample/SAMN27176825,SRA: https://www.ncbi.nlm.nih.gov/sra?term=SRX14708788",
+          "supplementary_file_1": "NONE",
+          "series_id": "GSE199927",
+          "data_row_count": "0",
+          "curated_genetic_modification_type": [
+            "wildtype"
+          ],
+          "curated_disease": [
+            "Normal"
+          ],
+          "curated_drug": [
+            "none"
+          ],
+          "kw_curated_strain": "none",
+          "organism": "Mus musculus",
+          "curated_cell_line": "none",
+          "curated_cell_type": [
+            "none"
+          ],
+          "curated_gene": [
+            "none"
+          ],
+          "curated_tissue": "none",
+          "curated_gene_modified": [
+            "none"
+          ],
+          "curated_cohort_id": "1",
+          "curated_control": "1",
+          "curated_cohort_name": "WT; Âxa0C57BL/",
+          "sample_id": "GSM5993856",
+          "kw_column": "GSM5993856",
+          "version": "0",
+          "is_current": "true",
+          "id_key": "kw_column",
+          "data_id": "gsm5993856",
+          "name": "GSM5993856",
+          "src_repo": "geo",
+          "src_dataset_id": "GSE199927_GPL19057",
+          "src_uri": "polly:data://GEO_data_lake/data/GEO_metadata/GSE199927/GCT/GSE199927_GPL19057_metadata.gct",
+          "timestamp_": "1677940712600"
+        }
+      },
+      {
+        "_index": "geo_gct",
+        "_type": "_doc",
+        "_id": "geo__gse",
+        "_score": 13.694996,
+        "_source": {
+          "title": "WT_MDSCs_rep2",
+          "status": "Public on Mar 02 2023",
+          "submission_date": "Apr 01 2022",
+          "last_update_date": "Mar 02 2023",
+          "type": "SRA",
+          "channel_count": "1",
+          "source_name_ch1": "MDSCs",
+          "organism_ch1": "Mus musculus",
+          "taxid_ch1": "10090",
+          "characteristics_ch1_0_genotype": "WT",
+          "characteristics_ch1_1_strain": "C57BL/6",
+          "treatment_protocol_ch1": "Tumours were disaggregated and digested in collagenase D and DNAse for 45 minutes at 37°C to obtain single-cell suspension. After neutralization of unspecific binding with αCD16/CD32 (clone 93), single-cell suspensions were stained with specific mAb (primary antibodies directly conjugated). MDSCs were sorted using FACS Aria (BD) as CD45+, CD11B+, GR1+ cells . RNA isolation was performed using TRIzol (Qiagen)",
+          "growth_protocol_ch1": "Murine MDSCs were differentiated in vitro. Briefly, bone marrow precursors were flushed from the femurs of C57/BL6 or TREM2mut mice with RPMI 1640 medium. Six-week-old NRG males were challenged subcutaneously with TRAMP-C1 cells. After 4 weeks, mice were treated with BM-MDSCs differentiated in vitro from C57/BL6 or TREM2mut mice. Tumour-bearing mice were sacrificed after 6h upon BM-MDSCs injection.",
+          "molecule_ch1": "total RNA",
+          "extract_protocol_ch1": "RNA was then extracted using TRIzol RNA isolation reagent (Invitrogel, Cat n=15596026) and RNase-Free DNase set (Qiagen, Cat n=79254) treatment was performed following manufacturers’ guidelines.,RNA integrity was checked with Agilent 2100 Bioanalyzer system. Protocol used was NEBNext rRNA depletion KIT (Human\\Mouse\\Rat) (“NEB #E6310”). Sequencing of the libraries was performed using the NextSeq 500 with the NextSeq 500/550 High Output Kit v2 (75 cycles; Illumina).",
+          "description": "RiboZero RNA",
+          "data_processing": "Samples were processed starting from stranded, single ended 75bp-long sequencing reads,the overall quality of sequencing reads was evaluated using a variety of tools, namely FastQC, RSeQC, AfterQC and Qualimap. Sequence alignments to the reference mouse genome (GRCm38) was performed using STAR (v.2.5.2a). Gene-expression was quantified at gene level by using the comprehensive annotations made available by Gencode. Specifically, we used v20 release of the Gene Transfer File (GTF).,Raw counts were further processed in the R Statistical environment and downstream differential expression analysis was performed using the DESeq2 pipeline.  Genes characterized by zero expression were removed and genes with low mean normalized counts were filtered out by the Independent Filtering feature embedded in DESeq243 (alpha = 0.05).,Over-representation analysis was performed using egsea.ora function.,Assembly: mm10,Supplementary files format and content: Matrix table with raw gene counts",
+          "platform_id": "GPL19057",
+          "contact_name": "Andrea,,Alimonti",
+          "contact_email": "andrea.alimonti@ior.usi.ch",
+          "contact_department": "Molecular Oncology",
+          "contact_institute": "Institute of oncology research",
+          "contact_address": "Via vela 6",
+          "contact_city": "Bellinzona",
+          "contact_zip_postal_code": "6500",
+          "contact_country": "Switzerland",
+          "instrument_model": "Illumina NextSeq 500",
+          "library_selection": "cDNA",
+          "library_source": "transcriptomic",
+          "library_strategy": "RNA-Seq",
+          "relation": "BioSample: https://www.ncbi.nlm.nih.gov/biosample/SAMN27176824,SRA: https://www.ncbi.nlm.nih.gov/sra?term=SRX14708789",
+          "supplementary_file_1": "NONE",
+          "series_id": "GSE199927",
+          "data_row_count": "0",
+          "curated_genetic_modification_type": [
+            "wildtype"
+          ],
+          "curated_disease": [
+            "Normal"
+          ],
+          "curated_drug": [
+            "none"
+          ],
+          "kw_curated_strain": "none",
+          "organism": "Mus musculus",
+          "curated_cell_line": "none",
+          "curated_cell_type": [
+            "none"
+          ],
+          "curated_gene": [
+            "none"
+          ],
+          "curated_tissue": "none",
+          "curated_gene_modified": [
+            "none"
+          ],
+          "curated_cohort_id": "1",
+          "curated_control": "1",
+          "curated_cohort_name": "WT; Âxa0C57BL/",
+          "sample_id": "GSM5993857",
+          "kw_column": "GSM5993857",
+          "version": "0",
+          "is_current": "true",
+          "id_key": "kw_column",
+          "data_id": "gsm5993857",
+          "name": "GSM5993857",
+          "src_repo": "geo",
+          "src_dataset_id": "GSE199927_GPL19057",
+          "src_uri": "url",
+          "timestamp_": "1677940712600"
+        }
+      },
+      {
+        "_index": "geo_gct",
+        "_type": "_doc",
+        "_id": "geo__gse",
+        "_score": 13.694996,
+        "_source": {
+          "title": "Trem2_mut_MDSCs_rep1",
+          "status": "Public on Mar 02 2023",
+          "submission_date": "Apr 01 2022",
+          "last_update_date": "Mar 02 2023",
+          "type": "SRA",
+          "channel_count": "1",
+          "source_name_ch1": "MDSCs",
+          "organism_ch1": "Mus musculus",
+          "taxid_ch1": "10090",
+          "characteristics_ch1_0_genotype": "Trem2_mutant",
+          "characteristics_ch1_1_strain": "C57BL/6",
+          "treatment_protocol_ch1": "Tumours were disaggregated and digested in collagenase D and DNAse for 45 minutes at 37°C to obtain single-cell suspension. After neutralization of unspecific binding with αCD16/CD32 (clone 93), single-cell suspensions were stained with specific mAb (primary antibodies directly conjugated). MDSCs were sorted using FACS Aria (BD) as CD45+, CD11B+, GR1+ cells . RNA isolation was performed using TRIzol (Qiagen)",
+          "growth_protocol_ch1": "Murine MDSCs were differentiated in vitro. Briefly, bone marrow precursors were flushed from the femurs of C57/BL6 or TREM2mut mice with RPMI 1640 medium. Six-week-old NRG males were challenged subcutaneously with TRAMP-C1 cells. After 4 weeks, mice were treated with BM-MDSCs differentiated in vitro from C57/BL6 or TREM2mut mice. Tumour-bearing mice were sacrificed after 6h upon BM-MDSCs injection.",
+          "molecule_ch1": "total RNA",
+          "extract_protocol_ch1": "RNA was then extracted using TRIzol RNA isolation reagent (Invitrogel, Cat n=15596026) and RNase-Free DNase set (Qiagen, Cat n=79254) treatment was performed following manufacturers’ guidelines.,RNA integrity was checked with Agilent 2100 Bioanalyzer system. Protocol used was NEBNext rRNA depletion KIT (Human\\Mouse\\Rat) (“NEB #E6310”). Sequencing of the libraries was performed using the NextSeq 500 with the NextSeq 500/550 High Output Kit v2 (75 cycles; Illumina).",
+          "description": "RiboZero RNA",
+          "data_processing": "Samples were processed starting from stranded, single ended 75bp-long sequencing reads,the overall quality of sequencing reads was evaluated using a variety of tools, namely FastQC, RSeQC, AfterQC and Qualimap. Sequence alignments to the reference mouse genome (GRCm38) was performed using STAR (v.2.5.2a). Gene-expression was quantified at gene level by using the comprehensive annotations made available by Gencode. Specifically, we used v20 release of the Gene Transfer File (GTF).,Raw counts were further processed in the R Statistical environment and downstream differential expression analysis was performed using the DESeq2 pipeline.  Genes characterized by zero expression were removed and genes with low mean normalized counts were filtered out by the Independent Filtering feature embedded in DESeq243 (alpha = 0.05).,Over-representation analysis was performed using egsea.ora function.,Assembly: mm10,Supplementary files format and content: Matrix table with raw gene counts",
+          "platform_id": "GPL19057",
+          "contact_name": "Andrea,,Alimonti",
+          "contact_email": "andrea.alimonti@ior.usi.ch",
+          "contact_department": "Molecular Oncology",
+          "contact_institute": "Institute of oncology research",
+          "contact_address": "Via vela 6",
+          "contact_city": "Bellinzona",
+          "contact_zip_postal_code": "6500",
+          "contact_country": "Switzerland",
+          "instrument_model": "Illumina NextSeq 500",
+          "library_selection": "cDNA",
+          "library_source": "transcriptomic",
+          "library_strategy": "RNA-Seq",
+          "relation": "BioSample: https://www.ncbi.nlm.nih.gov/biosample/SAMN27176823,SRA: https://www.ncbi.nlm.nih.gov/sra?term=SRX14708790",
+          "supplementary_file_1": "NONE",
+          "series_id": "GSE199927",
+          "data_row_count": "0",
+          "curated_genetic_modification_type": [
+            "mutation"
+          ],
+          "curated_disease": [
+            "Normal"
+          ],
+          "curated_drug": [
+            "none"
+          ],
+          "kw_curated_strain": "none",
+          "organism": "Mus musculus",
+          "curated_cell_line": "none",
+          "curated_cell_type": [
+            "none"
+          ],
+          "curated_gene": [
+            "none"
+          ],
+          "curated_tissue": "none",
+          "curated_gene_modified": [
+            "none"
+          ],
+          "curated_cohort_id": "0",
+          "curated_control": "0",
+          "curated_cohort_name": "Trem2_mutant; Âxa0C57BL/",
+          "sample_id": "GSM5993858",
+          "kw_column": "GSM5993858",
+          "version": "0",
+          "is_current": "true",
+          "id_key": "kw_column",
+          "data_id": "gsm5993858",
+          "name": "GSM5993858",
+          "src_repo": "geo",
+          "src_dataset_id": "GSE199927_GPL19057",
+          "src_uri": "url",
+          "timestamp_": "1677940712600"
+        }
+      },
+      {
+        "_index": "geo_gct",
+        "_type": "_doc",
+        "_id": "geo__gs",
+        "_score": 13.69,
+        "_source": {
+          "title": "Trem2_mut_MDSCs_rep2",
+          "status": "Public on Mar 02 2023",
+          "submission_date": "Apr 01 2022",
+          "last_update_date": "Mar 02 2023",
+          "type": "SRA",
+          "channel_count": "1",
+          "source_name_ch1": "MDSCs",
+          "organism_ch1": "Mus musculus",
+          "taxid_ch1": "10090",
+          "characteristics_ch1_0_genotype": "Trem2_mutant",
+          "characteristics_ch1_1_strain": "C57BL/6",
+          "treatment_protocol_ch1": "Tumours were disaggregated and digested in collagenase D and DNAse for 45 minutes at 37°C to obtain single-cell suspension. After neutralization of unspecific binding with αCD16/CD32 (clone 93), single-cell suspensions were stained with specific mAb (primary antibodies directly conjugated). MDSCs were sorted using FACS Aria (BD) as CD45+, CD11B+, GR1+ cells . RNA isolation was performed using TRIzol (Qiagen)",
+          "growth_protocol_ch1": "Murine MDSCs were differentiated in vitro. Briefly, bone marrow precursors were flushed from the femurs of C57/BL6 or TREM2mut mice with RPMI 1640 medium. Six-week-old NRG males were challenged subcutaneously with TRAMP-C1 cells. After 4 weeks, mice were treated with BM-MDSCs differentiated in vitro from C57/BL6 or TREM2mut mice. Tumour-bearing mice were sacrificed after 6h upon BM-MDSCs injection.",
+          "molecule_ch1": "total RNA",
+          "extract_protocol_ch1": "RNA was then extracted using TRIzol RNA isolation reagent (Invitrogel, Cat n=15596026) and RNase-Free DNase set (Qiagen, Cat n=79254) treatment was performed following manufacturers’ guidelines.,RNA integrity was checked with Agilent 2100 Bioanalyzer system. Protocol used was NEBNext rRNA depletion KIT (Human\\Mouse\\Rat) (“NEB #E6310”). Sequencing of the libraries was performed using the NextSeq 500 with the NextSeq 500/550 High Output Kit v2 (75 cycles; Illumina).",
+          "description": "RiboZero RNA",
+          "data_processing": "Samples were processed starting from stranded, single ended 75bp-long sequencing reads,the overall quality of sequencing reads was evaluated using a variety of tools, namely FastQC, RSeQC, AfterQC and Qualimap. Sequence alignments to the reference mouse genome (GRCm38) was performed using STAR (v.2.5.2a). Gene-expression was quantified at gene level by using the comprehensive annotations made available by Gencode. Specifically, we used v20 release of the Gene Transfer File (GTF).,Raw counts were further processed in the R Statistical environment and downstream differential expression analysis was performed using the DESeq2 pipeline.  Genes characterized by zero expression were removed and genes with low mean normalized counts were filtered out by the Independent Filtering feature embedded in DESeq243 (alpha = 0.05).,Over-representation analysis was performed using egsea.ora function.,Assembly: mm10,Supplementary files format and content: Matrix table with raw gene counts",
+          "platform_id": "GPL19057",
+          "contact_name": "Andrea,,Alimonti",
+          "contact_email": "andrea.alimonti@ior.usi.ch",
+          "contact_department": "Molecular Oncology",
+          "contact_institute": "Institute of oncology research",
+          "contact_address": "Via vela 6",
+          "contact_city": "Bellinzona",
+          "contact_zip_postal_code": "6500",
+          "contact_country": "Switzerland",
+          "instrument_model": "Illumina NextSeq 500",
+          "library_selection": "cDNA",
+          "library_source": "transcriptomic",
+          "library_strategy": "RNA-Seq",
+          "relation": "BioSample: https://www.ncbi.nlm.nih.gov/biosample/SAMN27176822,SRA: https://www.ncbi.nlm.nih.gov/sra?term=SRX14708791",
+          "supplementary_file_1": "NONE",
+          "series_id": "GSE199927",
+          "data_row_count": "0",
+          "curated_genetic_modification_type": [
+            "mutation"
+          ],
+          "curated_disease": [
+            "Normal"
+          ],
+          "curated_drug": [
+            "none"
+          ],
+          "kw_curated_strain": "none",
+          "organism": "Mus musculus",
+          "curated_cell_line": "none",
+          "curated_cell_type": [
+            "none"
+          ],
+          "curated_gene": [
+            "none"
+          ],
+          "curated_tissue": "none",
+          "curated_gene_modified": [
+            "none"
+          ],
+          "curated_cohort_id": "0",
+          "curated_control": "0",
+          "curated_cohort_name": "Tre",
+          "sample_id": "GSM5993859",
+          "kw_column": "GSM5993859",
+          "version": "0",
+          "is_current": "true",
+          "id_key": "kw_column",
+          "data_id": "gsm5993859",
+          "name": "GSM5993859",
+          "src_repo": "geo",
+          "src_dataset_id": "GSE199927_GPL19057",
+          "src_uri": "url",
+          "timestamp_": "1677940712600"
+        }
+      }
+    ]
+  }
+}
