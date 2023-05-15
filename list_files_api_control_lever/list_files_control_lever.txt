@@ -1,0 +1,10 @@
+# shift the pagination control levers to github
+# it will be easy then to regulate it and the control levers will
+# also be independent of the release
+# DEFAULT_PAGE_SIZE_LIST_FILES = 700
+
+# this control lever is for testing as data is less on testpolly
+DEFAULT_PAGE_SIZE_LIST_FILES = 2600
+
+
+PAGE_REDUCTION_PERCENTAGE_LIST_FILES = 20
