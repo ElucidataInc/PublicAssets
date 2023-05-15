@@ -1,5 +1,1 @@
-# shift the pagination control levers to github
-# it will be easy then to regulate it and the control levers will
-# also be independent of the release
-# {"default_page_size_list_files":700, "page_reduction_percentage_list_files": 20}
-{"default_page_size_list_files":2600, "page_reduction_percentage_list_files": 20}
+{"_comment":"page size change to 700 before release", default_page_size_list_files":2600, "page_reduction_percentage_list_files": 20}
