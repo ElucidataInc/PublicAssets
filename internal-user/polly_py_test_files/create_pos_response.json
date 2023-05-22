@@ -1,0 +1,36 @@
+{
+   "data":{
+      "type":"omixatlases",
+      "id":"1684738195734",
+      "attributes":{
+         "components":[
+            
+         ],
+         "frontend_info":{
+            "description":"testing locally create for mocking v5",
+            "display_name":"doing_test_for_mocking_v5",
+            "icon_image_url":"https://random.github.io/PublicAssets/discover-fe-assets/random.svg"
+         },
+         "repo_id":"1684738195734",
+         "repo_name":"doing_test_for_mocking_v5",
+         "type":"random",
+         "owner":"random",
+         "indexes":{
+            
+         },
+         "v2_indexes":{
+            
+         },
+         "studio_presets":[
+            
+         ],
+         "is_public":false,
+         "is_locked":false,
+         "category":"private",
+         "storage_infra_version":"v1"
+      },
+      "links":{
+         "self":"/omixatlases/1684738195734"
+      }
+   }
+}
