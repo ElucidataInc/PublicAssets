@@ -12,7 +12,7 @@
             "description":"updated description of lib repo dev v1"
          },
          "repo_id":"1673847977346",
-         "repo_name":"nvkenkvenk",
+         "repo_name":"lib_repo_dev",
          "type":"omixatlas",
          "owner":"nvkenkvenkvne",
          "indexes":{
@@ -31,7 +31,7 @@
          "is_public":false,
          "is_locked":false,
          "linked_workspace_id":"99999999999999999999999",
-         "category":"nknvenvkv",
+         "category":"private",
          "storage_infra_version":"v1"
       },
       "links":{
