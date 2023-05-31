@@ -1,0 +1,1 @@
+{'data': {'type': 'queries', 'id': 'query_id', 'attributes': {'user_id': 'vivek.mathpal@elucidata.io', 'query': 'Select * FROM data_matrices.sc_data_lake__the_single_cell_lung_cancer_atlas_luca____extended_atlas', 'status': 'succeeded', 'query_results_format': 'JSON', 'exec_time_ms': 30584, 'data_scanned_bytes': 1022569953}}}
