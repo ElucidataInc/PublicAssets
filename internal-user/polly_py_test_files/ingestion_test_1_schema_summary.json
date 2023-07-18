@@ -1,0 +1,343 @@
+{
+    "data": {
+        "type": "schemas",
+        "id": "1643016586529",
+        "attributes": {
+            "repo_id": "1643016586529",
+            "schema_type": "gct_metadata",
+            "schema": {
+                "all": {
+                    "all": {
+                        "growth_protocol_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "src_uri": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Unique URI derived from source data file's S3 location"
+                        },
+                        "sample_id": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Unique ID associated with every sample"
+                        },
+                        "curated_gene_modified": {
+                            "type": "text",
+                            "is_array": true,
+                            "is_curated": false,
+                            "description": "Gene modified through genetic modification"
+                        },
+                        "dose_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "curated_cohort_name": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Name of the cohort to which the sample belongs"
+                        },
+                        "curated_control": {
+                            "type": "integer",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Signifies whether the given sample is a control or not, 1 signifies control and 0 signifies perturbed sample"
+                        },
+                        "src_dataset_id": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Dataset ID of the file this data entity originated from"
+                        },
+                        "extract_protocol_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "characteristics_ch2": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "characteristics_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "extract_protocol_ch2": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "age_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "curated_cell_type": {
+                            "type": "text",
+                            "is_array": true,
+                            "is_curated": false,
+                            "description": "Types of cell present in the sample"
+                        },
+                        "sex_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "treatment_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "dataset_id": {
+                            "type": "text",
+                            "is_array": true,
+                            "is_curated": false,
+                            "description": "Unique ID of the dataset to which the sample belongs"
+                        },
+                        "taxid_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "curated_gene": {
+                            "type": "text",
+                            "is_array": true,
+                            "is_curated": false,
+                            "description": "Gene of interest in the sample"
+                        },
+                        "curated_drug": {
+                            "type": "text",
+                            "is_array": true,
+                            "is_curated": false,
+                            "description": "Drug admistered in the sample"
+                        },
+                        "version": {
+                            "type": "integer",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Version of data entity"
+                        },
+                        "label_protocol_ch2": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "label_protocol_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "treatment_protocol_ch2": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "characteristics_ch2_1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "treatment_protocol_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "instrument_model": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "name": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Name of the data entity (local to its source file)"
+                        },
+                        "curated_genetic_modification_type": {
+                            "type": "text",
+                            "is_array": true,
+                            "is_curated": false,
+                            "description": "Signifies the kind of genetic modification performed on the sample like Knockout or Mutation"
+                        },
+                        "bmi_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "data_processing": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "curated_cell_line": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Cell line from which the sample was derived"
+                        },
+                        "description": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Description of the sample"
+                        },
+                        "title": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "timestamp_": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Unix timestamp denoting time of creation for this entry"
+                        },
+                        "curated_cohort_id": {
+                            "type": "integer",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Numeric ID of the cohort to which the sample belongs"
+                        },
+                        "data_id": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Unique ID for this data entity on Polly"
+                        },
+                        "src_repo": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Name of the repository this data entity originated from"
+                        },
+                        "id_key": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Name of the key that was used for creation of unique identity"
+                        },
+                        "gender_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "smoking_status_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "label_ch2": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "curated_disease": {
+                            "type": "text",
+                            "is_array": true,
+                            "is_curated": false,
+                            "description": "Disease associated with the sample"
+                        },
+                        "label_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "time_point_ch1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "characteristics_ch1_3": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "characteristics_ch1_2": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "curated_tissue": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Tissue to which the sample belongs"
+                        },
+                        "curated_drug_smiles_code": {
+                            "type": "text",
+                            "is_array": true,
+                            "is_curated": false,
+                            "description": "SMILES code of the drug admistered in the sample"
+                        },
+                        "hyb_protocol": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "platform_id": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        },
+                        "is_current": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "Whether this is the current version of the data entity or not"
+                        },
+                        "characteristics_ch1_1": {
+                            "type": "text",
+                            "is_array": false,
+                            "is_curated": false,
+                            "description": "NA"
+                        }
+                    }
+                }
+            },
+            "created_time": 1649932067523,
+            "last_updated_time": 1670332151817,
+            "enabled": true,
+            "schema_version": 0,
+            "last_updated_by": "506",
+            "aliasing_locked": false
+        },
+        "links": {
+            "self": "/repositories/1643016586529/schema/gct_metadata"
+        }
+    }
+}
