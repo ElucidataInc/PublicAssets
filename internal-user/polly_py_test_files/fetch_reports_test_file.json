@@ -1,0 +1,62 @@
+{
+  "data": {
+    "type": "dataset-reports",
+    "dataset_id": "GSE76311_GPL17586",
+    "attributes": {
+      "reports": [
+        {
+          "workspace_id": "14620",
+          "absolute_path": "14620/test.pdf",
+          "added_by": "kishan.thummar@elucidata.io",
+          "added_on": 1688379786976,
+          "report_id": "0f2e564b-c3d1-410c-b38c-716356f887c2",
+          "file_name": "test.pdf"
+        },
+        {
+          "workspace_id": "14620",
+          "absolute_path": "14620/test.pdf",
+          "added_by": "kishan.thummar@elucidata.io",
+          "added_on": 1688379812074,
+          "report_id": "2956f98d-b9e8-4ae6-a14c-3f09b698e242",
+          "file_name": "test.pdf"
+        },
+        {
+          "workspace_id": "14620",
+          "absolute_path": "14620/test-2.pdf",
+          "added_by": "kishan.thummar@elucidata.io",
+          "added_on": 1688379818074,
+          "report_id": "ad9f0c23-9857-4b27-99a0-36eb8f22295b",
+          "file_name": "test-2.pdf"
+        },
+        {
+          "workspace_id": "4045",
+          "absolute_path": "4045/Trading_Habits_39_of_the_World_s_Most_Powerful_Stock_Market_Rules.pdf",
+          "added_by": "kishan.thummar@elucidata.io",
+          "added_on": 1688379837331,
+          "report_id": "8b800467-dec6-4bf4-ae71-fd8b31e6ed8e",
+          "file_name": "Trading_Habits_39_of_the_World_s_Most_Powerful_Stock_Market_Rules.pdf"
+        },
+        {
+          "added_by": "vivek.mathpal@elucidata.io",
+          "added_on": 1689703001918,
+          "report_id": "41308129-60e6-4fd8-a78b-1824b35b68ce",
+          "url": "http://www.cwi.nl:80/%7Eguido/Python.html"
+        },
+        {
+          "added_by": "vivek.mathpal@elucidata.io",
+          "added_on": 1689740647635,
+          "report_id": "2be74c34-6bfa-44ed-b374-4e0497196478",
+          "url": "http://www.cwi.nl:80/%7Eguido/Python.html"
+        },
+        {
+          "workspace_id": "14645",
+          "absolute_path": "14645/GSE99361_GPL19441_report.html",
+          "added_by": "vivek.mathpal@elucidata.io",
+          "added_on": 1689740689414,
+          "report_id": "6ba297f2-1edc-4c8e-abd5-7947f13c8cb2",
+          "file_name": "GSE99361_GPL19441_report.html"
+        }
+      ]
+    }
+  }
+}
