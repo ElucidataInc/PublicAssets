@@ -12,6 +12,7 @@
                           "is_array": false,
                           "is_ontology": false,
                           "is_keyword": false,
+                          "is_searchable": true,
                           "original_name": "Data Matrix Available",
                           "description": "Data Matrix Available",
                           "type": "cosco",
@@ -25,6 +26,7 @@
                           "is_array": true,
                           "is_ontology": false,
                           "is_keyword": true,
+                          "is_searchable": true,
                           "original_name": "organism",
                           "description": "Orgnism from which the samples were derived",
                           "type": "text",
@@ -39,6 +41,7 @@
                           "is_ontology": false,
                           "is_keyword": true,
                           "original_name": "kw_src_uri",
+                          "is_searchable": true,
                           "description": "Unique URI derived from data file's S3 location",
                           "type": "text",
                           "is_filter": false,
@@ -54,6 +57,7 @@
                           "original_name": "total_num_samples",
                           "description": "Total number of samples in a dataset",
                           "type": "integer",
+                          "is_searchable": true,
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
@@ -69,6 +73,7 @@
                           "type": "text",
                           "is_filter": false,
                           "is_column": false,
+                          "is_searchable": true,
                           "is_curated": false,
                           "filter_size": 1,
                           "display_name": "Year"
@@ -81,6 +86,7 @@
                           "description": "Description of the dataset",
                           "type": "text",
                           "is_filter": false,
+                          "is_searchable": true,
                           "is_column": false,
                           "is_curated": false,
                           "filter_size": 1,
@@ -96,6 +102,7 @@
                           "is_filter": true,
                           "is_column": true,
                           "is_curated": true,
+                          "is_searchable": true,
                           "filter_size": 1000,
                           "display_name": "Cell line"
                       },
@@ -109,6 +116,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
+                          "is_searchable": true,
                           "filter_size": 2000,
                           "display_name": "Data-matrix table"
                       },
@@ -121,6 +129,7 @@
                           "type": "integer",
                           "is_filter": false,
                           "is_column": false,
+                         "is_searchable": true,
                           "is_curated": false,
                           "filter_size": 2000,
                           "display_name": "Data-matrix version"
@@ -134,6 +143,7 @@
                           "type": "text",
                           "is_filter": true,
                           "is_column": false,
+                          "is_searchable": true,
                           "is_curated": true,
                           "filter_size": 1,
                           "display_name": "Platform"
@@ -147,6 +157,7 @@
                           "type": "text",
                           "is_filter": false,
                           "is_column": false,
+                          "is_searchable": true,
                           "is_curated": false,
                           "filter_size": 2000,
                           "display_name": "Timestamp"
@@ -159,6 +170,7 @@
                           "description": "GSE IDs associated with a SuperSeries",
                           "type": "text",
                           "is_filter": false,
+                          "is_searchable": true,
                           "is_column": false,
                           "is_curated": false,
                           "filter_size": 1,
@@ -174,6 +186,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
+                          "is_searchable": true,
                           "filter_size": 2000,
                           "display_name": "File type"
                       },
@@ -185,6 +198,7 @@
                           "description": "Publication associated with the dataset",
                           "type": "text",
                           "is_filter": false,
+                          "is_searchable": true,
                           "is_column": false,
                           "is_curated": false,
                           "filter_size": 1,
@@ -198,6 +212,7 @@
                           "description": "Additional sample IDs that are available at source",
                           "type": "text",
                           "is_filter": false,
+                          "is_searchable": true,
                           "is_column": false,
                           "is_curated": false,
                           "filter_size": 1,
@@ -213,6 +228,7 @@
                           "is_filter": false,
                           "is_column": true,
                           "is_curated": true,
+                          "is_searchable": true,
                           "filter_size": 1,
                           "display_name": "Cell type"
                       },
@@ -226,6 +242,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
+                          "is_searchable": true,
                           "filter_size": 2000,
                           "display_name": "Key"
                       },
@@ -238,6 +255,7 @@
                           "type": "text",
                           "is_filter": false,
                           "is_column": false,
+                          "is_searchable": true,
                           "is_curated": false,
                           "filter_size": 1,
                           "display_name": "Summary"
@@ -252,6 +270,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
+                          "is_searchable": true,
                           "filter_size": 2000,
                           "display_name": "Source repository"
                       },
@@ -264,6 +283,7 @@
                           "type": "text",
                           "is_filter": false,
                           "is_column": false,
+                          "is_searchable": true,
                           "is_curated": true,
                           "filter_size": 1,
                           "display_name": "Drug (SMILES code)"
@@ -279,6 +299,7 @@
                           "is_column": false,
                           "is_curated": false,
                           "filter_size": 2000,
+                          "is_searchable": true,
                           "display_name": "Package"
                       },
                       "file_location": {
@@ -292,6 +313,7 @@
                           "is_column": false,
                           "is_curated": false,
                           "filter_size": 2000,
+                          "is_searchable": true,
                           "display_name": "File location"
                       },
                       "author": {
@@ -303,6 +325,7 @@
                           "type": "text",
                           "is_filter": false,
                           "is_column": false,
+                          "is_searchable": true,
                           "is_curated": false,
                           "filter_size": 1,
                           "display_name": "Author"
@@ -315,6 +338,7 @@
                           "description": "Unique ID assocaited with every dataset",
                           "type": "text",
                           "is_filter": false,
+                          "is_searchable": true,
                           "is_column": true,
                           "is_curated": true,
                           "filter_size": 1,
@@ -330,6 +354,7 @@
                           "is_ontology": true,
                           "is_column": true,
                           "is_curated": true,
+                          "is_searchable": true,
                           "filter_size": 3000,
                           "display_name": "Disease"
                       },
@@ -344,6 +369,7 @@
                           "is_column": true,
                           "is_curated": true,
                           "filter_size": 3000,
+                          "is_searchable": true,
                           "display_name": "Drug"
                       },
                       "curated_gene": {
@@ -357,6 +383,7 @@
                           "is_column": false,
                           "is_curated": true,
                           "filter_size": 1,
+                          "is_searchable": true,
                           "display_name": "Gene"
                       },
                       "abstract": {
@@ -368,6 +395,7 @@
                           "type": "text",
                           "is_filter": false,
                           "is_column": false,
+                          "is_searchable": true,
                           "is_curated": false,
                           "filter_size": 1,
                           "display_name": "Abstract"
@@ -382,6 +410,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
+                          "is_searchable": true,
                           "filter_size": 2000,
                           "display_name": "Version"
                       },
@@ -395,6 +424,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": true,
+                          "is_searchable": true,
                           "filter_size": 1,
                           "display_name": "Strain"
                       },
@@ -406,6 +436,7 @@
                           "description": "S3 bucket in which the data file resides",
                           "type": "text",
                           "is_filter": false,
+                          "is_searchable": true,
                           "is_column": false,
                           "is_curated": false,
                           "filter_size": 2000,
@@ -420,6 +451,7 @@
                           "type": "text",
                           "is_filter": true,
                           "is_column": true,
+                          "is_searchable": true,
                           "is_curated": true,
                           "filter_size": 1000,
                           "display_name": "Tissue"
@@ -433,6 +465,7 @@
                           "type": "text",
                           "is_filter": false,
                           "is_column": false,
+                          "is_searchable": true,
                           "is_curated": true,
                           "filter_size": 1,
                           "display_name": "Source"
@@ -447,6 +480,7 @@
                           "is_filter": true,
                           "is_column": true,
                           "is_curated": true,
+                          "is_searchable": true,
                           "filter_size": 10,
                           "display_name": "Data type"
                       },
@@ -460,6 +494,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
+                          "is_searchable": true,
                           "filter_size": 1,
                           "display_name": "Overall Design"
                       },
@@ -473,6 +508,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
+                          "is_searchable": true,
                           "filter_size": 2000,
                           "display_name": "Is current"
                       },
@@ -486,6 +522,7 @@
                           "is_filter": false,
                           "is_column": false,
                           "is_curated": false,
+                          "is_searchable": true,
                           "filter_size": 2000,
                           "display_name": "Region"
                       }
