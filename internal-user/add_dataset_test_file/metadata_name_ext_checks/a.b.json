@@ -1,18 +1,21 @@
-{"__index__": {
-        "file_metadata": "true",
-        "col_metadata": "true",
-        "row_metadata": "true",
-        "data_required": "true",
-        "validation_check": {
-            "dataset": {
-                "validate": false, 
-                "scope": "advanced", 
-                "force_ingest": false
-            }, 
-            "sample": {
-                "validate": "true", 
-                "scope": "advanced", 
-                "force_ingest": "false"
-            }
-        }
-    }, "_index": "tcga_files", "_type": "_doc", "_id": "tcga__lihc_copy_number_segment_tcga_g3_a25z_01a@0", "_score": 10.215287, "_source": {"curated_disease": ["Carcinoma, Hepatocellular"], "disease_type": "histologic_diagnosis", "disease_stage": "None", "sample_type": "Tumor", "gender": "MALE", "vital_status": "Alive", "molecular_subtype": "iCluster:3", "curated_drug": ["None"], "publication": "https://www.cell.com/cell/fulltext/S0092-8674(17)30639-6?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0092867417306396%3Fshowall%3Dtrue", "patient_id": "TCGA-G3-A25Z", "curated_tissue": ["bile duct", "liver"], "curated_organism": ["['Homo sapiens']"], "dataset_id": "LIHC_Copy_Number_Segment_TCGA-G3-A25Z-01A", "data_type": "Copy Number Variation", "copy_number_type": "segment", "description": "Liver hepatocellular carcinoma Copy Number Variation for TCGA-G3-A25Z-01A", "curated_cell_line": ["None"], "curated_cell_type": ["None"], "dataset_source": "TCGA", "curation_version": "g3", "total_num_samples": "1", "version": "0", "is_current": "true", "src_repo": "tcga", "package": "TCGA_data_lake/data", "region": "us-west-2", "bucket": "discover-prod-datalake-v1", "key": "TCGA_data_lake/data/LIHC/CNV/LIHC_Copy_Number_Segment_TCGA-G3-A25Z-01A.gct", "file_type": "gct", "file_location": "https://discover-prod-datalake-v1.s3-us-west-2.amazonaws.com/TCGA_data_lake/data/LIHC/CNV/LIHC_Copy_Number_Segment_TCGA-G3-A25Z-01A.gct", "src_uri": "polly:data://TCGA_data_lake/data/LIHC/CNV/LIHC_Copy_Number_Segment_TCGA-G3-A25Z-01A.gct", "timestamp_": "1652981809135", "data_table_name": "tcga__lihc_copy_number_segment_tcga_g3_a25z_01a", "data_table_version": "0"}}
+{
+   "__index__":{
+      "file_metadata":"true",
+      "col_metadata":"true",
+      "row_metadata":"true",
+      "data_required":"true",
+      "validation_check":{
+         "dataset":{
+            "validate":false,
+            "scope":"advanced",
+            "force_ingest":false
+         },
+         "sample":{
+            "validate":"true",
+            "scope":"advanced",
+            "force_ingest":"false"
+         }
+      }
+   },
+  "dataset_id": "GJLLDJNNSBBJJDLFFD"
+}
