@@ -58,5 +58,8 @@
  },
    "sonata_tx": {
   "file_structure": "multiple"
- }
+ },
+"gates_geo_transcriptomics": {
+  "file_structure": "multiple"
+}
 }
