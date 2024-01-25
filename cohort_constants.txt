@@ -61,5 +61,8 @@
  },
 "gates_geo_transcriptomics": {
   "file_structure": "multiple"
+},
+"prologue_bulk_omixatlas": {
+  "file_structure": "multiple"
 }
 }
